@@ -9,4 +9,6 @@ window.onload = function() {
         container: 'map',
         style: 'mapbox://styles/syntaf/cj3rys2fx000q2qodb7zlbh2v'
     });
+
+    $(".button-collapse").sideNav();
 };

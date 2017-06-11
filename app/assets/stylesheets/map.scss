@@ -10,7 +10,7 @@
     z-index: 2;
     top: 10px;
     left: calc(10px + 0.5rem);
-    position: fixed !important;
+    position: fixed;
     width: 350px;
     height: 50px;
     background-color: #fff;
@@ -18,19 +18,21 @@
 .menu {
     display: inline-block;
     margin-left: 15px;
-    font-size: 18px !important;
-    margin-top: 16px !important;
+    font-size: 18px;
+    margin-top: 16px;
+    cursor: pointer;
 }
-.search-field {
+
+#search-field {
     position: absolute;
-    margin-top: -2px;
-    width: 300px !important;
-    height: 100% !important;
-    box-shadow: none !important;
-    border-bottom: none !important;
+    margin-top: -1px;
+    width: 300px;
+    height: 100%;
+    box-shadow: none;
+    border-bottom: none;
     display: inline-block;
-    font-size: 16px !important;
-    margin-left: 20px !important;
+    font-size: 16px;
+    margin-left: 20px;
 }
 .search {
     position: absolute;
