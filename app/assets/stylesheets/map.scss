@@ -41,3 +41,18 @@
     margin-top: 16px;
     color: grey;
 }
+.headerview {
+    background-image: linear-gradient(to top, transparentize(rgb(83, 188, 226), 0.5), transparentize(rgb(83, 188, 226), 0.5)), url('headerbg.png');
+    background-size: cover;
+    height: 90px;
+    width: 100%;
+
+    h3 {
+        text-align: center;
+        font-weight: bold;
+        font-size: 22px;
+        margin: 0;
+        padding-top: 34px;
+        color: #fff;
+    }
+}
