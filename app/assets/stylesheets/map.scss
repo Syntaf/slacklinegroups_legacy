@@ -46,6 +46,7 @@
     background-size: cover;
     height: 90px;
     width: 100%;
+    margin-bottom: 10px;
 
     h3 {
         text-align: center;
@@ -54,5 +55,24 @@
         margin: 0;
         padding-top: 34px;
         color: #fff;
+    }
+}
+.bottom-bar {
+    position: absolute;
+    top: calc(100% - 110px);
+    width: 100%;
+    ul {
+        width: 100%;
+        text-align: center;
+    }
+    li {
+        text-align: center;
+        display: inline-block;
+        a {
+            padding: 0;
+            i {
+                font-size: 24px;
+            }
+        }
     }
 }
