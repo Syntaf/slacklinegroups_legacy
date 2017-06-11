@@ -6,12 +6,18 @@
 
     <%= javascript_include_tag 'https://api.mapbox.com/mapbox-gl-js/v0.38.0/mapbox-gl.js' %>
     <%= stylesheet_link_tag 'https://api.mapbox.com/mapbox-gl-js/v0.38.0/mapbox-gl.css' %>
+    <!-- Raleway font style -->
     <%= stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Raleway' %>
+    <!-- Global application js and css files -->
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <!-- Page specific css files -->
+    <%= stylesheet_link_tag params[:controller] if Rails.application.assets_manifest.assets["#{params[:controller]}.css"] %>
   </head>
 
   <body>
     <%= yield %>
+    <!-- Page specific js files -->
+    <%= javascript_include_tag params[:controller] if Rails.application.assets_manifest.assets["#{params[:controller]}.js"] %>
   </body>
 </html>

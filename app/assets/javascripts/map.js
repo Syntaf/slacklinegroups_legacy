@@ -1,6 +1,3 @@
-// Place all the behaviors and hooks related to the matching controller here.
-// All this logic will automatically be available in application.js.
-// You can use CoffeeScript in this file: http://coffeescript.org/
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3ludGFmIiwiYSI6ImNqM2Z2bzZhbTAxZWwycW4wcmI5cjk4MW0ifQ.YOd5yuJfLARC2oOfqY-KoA'
 window.onload = function() {
     var map = new mapboxgl.Map({
@@ -75,25 +72,25 @@ window.onload = function() {
                 'fill-opacity': 0.8
             }
         });
-    });
 
-    // When a click event occurs on a feature in the states layer, open a popup at the
-    // location of the click, with description HTML from its properties.
-    map.on('click', 'maine', function (e) {
-        new mapboxgl.Popup()
-            .setLngLat(e.lngLat)
-            .setHTML(e.features[0].properties.name)
-            .addTo(map);
-    });
+        // When a click event occurs on a feature in the states layer, open a popup at the
+        // location of the click, with description HTML from its properties.
+        map.on('click', 'maine', function (e) {
+            new mapboxgl.Popup()
+                .setLngLat(e.lngLat)
+                .setHTML(e.features[0].properties.name)
+                .addTo(map);
+        });
 
-    // Change the cursor to a pointer when the mouse is over the states layer.
-    map.on('mouseenter', 'maine', function () {
-        map.getCanvas().style.cursor = 'pointer';
-    });
+        // Change the cursor to a pointer when the mouse is over the states layer.
+        map.on('mouseenter', 'maine', function () {
+            map.getCanvas().style.cursor = 'pointer';
+        });
 
-    // Change it back to a pointer when it leaves.
-    map.on('mouseleave', 'maine', function () {
-        map.getCanvas().style.cursor = '';
+        // Change it back to a pointer when it leaves.
+        map.on('mouseleave', 'maine', function () {
+            map.getCanvas().style.cursor = '';
+        });
     });
 };
 
