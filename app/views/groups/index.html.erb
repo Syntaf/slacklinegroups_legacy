@@ -1,0 +1,34 @@
+<h1>Adminitrative Panel</h1>
+<hr>
+<h3>Active DB Objects</h3>
+
+<%= link_to 'New Group', new_group_path %>
+
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Cords</th>
+        <th>Members</th>
+        <th>View</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+
+    <% @groups.each do |group| %>
+    <tr>
+        <td><%= group.name %></td>
+        <% if group.cords %>
+            <td>...</td>
+        <% else %>
+            <td>NULL</td>
+        <% end %>
+        <td><%= group.members %></td>
+        <td><%= link_to 'Show', group_path(group) %></td>
+        <td><%= link_to 'Edit', edit_group_path(group) %></td>
+        <td><%= link_to 'Delete', group_path(group),
+            method: :delete,
+            data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+    <% end %>
+
+</table>
