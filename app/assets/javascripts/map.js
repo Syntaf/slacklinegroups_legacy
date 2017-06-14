@@ -14,11 +14,9 @@ window.onload = function() {
     $(".button-collapse").sideNav();
 
     map.on('load', function () {
-
-
         geoJSON.done(function(data) {
             map.addLayer({
-                'id': 'maine',
+                'id': 'group-locations',
                 'type': 'fill',
                 'source': {
                     type: 'geojson',
@@ -35,7 +33,7 @@ window.onload = function() {
             });
             // When a click event occurs on a feature in the states layer, open a popup at the
             // location of the click, with description HTML from its properties.
-            map.on('click', 'maine', function (e) {
+            map.on('click', 'group-locations', function (e) {
                 new mapboxgl.Popup()
                     .setLngLat(e.lngLat)
                     .setHTML(e.features[0].properties.name)
@@ -43,12 +41,12 @@ window.onload = function() {
             });
 
             // Change the cursor to a pointer when the mouse is over the states layer.
-            map.on('mouseenter', 'maine', function () {
+            map.on('mouseenter', 'group-locations', function () {
                 map.getCanvas().style.cursor = 'pointer';
             });
 
             // Change it back to a pointer when it leaves.
-            map.on('mouseleave', 'maine', function () {
+            map.on('mouseleave', 'group-locations', function () {
                 map.getCanvas().style.cursor = '';
             });
             // map.getSource('maine').setData({
