@@ -9,45 +9,12 @@
                 </div>
             </td>
             <td style="width: 50%;">
-                <%= form_for @group do |f| %>
-                    <% if @group.errors.any? %>
-                        <div id="error_explanation">
-                            <h4>
-                                <%= pluralize(@group.errors.count, "error") %> prohibited
-                                this article from being saved:
-                            </h4>
-                            <ul>
-                                <% @group.errors.full_messages.each do |msg| %>
-                                    <li><%= msg %></li>
-                                <% end %>
-                            </ul>
-                        </div>
-                    <% end %>
-
-                    <p>
-                        <%= f.label :name %><br>
-                        <%= f.text_field :name %>
-                    </p>
-
-                    <p>
-                        <%= f.label :cords %><br>
-                        <%= f.text_field :cords, name: "group[cords]" %>
-                    </p>
-
-                    <p>
-                        <%= f.label :members %><br>
-                        <%= f.text_field :members %>
-                    </p>
-
-                    <p>
-                        <%= f.submit %>
-                    </p>
-                <% end %>
+                <%= render 'form' %>
             </td>
         </tr>
     </table>
 </div>
-
+<%= link_to 'Back', groups_path %>
 <script>
     mapboxgl.accessToken = 'pk.eyJ1Ijoic3ludGFmIiwiYSI6ImNqM2Z2bzZhbTAxZWwycW4wcmI5cjk4MW0ifQ.YOd5yuJfLARC2oOfqY-KoA'
     var map = new mapboxgl.Map({
