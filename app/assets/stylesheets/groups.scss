@@ -5,3 +5,10 @@
     max-width: 800px;
     margin: 0 auto;
 }
+
+td {
+    vertical-align: top;
+    max-width: 200px;
+    overflow-x: auto;
+    white-space: nowrap;
+}

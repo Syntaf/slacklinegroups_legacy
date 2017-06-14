@@ -45,7 +45,13 @@ class GroupsController < ApplicationController
     end
 
     private
+        def cords_to_a
+            # get the params[:group][:cords], if empty use '[]'
+            cords = params.dig(:group, :cords).presence || "[]"
+            JSON.parse cords
+        end
+
         def group_params
-            params.require(:group).permit(:name, :members, cords: [] )
+            params.require(:group).permit(:name, :members).merge({cords: cords_to_a})
         end
 end

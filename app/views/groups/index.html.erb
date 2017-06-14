@@ -16,16 +16,12 @@
 
     <% @groups.each do |group| %>
     <tr>
-        <td><%= group.name %></td>
-        <% if group.cords %>
-            <td>...</td>
-        <% else %>
-            <td>NULL</td>
-        <% end %>
-        <td><%= group.members %></td>
-        <td><%= link_to 'Show', group_path(group) %></td>
-        <td><%= link_to 'Edit', edit_group_path(group) %></td>
-        <td><%= link_to 'Delete', group_path(group),
+        <td style="width: 10%;"><%= group.name %></td>
+        <td style="width: 50%;"><%= group.cords %></td>
+        <td style="width: 10%;"><%= group.members %></td>
+        <td style="width: 10%;"><%= link_to 'Show', group_path(group) %></td>
+        <td style="width: 10%;"><%= link_to 'Edit', edit_group_path(group) %></td>
+        <td style="width: 10%;"><%= link_to 'Delete', group_path(group),
             method: :delete,
             data: { confirm: 'Are you sure?' } %></td>
     </tr>
