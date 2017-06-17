@@ -1,5 +1,7 @@
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3ludGFmIiwiYSI6ImNqM2Z2bzZhbTAxZWwycW4wcmI5cjk4MW0ifQ.YOd5yuJfLARC2oOfqY-KoA'
 
+zoomThresh = 2;
+
 var createPopUp = function(f) {
     console.log(f);
     return `
@@ -37,7 +39,9 @@ window.onload = function() {
                         features: data
                     }
                 },
-                'layout': {},
+                'layout': {
+                    'visibility': 'none'
+                },
                 'paint': {
                     'fill-color': '#088',
                     'fill-opacity': 0.8
@@ -60,6 +64,14 @@ window.onload = function() {
             // Change it back to a pointer when it leaves.
             map.on('mouseleave', 'group-locations', function () {
                 map.getCanvas().style.cursor = '';
+            });
+
+            map.on('zoom', function() {
+                if(map.getZoom() < zoomThresh) {
+                    map.setLayoutProperty('group-locations', 'visibility', 'none');
+                } else {
+                    map.setLayoutProperty('group-locations', 'visibility', 'visible');
+                }
             });
         });
     });

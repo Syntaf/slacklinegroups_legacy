@@ -53,6 +53,6 @@ class GroupsController < ApplicationController
         end
 
         def group_params
-            params.require(:group).permit(:name, :members).merge({cords: cords_to_a})
+            params.require(:group).permit(:name, :members, :link).merge({cords: cords_to_a})
         end
 end

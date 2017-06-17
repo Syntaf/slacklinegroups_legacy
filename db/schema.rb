@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170611211423) do
+ActiveRecord::Schema.define(version: 20170617201748) do
 
   create_table "groups", force: :cascade do |t|
     t.text "cords"
@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 20170611211423) do
     t.integer "members"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "link"
   end
 
 end
