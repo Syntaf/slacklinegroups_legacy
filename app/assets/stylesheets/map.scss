@@ -1,7 +1,32 @@
 // Place all the styles related to the Map controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.mapboxgl-popup-content {
+    width: 220px;
+    height: 170px;
 
+    p, a {
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .mapboxgl-popup-close-button {
+        font-size: 16px;
+    }
+
+    .title {
+        font-family: 'Raleway', sans-serif;
+        font-size: 18px;
+    }
+
+    .label {
+        display: inline-block;
+    }
+
+    .members {
+        font-weight: bold;
+        display: inline-block;
+    }
+}
 #map {
     height: 100vh;
     width: 100vw;

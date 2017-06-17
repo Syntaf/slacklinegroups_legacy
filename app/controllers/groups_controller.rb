@@ -7,6 +7,7 @@ class GroupsController < ApplicationController
 
     def edit
         @group = Group.find(params[:id])
+        p @group.cords
     end
 
     def create

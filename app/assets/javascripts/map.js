@@ -1,4 +1,16 @@
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3ludGFmIiwiYSI6ImNqM2Z2bzZhbTAxZWwycW4wcmI5cjk4MW0ifQ.YOd5yuJfLARC2oOfqY-KoA'
+
+var createPopUp = function(f) {
+    console.log(f);
+    return `
+        <p class="title">${f[0].properties.name}</p>
+        <hr>
+        <p class="label">Last recorded member count:</p>
+        <p class="members">${f[0].properties.members}</p>
+        <a href="">Visit on Facebook</a>
+    `;
+}
+
 var geoJSON = $.ajax({
     url: '/map/groups',
     dataType: 'json'
@@ -36,7 +48,7 @@ window.onload = function() {
             map.on('click', 'group-locations', function (e) {
                 new mapboxgl.Popup()
                     .setLngLat(e.lngLat)
-                    .setHTML(e.features[0].properties.name)
+                    .setHTML(createPopUp(e.features))
                     .addTo(map);
             });
 
@@ -49,13 +61,7 @@ window.onload = function() {
             map.on('mouseleave', 'group-locations', function () {
                 map.getCanvas().style.cursor = '';
             });
-            // map.getSource('maine').setData({
-            //     type: 'FeatureCollection',
-            //     features: [data]
-            // });
         });
-
-
     });
 };
 
