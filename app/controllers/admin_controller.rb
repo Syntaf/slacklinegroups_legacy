@@ -1,11 +1,23 @@
-require "json"
-
-class GroupsController < ApplicationController
+class AdminController < ApplicationController
     before_action :authenticate
+    
+    def new
+        @group = Group.new
+    end
 
     def edit
         @group = Group.find(params[:id])
         p @group.cords
+    end
+
+    def create
+        @group = Group.new(group_params)
+
+        if @group.save
+            redirect_to @group
+        else
+            render 'new'
+        end
     end
 
     def update
@@ -20,6 +32,18 @@ class GroupsController < ApplicationController
 
     def show
         @group = Group.find(params[:id])
+    end
+
+    def index
+        p ENV
+        @groups = Group.all
+    end
+
+    def destroy
+        @group = Group.find(params[:id])
+        @group.destroy
+
+        redirect_to groups_path
     end
 
     private

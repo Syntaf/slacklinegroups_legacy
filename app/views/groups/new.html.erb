@@ -1,38 +1,4 @@
-<h1>New Group</h1>
-<hr>
-<div class="my-container">
-    <table>
-        <tr>
-            <td style="width: 50%;">
-                <div id="map">
-                    <a class="waves-effect waves-light btn" id="export">Export</a>
-                </div>
-            </td>
-            <td style="width: 50%;">
-                <%= render 'form' %>
-            </td>
-        </tr>
-    </table>
+<div style="text-align: center;">
+    <h1>Access Restricted</h1>
+    <p>sorry bud</p>
 </div>
-<%= link_to 'Back', groups_path %>
-<script>
-    mapboxgl.accessToken = 'pk.eyJ1Ijoic3ludGFmIiwiYSI6ImNqM2Z2bzZhbTAxZWwycW4wcmI5cjk4MW0ifQ.YOd5yuJfLARC2oOfqY-KoA'
-    var map = new mapboxgl.Map({
-        center: [-90, 45],
-        zoom: 2.5,
-        container: 'map',
-        style: 'mapbox://styles/syntaf/cj3rys2fx000q2qodb7zlbh2v'
-    });
-    var draw = new MapboxDraw({
-        displayControlsDefault: false,
-        controls: {
-            polygon: true,
-            trash: true
-        }
-    });
-    map.addControl(draw);
-    $('#export').click(function() {
-        var data = draw.getAll();
-        $('#group_cords').val(JSON.stringify(data.features[0].geometry.coordinates));
-    });
-</script>
