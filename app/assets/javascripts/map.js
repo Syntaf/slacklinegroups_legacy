@@ -17,6 +17,12 @@ var geoJSON = $.ajax({
     url: '/map/groups',
     dataType: 'json'
 });
+
+var geoPointJSON = $.ajax({
+    url: '/map/pointclouds',
+    dataType: 'json'
+});
+
 window.onload = function() {
     var map = new mapboxgl.Map({
         center: [0, 35],
@@ -28,6 +34,78 @@ window.onload = function() {
     $(".button-collapse").sideNav();
 
     map.on('load', function () {
+        geoPointJSON.done(function(data) {
+            console.log(data);
+            map.addLayer({
+                id: 'group-clusters',
+                type: 'circle',
+                source: {
+                    type: 'geojson',
+                    data: {
+                        type: 'FeatureCollection',
+                        features: data
+                    }
+                },
+                filter: ['has', 'point_count'],
+                paint: {
+                    'circle-color': {
+                        property: 'point_count',
+                        type: 'interval',
+                        stops: [
+                            [0, "#51bbd6"],
+                            [100, "#f1f075"],
+                            [750, "#f28cb1"],
+                        ]
+                    },
+                    "circle-radius": {
+                        property: "point_count",
+                        type: "interval",
+                        stops: [
+                            [0, 20],
+                            [100, 30],
+                            [750, 40]
+                        ]
+                    }
+                }
+            });
+
+            map.addLayer({
+                id: "cluster-count",
+                type: "symbol",
+                source: {
+                    type: 'geojson',
+                    data: {
+                        type: 'FeatureCollection',
+                        features: data
+                    }
+                },
+                filter: ["has", "point_count"],
+                layout: {
+                    "text-field": "{point_count_abbreviated}",
+                    "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+                    "text-size": 12
+                }
+            });
+
+            map.addLayer({
+                id: "unclustered-point",
+                type: "circle",
+                source: {
+                    type: 'geojson',
+                    data: {
+                        type: 'FeatureCollection',
+                        features: data
+                    }
+                },
+                filter: ["!has", "point_count"],
+                paint: {
+                    "circle-color": "#11b4da",
+                    "circle-radius": 4,
+                    "circle-stroke-width": 1,
+                    "circle-stroke-color": "#fff"
+                }
+            });
+        });
         geoJSON.done(function(data) {
             map.addLayer({
                 'id': 'group-locations',
@@ -47,6 +125,7 @@ window.onload = function() {
                     'fill-opacity': 0.8
                 }
             });
+
             // When a click event occurs on a feature in the states layer, open a popup at the
             // location of the click, with description HTML from its properties.
             map.on('click', 'group-locations', function (e) {

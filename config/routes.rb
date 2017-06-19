@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get 'map/index'
   get 'map/groups'
+  get 'map/pointclouds'
 
   resources :groups
 
