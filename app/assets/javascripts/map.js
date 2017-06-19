@@ -1,6 +1,6 @@
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3ludGFmIiwiYSI6ImNqM2Z2bzZhbTAxZWwycW4wcmI5cjk4MW0ifQ.YOd5yuJfLARC2oOfqY-KoA'
 
-zoomThresh = 2;
+zoomThresh = 4;
 
 var createPopUp = function(f) {
     console.log(f);
@@ -36,16 +36,21 @@ window.onload = function() {
     map.on('load', function () {
         geoPointJSON.done(function(data) {
             console.log(data);
+            map.addSource('group-points', {
+                type: 'geojson',
+                data: {
+                    type: 'FeatureCollection',
+                    features: data
+                },
+                cluster: true,
+                clusterMaxZoom: 14,
+                clusterRadius: 50
+            })
+
             map.addLayer({
                 id: 'group-clusters',
                 type: 'circle',
-                source: {
-                    type: 'geojson',
-                    data: {
-                        type: 'FeatureCollection',
-                        features: data
-                    }
-                },
+                source: 'group-points',
                 filter: ['has', 'point_count'],
                 paint: {
                     'circle-color': {
@@ -53,8 +58,8 @@ window.onload = function() {
                         type: 'interval',
                         stops: [
                             [0, "#51bbd6"],
-                            [100, "#f1f075"],
-                            [750, "#f28cb1"],
+                            [5, "#f1f075"],
+                            [10, "#f28cb1"],
                         ]
                     },
                     "circle-radius": {
@@ -62,8 +67,8 @@ window.onload = function() {
                         type: "interval",
                         stops: [
                             [0, 20],
-                            [100, 30],
-                            [750, 40]
+                            [5, 30],
+                            [10, 40]
                         ]
                     }
                 }
@@ -72,13 +77,7 @@ window.onload = function() {
             map.addLayer({
                 id: "cluster-count",
                 type: "symbol",
-                source: {
-                    type: 'geojson',
-                    data: {
-                        type: 'FeatureCollection',
-                        features: data
-                    }
-                },
+                source: 'group-points',
                 filter: ["has", "point_count"],
                 layout: {
                     "text-field": "{point_count_abbreviated}",
@@ -90,19 +89,26 @@ window.onload = function() {
             map.addLayer({
                 id: "unclustered-point",
                 type: "circle",
-                source: {
-                    type: 'geojson',
-                    data: {
-                        type: 'FeatureCollection',
-                        features: data
-                    }
-                },
+                source: 'group-points',
                 filter: ["!has", "point_count"],
                 paint: {
                     "circle-color": "#11b4da",
                     "circle-radius": 4,
                     "circle-stroke-width": 1,
                     "circle-stroke-color": "#fff"
+                }
+            });
+
+            map.on('zoom', function() {
+                console.log(map.getZoom());
+                if(map.getZoom() >= zoomThresh) {
+                    map.setLayoutProperty('group-clusters', 'visibility', 'none');
+                    map.setLayoutProperty('cluster-count', 'visibility', 'none');
+                    map.setLayoutProperty('unclustered-point', 'visibility', 'none');
+                } else {
+                    map.setLayoutProperty('group-clusters', 'visibility', 'visible');
+                    map.setLayoutProperty('cluster-count', 'visibility', 'visible');
+                    map.setLayoutProperty('unclustered-point', 'visibility', 'visible');
                 }
             });
         });
@@ -121,8 +127,9 @@ window.onload = function() {
                     'visibility': 'none'
                 },
                 'paint': {
-                    'fill-color': '#088',
-                    'fill-opacity': 0.8
+                    'fill-outline-color': '#000',
+                    'fill-color': '#ab09b7',
+                    'fill-opacity': 0.7
                 }
             });
 
