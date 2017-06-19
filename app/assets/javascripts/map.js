@@ -109,6 +109,32 @@ window.onload = function() {
                 }
             });
 
+            map.on('click', 'group-clusters', function(e) {
+                if(e.features[0].properties.point_count > 10) {
+                    map.flyTo({
+                        center: e.lngLat,
+                        zoom: map.getZoom() + 1.75
+                    });
+                } else if(e.features[0].properties.point_count > 5) {
+                    map.flyTo({
+                        center: e.lngLat,
+                        zoom: map.getZoom() + 2.5
+                    });
+                } else if(e.features[0].properties.point_count > 0) {
+                    map.flyTo({
+                        center: e.lngLat,
+                        zoom: map.getZoom() + 3.5
+                    });
+                }
+            });
+
+            map.on('click', 'unclustered-point', function(e) {
+                map.flyTo({
+                    center: e.lngLat,
+                    zoom: 7.7
+                });
+            });
+
             map.on('zoom', function() {
                 console.log(map.getZoom());
                 if(map.getZoom() >= zoomThresh) {
