@@ -1,8 +1,8 @@
 require "json"
 
 class GroupsController < ApplicationController
-    http_basic_authenticate_with name: ENV['GROUP_USERNAME'], password: ENV['GROUP_PASSWORD']
-
+    before_action :authenticate
+    
     def new
         @group = Group.new
     end
@@ -37,6 +37,7 @@ class GroupsController < ApplicationController
     end
 
     def index
+        p ENV
         @groups = Group.all
     end
 
@@ -56,5 +57,11 @@ class GroupsController < ApplicationController
 
         def group_params
             params.require(:group).permit(:name, :members, :link).merge({cords: cords_to_a})
+        end
+
+        def authenticate
+            authenticate_or_request_with_http_basic do |username, password|
+                username == ENV['GROUP_USERNAME'] && password == ENV['GROUP_PASSWORD']
+            end
         end
 end
