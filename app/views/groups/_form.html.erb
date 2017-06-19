@@ -20,7 +20,7 @@
 
     <p>
         <%= f.label :cords %><br>
-        <%= f.text_field :cords, name: "group[cords]" %>
+        <input type="text" name="group[cords]" id="group_cords" value="<%= @group.cords %>">
     </p>
 
     <p>

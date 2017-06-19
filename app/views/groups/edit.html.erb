@@ -31,6 +31,38 @@
         }
     });
     map.addControl(draw);
+    var cords = $('#group_cords').val();
+    // if cords are non-empty, we should display that polygon
+    if(cords !== '[]') {
+        var arr = JSON.parse(cords);
+        map.on('load', function() {
+            map.addLayer({
+                id: 'group-location',
+                type: 'fill',
+                source: {
+                    type: 'geojson',
+                    data: {
+                        type: 'Feature',
+                        geometry: {
+                            type: 'Polygon',
+                            coordinates: arr
+                        }
+                    }
+                },
+                layout: {},
+                paint: {
+                    'fill-outline-color': '#FF1E1E',
+                    'fill-color': '#FE5F55',
+                    'fill-opacity': 0.8
+                }
+            });
+
+            $('.mapbox-gl-draw_trash').click(function() {
+                map.setLayoutProperty('group-location', 'visibility', 'none');
+                $('#group_cords').val('');
+            });
+        });
+    }
     $('#export').click(function() {
         var data = draw.getAll();
         $('#group_cords').val(JSON.stringify(data.features[0].geometry.coordinates));
