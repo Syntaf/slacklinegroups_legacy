@@ -1,6 +1,6 @@
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3ludGFmIiwiYSI6ImNqM2Z2bzZhbTAxZWwycW4wcmI5cjk4MW0ifQ.YOd5yuJfLARC2oOfqY-KoA'
 
-zoomThresh = 4;
+zoomThresh = 4.5;
 
 var createPopUp = function(f) {
     console.log(f);
@@ -57,18 +57,18 @@ window.onload = function() {
                         property: 'point_count',
                         type: 'interval',
                         stops: [
-                            [0, "#51bbd6"],
-                            [5, "#f1f075"],
-                            [10, "#f28cb1"],
+                            [0, "#F0CF65"],
+                            [5, "#4CE0B3"],
+                            [10, "#F45B69"],
                         ]
                     },
                     "circle-radius": {
                         property: "point_count",
                         type: "interval",
                         stops: [
-                            [0, 20],
-                            [5, 30],
-                            [10, 40]
+                            [0, 30],
+                            [5, 40],
+                            [10, 50]
                         ]
                     }
                 }
@@ -93,9 +93,19 @@ window.onload = function() {
                 filter: ["!has", "point_count"],
                 paint: {
                     "circle-color": "#11b4da",
-                    "circle-radius": 4,
-                    "circle-stroke-width": 1,
-                    "circle-stroke-color": "#fff"
+                    "circle-radius": 20
+                },
+            });
+
+            map.addLayer({
+                id: "cluster-noncount",
+                type: "symbol",
+                source: 'group-points',
+                filter: ["!has", "point_count"],
+                layout: {
+                    "text-field": "1",
+                    "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
+                    "text-size": 12
                 }
             });
 
@@ -105,10 +115,12 @@ window.onload = function() {
                     map.setLayoutProperty('group-clusters', 'visibility', 'none');
                     map.setLayoutProperty('cluster-count', 'visibility', 'none');
                     map.setLayoutProperty('unclustered-point', 'visibility', 'none');
-                } else {
+                    map.setLayoutProperty('cluster-noncount', 'visibility', 'none');
+                } else { 
                     map.setLayoutProperty('group-clusters', 'visibility', 'visible');
                     map.setLayoutProperty('cluster-count', 'visibility', 'visible');
                     map.setLayoutProperty('unclustered-point', 'visibility', 'visible');
+                    map.setLayoutProperty('cluster-noncount', 'visibility', 'visible');
                 }
             });
         });
@@ -127,9 +139,9 @@ window.onload = function() {
                     'visibility': 'none'
                 },
                 'paint': {
-                    'fill-outline-color': '#000',
-                    'fill-color': '#ab09b7',
-                    'fill-opacity': 0.7
+                    'fill-outline-color': '#FF1E1E',
+                    'fill-color': '#FE5F55',
+                    'fill-opacity': 0.8
                 }
             });
 
