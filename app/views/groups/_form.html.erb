@@ -13,27 +13,27 @@
         </div>
     <% end %>
 
-    <p>
+    <p id="nm">
         <%= f.label :name %><br>
         <%= f.text_field :name %>
     </p>
 
-    <p>
+    <p id="cd">
         <%= f.label :cords %><br>
         <input type="text" name="group[cords]" id="group_cords" value="<%= @group.cords %>">
     </p>
-
-    <p>
+    <br>
+    <p id="mm">
         <%= f.label :members %><br>
         <%= f.text_field :members %>
     </p>
 
-    <p>
-        <%= f.label :link %><br>
+    <p id="lk">
+        <%= f.label :link, 'Link to group' %><br>
         <%= f.text_field :link %>
     </p>
 
     <p>
-        <%= f.submit %>
+        <%= f.submit class: 'waves-effect waves-light btn' %>
     </p>
 <% end %>

@@ -1,25 +1,33 @@
-<h1>Edit Group</h1>
-<hr>
+<div class="header">
+    <h2>SlacklineGroups<sub>beta</sub></h2>
+    <p>Admin Panel</p>
+</div>
 <div class="my-container">
+    <h5>Editing your slackline group:</h5>
+    <p>To draw an area that encompasses your groups activities, select the <b>Polygon Tool (p)</b> on the right side of the map, and click to create vertices. Upon clicking on an existing vertex, the shape will close and you will be able to click <em>Export</em>. This will automatically fill the <em>Cords</em> field below, so no need to touch it after.
+    <br><br>After filling out or verifying the remaining information, click <em>Update Group</em> to submit your changes. All done, thanks!
+    </p>
     <table>
         <tr>
-            <td style="width: 50%;">
+            <td style="width: 100%;">
                 <div id="map">
                     <a class="waves-effect waves-light btn" id="export">Export</a>
                 </div>
             </td>
-            <td style="width: 50%;">
+        </tr>
+        <tr>
+            <td class="form-td">
                 <%= render 'form' %>
             </td>
         </tr>
     </table>
+    <!-- <%= link_to 'Back', groups_path %> -->
 </div>
-<%= link_to 'Back', groups_path %>
 <script>
     mapboxgl.accessToken = 'pk.eyJ1Ijoic3ludGFmIiwiYSI6ImNqM2Z2bzZhbTAxZWwycW4wcmI5cjk4MW0ifQ.YOd5yuJfLARC2oOfqY-KoA'
     var map = new mapboxgl.Map({
-        center: [20, 25],
-        zoom: 0.5,
+        center: [-20, 45],
+        zoom: 1.5,
         container: 'map',
         style: 'mapbox://styles/syntaf/cj3rys2fx000q2qodb7zlbh2v'
     });
