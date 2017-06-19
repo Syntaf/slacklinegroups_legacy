@@ -35,7 +35,6 @@ window.onload = function() {
 
     map.on('load', function () {
         geoPointJSON.done(function(data) {
-            console.log(data);
             map.addSource('group-points', {
                 type: 'geojson',
                 data: {
@@ -118,12 +117,12 @@ window.onload = function() {
                 } else if(e.features[0].properties.point_count > 5) {
                     map.flyTo({
                         center: e.lngLat,
-                        zoom: map.getZoom() + 2.5
+                        zoom: map.getZoom() + 2.0
                     });
                 } else if(e.features[0].properties.point_count > 0) {
                     map.flyTo({
                         center: e.lngLat,
-                        zoom: map.getZoom() + 3.5
+                        zoom: map.getZoom() + 3.0
                     });
                 }
             });
@@ -136,7 +135,6 @@ window.onload = function() {
             });
 
             map.on('zoom', function() {
-                console.log(map.getZoom());
                 if(map.getZoom() >= zoomThresh) {
                     map.setLayoutProperty('group-clusters', 'visibility', 'none');
                     map.setLayoutProperty('cluster-count', 'visibility', 'none');
