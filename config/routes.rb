@@ -3,7 +3,6 @@ Rails.application.routes.draw do
   get 'map/groups'
   get 'map/pointclouds'
   get 'about', to: 'about#index'
-  get 'allgroups', to: 'allgroups#index'
   resources :groups
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html

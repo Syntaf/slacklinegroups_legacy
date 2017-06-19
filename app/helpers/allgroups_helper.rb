@@ -1,2 +1,0 @@
-module AllgroupsHelper
-end

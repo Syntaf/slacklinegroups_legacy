@@ -23,10 +23,21 @@
     width: 100%;
 
     .content {
-        margin-left: 30px;
-        h3 { 
+        * {
+            font-family: 'Roboto', sans-serif;
+        }
+        max-width: 970px;
+        margin: 0 auto;
+        h4 { 
             font-weight: bold;
-            letter-spacing: 3px;
+        }
+        p li {
+            font-size: 16px;
+        }
+
+        ul li {
+            margin-left: 30px;
+            list-style-type: circle;
         }
     }
 }
