@@ -1,0 +1,42 @@
+// Place all the styles related to the about controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+@import "materialize/components/color";
+
+.header {
+    height: 15vh;
+    @extend .cyan;
+    @extend .darken-2;
+
+    h2 {
+        text-align: center;
+        color: white;
+        margin: 0;
+        width: 100%;
+    }
+}
+.body {
+    @extend .cyan;
+    @extend .lighten-5;
+    background-color: #292C37;
+    height: 85vh;
+    width: 100%;
+
+    .content {
+        margin-left: 30px;
+        h3 { 
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+    }
+}
+.navigation {
+    display: inline-block;
+    width: 100%;
+    margin: 20px;
+    margin-left: 30px;
+}
+.btn {
+    @extend .cyan;
+    @extend .accent-4;
+}

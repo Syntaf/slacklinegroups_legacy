@@ -2,6 +2,7 @@ require 'json'
 
 class MapController < ApplicationController
     def index
+        p Rails.application.routes.named_routes.helper_names
     end
 
     def groups

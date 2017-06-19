@@ -3,7 +3,6 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoic3ludGFmIiwiYSI6ImNqM2Z2bzZhbTAxZWwycW4wcmI5c
 zoomThresh = 4.5;
 
 var createPopUp = function(f) {
-    console.log(f);
     return `
         <p class="title">${f[0].properties.name}</p>
         <hr>
@@ -23,15 +22,19 @@ var geoPointJSON = $.ajax({
     dataType: 'json'
 });
 
-window.onload = function() {
+$(document).ready(function() {
+    $(".button-collapse").sideNav({
+        closeOnClick: true
+    });
+    $("a").click(function() {
+        $("#sidenav-overlay").remove();
+    });
     var map = new mapboxgl.Map({
         center: [0, 35],
         zoom: 1.75,
         container: 'map',
         style: 'mapbox://styles/syntaf/cj3rys2fx000q2qodb7zlbh2v'
     });
-
-    $(".button-collapse").sideNav();
 
     map.on('load', function () {
         geoPointJSON.done(function(data) {
@@ -134,6 +137,22 @@ window.onload = function() {
                 });
             });
 
+            map.on('mouseenter', 'group-clusters', function () {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+
+            map.on('mouseleave', 'group-clusters', function () {
+                map.getCanvas().style.cursor = '';
+            });
+
+            map.on('mouseenter', 'unclustered-point', function () {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+
+            map.on('mouseleave', 'unclustered-point', function () {
+                map.getCanvas().style.cursor = '';
+            });
+
             map.on('zoom', function() {
                 if(map.getZoom() >= zoomThresh) {
                     map.setLayoutProperty('group-clusters', 'visibility', 'none');
@@ -197,5 +216,5 @@ window.onload = function() {
             });
         });
     });
-};
+});
 

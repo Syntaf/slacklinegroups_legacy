@@ -17,7 +17,7 @@
     <%= stylesheet_link_tag 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v0.18.0/mapbox-gl-draw.css' %>
   </head>
 
-  <body>
+  <body data-no-turbolink>
     <%= yield %>
     <!-- Page specific js files -->
     <%= javascript_include_tag params[:controller] if Rails.application.assets_manifest.assets["#{params[:controller]}.js"] %>
