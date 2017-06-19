@@ -1,6 +1,8 @@
 require "json"
 
 class GroupsController < ApplicationController
+    http_basic_authenticate_with name: ENV['GROUP_USERNAME'], password: ENV['GROUP_PASSWORD']
+
     def new
         @group = Group.new
     end
