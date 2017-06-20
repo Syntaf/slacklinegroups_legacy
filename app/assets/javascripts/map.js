@@ -3,13 +3,9 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoic3ludGFmIiwiYSI6ImNqM2Z2bzZhbTAxZWwycW4wcmI5c
 zoomThresh = 4.5;
 
 var createPopUp = function(f) {
-    return `
-        <p class="title">${f[0].properties.name}</p>
-        <hr>
-        <p class="label">Last recorded member count:</p>
-        <p class="members">${f[0].properties.members}</p>
-        <a href="">Visit on Facebook</a>
-    `;
+    return "<p class=\"title\">" + f[0].properties.name + 
+    "</p><hr><p class=\"label\">Last recorded member count:</p><p class=\"members\"> " + f[0].properties.members + 
+    "</p><a href=\"\">Visit on Facebook</a>";
 }
 
 var geoJSON = $.ajax({
