@@ -67,7 +67,7 @@
     color: grey;
 }
 .headerview {
-    background-image: linear-gradient(to top, transparentize(rgb(83, 188, 226), 0.5), transparentize(rgb(83, 188, 226), 0.5)), url('headerbg.png');
+    background-image: linear-gradient(to top, transparentize(rgb(83, 188, 226), 0.5), transparentize(rgb(83, 188, 226), 0.5)), image-url('headerbg.png');
     background-size: cover;
     height: 90px;
     width: 100%;
