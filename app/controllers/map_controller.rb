@@ -1,6 +1,8 @@
 require 'json'
 
 class MapController < ApplicationController
+    before_action :authenticate
+
     def index
         p Rails.application.routes.named_routes.helper_names
     end
@@ -78,5 +80,11 @@ class MapController < ApplicationController
             centroid[1] /= (6.0 * signedArea);
 
             centroid
+        end
+
+        def authenticate
+            authenticate_or_request_with_http_basic do |username, password|
+                username == ENV['TEMP_USERNAME'] && password == ENV['TEMP_PASSWORD']
+            end
         end
 end
