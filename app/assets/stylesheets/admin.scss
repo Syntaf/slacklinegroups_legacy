@@ -1,3 +1,68 @@
 // Place all the styles related to the admin controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+@import "materialize/components/color";
+body {
+    @extend .cyan;
+    @extend .lighten-5;
+}
+.my-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+#map {
+    height: 400px;
+    width: 100%;
+
+    .btn {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+    }
+}
+td {
+    vertical-align: top;
+    max-width: 200px;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+.header {
+    height: 15vh;
+    @extend .cyan;
+    @extend .darken-2;
+    text-align: center;
+    sub {
+        font-size: 12px;
+    }
+    h2 {
+        line-height: 10vh;
+        text-align: center;
+        color: white;
+        margin: 0;
+        display: block;
+    }
+    p {
+        font-weight: bold;
+        color: white;
+        margin: 0;
+        line-height: 3vh;
+        display: block;
+    }
+}
+.form-td {
+    width: 100%;
+    overflow: auto;
+    text-align: center;
+    p {
+        width: 48%;
+        padding: 10px;
+    }
+    #nm, #cd, #mm, #lk {
+        display: inline-block;
+        margin: 0;
+    }
+    label {
+        font-weight: bold;
+        color: #1b1b1b;
+    }
+}

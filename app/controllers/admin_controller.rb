@@ -14,7 +14,8 @@ class AdminController < ApplicationController
         @group = Group.new(group_params)
 
         if @group.save
-            redirect_to @group
+            p @group
+            redirect_to admin_path(@group)
         else
             render 'new'
         end
@@ -24,7 +25,7 @@ class AdminController < ApplicationController
         @group = Group.find(params[:id])
 
         if @group.update(group_params)
-            redirect_to @group
+            redirect_to admin_path(@group)
         else
             render 'edit'
         end
@@ -35,7 +36,7 @@ class AdminController < ApplicationController
     end
 
     def index
-        p ENV
+        p Rails.application.routes.named_routes.helper_names
         @groups = Group.all
     end
 
@@ -43,7 +44,7 @@ class AdminController < ApplicationController
         @group = Group.find(params[:id])
         @group.destroy
 
-        redirect_to groups_path
+        redirect_to admin_index_path
     end
 
     private
@@ -59,7 +60,7 @@ class AdminController < ApplicationController
 
         def authenticate
             authenticate_or_request_with_http_basic do |username, password|
-                username == ENV['GROUP_USERNAME'] && password == ENV['GROUP_PASSWORD']
+                username == ENV['ADMIN_USERNAME'] && password == ENV['ADMIN_PASSWORD']
             end
         end
 end

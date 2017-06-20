@@ -9,12 +9,50 @@
                 </div>
             </td>
             <td style="width: 50%;">
-                <%= render 'form' %>
+                <%= form_for @group, :url => {:action => 'create'} do |f| %>
+                    <% if @group.errors.any? %>
+                        <div id="error_explanation">
+                            <h4>
+                                <%= pluralize(@group.errors.count, "error") %> prohibited
+                                this article from being saved:
+                            </h4>
+                            <ul>
+                                <% @group.errors.full_messages.each do |msg| %>
+                                    <li><%= msg %></li>
+                                <% end %>
+                            </ul>
+                        </div>
+                    <% end %>
+
+                    <p id="nm">
+                        <%= f.label :name %><br>
+                        <%= f.text_field :name %>
+                    </p>
+
+                    <p id="cd">
+                        <%= f.label :cords, 'Coordinates (this field is generated via export!)' %><br>
+                        <input type="text" name="group[cords]" id="group_cords" value="<%= @group.cords %>">
+                    </p>
+                    <br>
+                    <p id="mm">
+                        <%= f.label :members %><br>
+                        <%= f.text_field :members %>
+                    </p>
+
+                    <p id="lk">
+                        <%= f.label :link, 'Link to group' %><br>
+                        <%= f.text_field :link %>
+                    </p>
+
+                    <p>
+                        <%= f.submit class: 'waves-effect waves-light btn' %>
+                    </p>
+                <% end %>
             </td>
         </tr>
     </table>
 </div>
-<%= link_to 'Back', groups_path %>
+<%= link_to 'Back', admin_index_path %>
 <script>
     mapboxgl.accessToken = 'pk.eyJ1Ijoic3ludGFmIiwiYSI6ImNqM2Z2bzZhbTAxZWwycW4wcmI5cjk4MW0ifQ.YOd5yuJfLARC2oOfqY-KoA'
     var map = new mapboxgl.Map({
