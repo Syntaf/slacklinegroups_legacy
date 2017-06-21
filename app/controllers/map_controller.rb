@@ -36,13 +36,15 @@ class MapController < ApplicationController
         @geojson = Array.new
 
         @groups.each do |group|
-            @geojson << {
-                type: 'Feature',
-                geometry: {
-                    type: 'Point',
-                    coordinates: centroid(group.cords)
+            if !group.cords.empty?
+                @geojson << {
+                    type: 'Feature',
+                    geometry: {
+                        type: 'Point',
+                        coordinates: centroid(group.cords)
+                    }
                 }
-            }
+            end
         end
 
         respond_to do |format|
