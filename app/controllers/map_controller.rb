@@ -12,17 +12,19 @@ class MapController < ApplicationController
         @geojson = Array.new
 
         @groups.each do |group|
-            @geojson << {
-                type: 'Feature',
-                geometry: {
-                    type: 'Polygon',
-                    coordinates: group.cords
-                },
-                properties: {
-                    name: group.name,
-                    members: group.members
+            if !group.cords.empty?
+                @geojson << {
+                    type: 'Feature',
+                    geometry: {
+                        type: 'Polygon',
+                        coordinates: group.cords
+                    },
+                    properties: {
+                        name: group.name,
+                        members: group.members
+                    }
                 }
-            }
+            end
         end
 
         respond_to do |format|
