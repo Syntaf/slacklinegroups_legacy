@@ -38,12 +38,12 @@ class MapController < ApplicationController
         @geojson = Array.new
 
         @groups.each do |group|
-            if !group.cords.empty?
+            if group.cords? || (group.centroid_lat? && group.centroid_lon?)
                 @geojson << {
                     type: 'Feature',
                     geometry: {
                         type: 'Point',
-                        coordinates: centroid(group.cords)
+                        coordinates: group.cords? ? centroid(group.cords) : [group.centroid_lon.to_f, group.centroid_lat.to_f]
                     }
                 }
             end
