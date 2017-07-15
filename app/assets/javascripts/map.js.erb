@@ -2,17 +2,35 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoic3ludGFmIiwiYSI6ImNqM2Z2bzZhbTAxZWwycW4wcmI5c
 
 var zoomThresh = 4.5;
 var isPointZoom = false;
-var point;
+var clickEvent = null;
 
 var createPopUp = function(f) {
-    return "<p class=\"title\">" + f[0].properties.name + 
-    "</p><hr><p class=\"label\">Last recorded member count:</p><p class=\"members\"> " + f[0].properties.members + 
-    "</p><a href=\"\">Visit on Facebook</a>";
+return  "<div class=\"title-bar\">"                                         +
+            "<p class=\"title\">"+f[0].properties.name+"e</p>"              +
+        "</div>"                                                            +
+        "<div class=\"content\">"                                           +
+            "<table>"                                                       +
+                "<tr>"                                                      +
+                    "<td class=\"label\">Page Type:</td>"                   +
+                    "<td class=\"value\">"+f[0].properties.type+"</td>"     +
+                "</tr>"                                                     +
+                "<tr>"                                                      +
+                    "<td class=\"label\">Member Count(Estimate)</td>"       +
+                    "<td class=\"value\">"+f[0].properties.members+"</td>"  +
+                "</tr>"                                                     +
+            "</table>"                                                      +
+            "<div class=\"no-img\">"                                        +
+                "<p>Photos Coming Soon :)</p>"                              +
+            "</div>"                                                        +
+        "</div>"                                                            +
+        "<a class=\"bottom left\" "                                         +
+            "href=\""+f[0].properties.link+"\">Visit on Facebook</a>"       +
+        "<a class=\"bottom right\">See Something Wrong?</a>"
 }
 
-var getCords = function(f) {
+var getCords = function(f, offset=0) {
     var x = f[0].geometry.coordinates;
-    x[1] += 0.04;
+    x[1] += offset;
     return x;
 }
 
@@ -108,30 +126,39 @@ $(document).ready(function() {
             });
 
             map.on('click', 'unclustered-point', function(e) {
-                point = e;
-                console.log(e);
+                var cover = $.ajax({
+                    url: '/map/cover',
+                    dataType: 'json'
+                });
+                cover.done(function(log) {
+                    console.log(log);
+                });
+
+                clickEvent = e;
+                var lngLat = getCords(e.features);
                 map.flyTo({
-                    center: e.lngLat,
+                    center: {
+                        lng: lngLat[0],
+                        lat: lngLat[1]
+                    },
                     zoom: 7.7
                 });
             });
 
             map.on('zoomend', 'unclustered-point', function() {
-                console.log('done');
-                if (point)
+                if (clickEvent)
                 {
                     new mapboxgl.Popup()
-                        .setLngLat(getCords(point.features))
-                        .setHTML(createPopUp(point.features))
+                        .setLngLat(getCords(clickEvent.features, 0.04))
+                        .setHTML(createPopUp(clickEvent.features))
                         .addTo(map);
-                    point = null;
+                    clickEvent = null;
                 }
 
             });
 
             map.on('click', 'group-clusters', function(e) {
-                isPointZoom = false;
-                point = null;
+                clickEvent = null;
                 if(e.features[0].properties.point_count > 10) {
                     map.flyTo({
                         center: e.lngLat,
@@ -169,54 +196,6 @@ $(document).ready(function() {
             });
 
         });
-        // geoJSON.done(function(data) {
-        //     map.addLayer({
-        //         'id': 'group-locations',
-        //         'type': 'fill',
-        //         'source': {
-        //             type: 'geojson',
-        //             data: {
-        //                 type: 'FeatureCollection',
-        //                 features: data
-        //             }
-        //         },
-        //         'layout': {
-        //             'visibility': 'none'
-        //         },
-        //         'paint': {
-        //             'fill-outline-color': '#FF1E1E',
-        //             'fill-color': '#FE5F55',
-        //             'fill-opacity': 0.8
-        //         }
-        //     });
-
-        //     // When a click event occurs on a feature in the states layer, open a popup at the
-        //     // location of the click, with description HTML from its properties.
-        //     map.on('click', 'group-locations', function (e) {
-        //         new mapboxgl.Popup()
-        //             .setLngLat(e.lngLat)
-        //             .setHTML(createPopUp(e.features))
-        //             .addTo(map);
-        //     });
-
-        //     // Change the cursor to a pointer when the mouse is over the states layer.
-        //     map.on('mouseenter', 'group-locations', function () {
-        //         map.getCanvas().style.cursor = 'pointer';
-        //     });
-
-        //     // Change it back to a pointer when it leaves.
-        //     map.on('mouseleave', 'group-locations', function () {
-        //         map.getCanvas().style.cursor = '';
-        //     });
-
-        //     map.on('zoom', function() {
-        //         if(map.getZoom() < zoomThresh) {
-        //             map.setLayoutProperty('group-locations', 'visibility', 'none');
-        //         } else {
-        //             map.setLayoutProperty('group-locations', 'visibility', 'visible');
-        //         }
-        //     });
-        // });
     });
 });
 

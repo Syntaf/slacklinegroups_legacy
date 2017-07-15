@@ -1,4 +1,5 @@
 require 'json'
+require 'net/http'
 
 class MapController < ApplicationController
     before_action :authenticate
@@ -7,12 +8,29 @@ class MapController < ApplicationController
         p Rails.application.routes.named_routes.helper_names
     end
 
+    def cover
+        url = URI.parse('https://graph.facebook.com/798358306957010?fields=cover&access_token=207399369789132|df69dfde8f407634938eb426cd932c1d')
+        req = Net::HTTP::Get.new(url.to_s)
+        res = Net::HTTP.start(url.host, url.port, :use_ssl => true) { |http|
+            http.request(req)
+        }
+        p res;
+        respond_to do |format|
+            format.html
+            format.json { render :json => res.body }
+        end
+    end
+
     def groups
         @groups = Group.all
         @geojson = Array.new
 
         @groups.each do |group|
             if !group.cords.empty?
+                type = "Group"
+                if !group.members
+                    type = "Page"
+                end
                 @geojson << {
                     type: 'Feature',
                     geometry: {
@@ -21,7 +39,8 @@ class MapController < ApplicationController
                     },
                     properties: {
                         name: group.name,
-                        members: group.members
+                        members: group.members,
+                        type: type
                     }
                 }
             end
