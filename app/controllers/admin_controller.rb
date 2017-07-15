@@ -1,5 +1,5 @@
 class AdminController < ApplicationController
-    before_action :authenticate
+    # before_action :authenticate
     
     def new
         @group = Group.new
@@ -55,7 +55,7 @@ class AdminController < ApplicationController
         end
 
         def group_params
-            params.require(:group).permit(:name, :members, :fb_group).merge({cords: cords_to_a})
+            params.require(:group).permit(:name, :members, :fb_group)
         end
 
         def authenticate

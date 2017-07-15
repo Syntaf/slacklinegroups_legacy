@@ -23,8 +23,8 @@ return  "<div class=\"title-bar\">"                                         +
                 "<p>Photos Coming Soon :)</p>"                              +
             "</div>"                                                        +
         "</div>"                                                            +
-        "<a class=\"bottom left\" "                                         +
-            "href=\""+f[0].properties.link+"\">Visit on Facebook</a>"       +
+        "<a class=\"bottom left\" target=\"_blank\" "                       +
+            "href=\""+f[0].properties.link+"\">Go to Group</a>"             +
         "<a class=\"bottom right\">See Something Wrong?</a>"
 }
 
@@ -148,6 +148,7 @@ $(document).ready(function() {
             map.on('zoomend', 'unclustered-point', function() {
                 if (clickEvent)
                 {
+                    console.log(clickEvent);
                     new mapboxgl.Popup()
                         .setLngLat(getCords(clickEvent.features, 0.04))
                         .setHTML(createPopUp(clickEvent.features))

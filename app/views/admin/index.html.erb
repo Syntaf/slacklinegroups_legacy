@@ -26,9 +26,9 @@
         <td style="width: 3%;"><%= group.centroid_lat %></td>
         <td style="width: 3%;"><%= group.centroid_lon %></td>
         <td style="width: 5%; text-align: center;"><%= group.members %></td>
-        <td style="width: 10%;"><%= group.fb_group %></td>
-        <td style="width: 10%;"><%= group.fb_page %></td>
-        <td style="width: 10%;"><%= group.website %></td>
+        <td style="width: 10%;"><a target="_blank" href="<%= group.fb_group %>"><%= group.fb_group %></a></td>
+        <td style="width: 10%;"><a target="_blank" href="<%= group.fb_page %>"><%= group.fb_page %></a></td>
+        <td style="width: 10%;"><a target="_blank" href="<%= group.website %>"><%= group.website %></a></td>
         <td style="width: 3%;"><%= link_to 'Show', admin_path(group) %></td>
         <td style="width: 3%;"><%= link_to 'Edit', edit_admin_path(group) %></td>
         <td style="width: 3%;"><%= link_to 'Delete', admin_path(group),

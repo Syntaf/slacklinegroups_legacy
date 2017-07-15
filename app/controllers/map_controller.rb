@@ -2,7 +2,7 @@ require 'json'
 require 'net/http'
 
 class MapController < ApplicationController
-    before_action :authenticate
+    # before_action :authenticate
 
     def index
         p Rails.application.routes.named_routes.helper_names
@@ -27,10 +27,6 @@ class MapController < ApplicationController
 
         @groups.each do |group|
             if !group.cords.empty?
-                type = "Group"
-                if !group.members
-                    type = "Page"
-                end
                 @geojson << {
                     type: 'Feature',
                     geometry: {
@@ -39,8 +35,7 @@ class MapController < ApplicationController
                     },
                     properties: {
                         name: group.name,
-                        members: group.members,
-                        type: type
+                        members: group.members
                     }
                 }
             end
@@ -58,6 +53,19 @@ class MapController < ApplicationController
 
         @groups.each do |group|
             if group.cords? || (group.centroid_lat? && group.centroid_lon?)
+                type = "Group"
+                members = group.members
+                link = group.fb_group
+                if !link
+                    type = "Page"
+                    members = "N/A"
+                    link = group.fb_page
+                end
+                if !link
+                    type = "Website"
+                    members = "N/A"
+                    link = group.website
+                end
                 @geojson << {
                     type: 'Feature',
                     geometry: {
@@ -66,7 +74,9 @@ class MapController < ApplicationController
                     },
                     properties: {
                         name: group.name,
-                        members: group.members
+                        members: members,
+                        type: type,
+                        link: link
                     }
                 }
             end

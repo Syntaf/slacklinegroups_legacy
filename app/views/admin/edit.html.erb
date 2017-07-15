@@ -47,11 +47,26 @@
                         <%= f.text_field :members %>
                     </p>
 
+                    <% if :fb_group %>
                     <p id="lk">
                         <%= f.label :link, 'Link to group' %><br>
-                        <%= f.text_field :link %>
+                        <%= f.text_field :fb_group %>
                     </p>
+                    <% end %>
+                    <br>
+                    <% if :fb_page %>
+                    <p id="lk">
+                        <%= f.label :link, 'Link to page' %><br>
+                        <%= f.text_field :fb_page %>
+                    </p>
+                    <% end %>
 
+                    <% if :website %>
+                    <p id="lk">
+                        <%= f.label :link, 'Link to group' %><br>
+                        <%= f.text_field :website %>
+                    </p>
+                    <% end %>
                     <p>
                         <%= f.submit class: 'waves-effect waves-light btn' %>
                     </p>
