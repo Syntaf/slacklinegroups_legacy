@@ -44,6 +44,10 @@ class MapController < ApplicationController
                     geometry: {
                         type: 'Point',
                         coordinates: group.cords? ? centroid(group.cords) : [group.centroid_lon.to_f, group.centroid_lat.to_f]
+                    },
+                    properties: {
+                        name: group.name,
+                        members: group.members
                     }
                 }
             end

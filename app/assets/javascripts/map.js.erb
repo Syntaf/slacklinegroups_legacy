@@ -1,11 +1,19 @@
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3ludGFmIiwiYSI6ImNqM2Z2bzZhbTAxZWwycW4wcmI5cjk4MW0ifQ.YOd5yuJfLARC2oOfqY-KoA'
 
-zoomThresh = 4.5;
+var zoomThresh = 4.5;
+var isPointZoom = false;
+var point;
 
 var createPopUp = function(f) {
     return "<p class=\"title\">" + f[0].properties.name + 
     "</p><hr><p class=\"label\">Last recorded member count:</p><p class=\"members\"> " + f[0].properties.members + 
     "</p><a href=\"\">Visit on Facebook</a>";
+}
+
+var getCords = function(f) {
+    var x = f[0].geometry.coordinates;
+    x[1] += 0.04;
+    return x;
 }
 
 var geoJSON = $.ajax({
@@ -55,34 +63,22 @@ $(document).ready(function() {
                         property: 'point_count',
                         type: 'interval',
                         stops: [
-                            [0, "#F0CF65"],
-                            [5, "#F9564F"],
-                            [15, "#5B507A"],
-                            [25, "#4CE0B3"],
-                            [50, "#F45B69"],
+                            [0, "#51bbd6"],
+                            [5, "#9A7197"],
+                            [10, "#3DDC97"],
+                            [25, "#f1f075"],
+                            [50, "#f28cb1"],
                         ]
                     },
                     "circle-radius": {
                         property: "point_count",
                         type: "interval",
                         stops: [
-                            [0, 15],
-                            [2, 24],
+                            [0, 20],
+                            [5, 20],
                             [10, 30],
-                            [25, 30],
-                            [50, 35]
-                            // [1, 16],
-                            // [20, 25],
-                            // [40, 27.5],
-                            // [50, 30],
-                            // [60, 32.5],
-                            // [70, 35],
-                            // [80, 37.5],
-                            // [90, 40],
-                            // [100, 42.5],
-                            // [120, 45],
-                            // [140, 47.5],
-                            // [160, 50]
+                            [25, 35],
+                            [50, 40]
                         ]
                     }
                 }
@@ -102,28 +98,40 @@ $(document).ready(function() {
 
             map.addLayer({
                 id: "unclustered-point",
-                type: "circle",
-                source: 'group-points',
-                filter: ["!has", "point_count"],
-                paint: {
-                    "circle-color": "#11b4da",
-                    "circle-radius": 15
-                },
-            });
-
-            map.addLayer({
-                id: "cluster-noncount",
                 type: "symbol",
                 source: 'group-points',
                 filter: ["!has", "point_count"],
                 layout: {
-                    "text-field": "1",
-                    "text-font": ["DIN Offc Pro Medium", "Arial Unicode MS Bold"],
-                    "text-size": 10
+                    'icon-image': 'slackgroup',
+                    'icon-size': 1
                 }
             });
 
+            map.on('click', 'unclustered-point', function(e) {
+                point = e;
+                console.log(e);
+                map.flyTo({
+                    center: e.lngLat,
+                    zoom: 7.7
+                });
+            });
+
+            map.on('zoomend', 'unclustered-point', function() {
+                console.log('done');
+                if (point)
+                {
+                    new mapboxgl.Popup()
+                        .setLngLat(getCords(point.features))
+                        .setHTML(createPopUp(point.features))
+                        .addTo(map);
+                    point = null;
+                }
+
+            });
+
             map.on('click', 'group-clusters', function(e) {
+                isPointZoom = false;
+                point = null;
                 if(e.features[0].properties.point_count > 10) {
                     map.flyTo({
                         center: e.lngLat,
@@ -142,12 +150,7 @@ $(document).ready(function() {
                 }
             });
 
-            map.on('click', 'unclustered-point', function(e) {
-                map.flyTo({
-                    center: e.lngLat,
-                    zoom: 7.7
-                });
-            });
+
 
             map.on('mouseenter', 'group-clusters', function () {
                 map.getCanvas().style.cursor = 'pointer';
@@ -165,19 +168,6 @@ $(document).ready(function() {
                 map.getCanvas().style.cursor = '';
             });
 
-            // map.on('zoom', function() {
-            //     if(map.getZoom() >= zoomThresh) {
-            //         map.setLayoutProperty('group-clusters', 'visibility', 'none');
-            //         map.setLayoutProperty('cluster-count', 'visibility', 'none');
-            //         map.setLayoutProperty('unclustered-point', 'visibility', 'none');
-            //         map.setLayoutProperty('cluster-noncount', 'visibility', 'none');
-            //     } else { 
-            //         map.setLayoutProperty('group-clusters', 'visibility', 'visible');
-            //         map.setLayoutProperty('cluster-count', 'visibility', 'visible');
-            //         map.setLayoutProperty('unclustered-point', 'visibility', 'visible');
-            //         map.setLayoutProperty('cluster-noncount', 'visibility', 'visible');
-            //     }
-            // });
         });
         // geoJSON.done(function(data) {
         //     map.addLayer({
