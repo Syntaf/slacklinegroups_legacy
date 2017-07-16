@@ -25,7 +25,7 @@ class AdminController < ApplicationController
         @group = Group.find(params[:id])
 
         if @group.update(group_params)
-            redirect_to admin_path(@group)
+            redirect_to admin_index_path
         else
             render 'edit'
         end
@@ -55,7 +55,7 @@ class AdminController < ApplicationController
         end
 
         def group_params
-            params.require(:group).permit(:name, :members, :fb_group)
+            params.require(:group).permit(:name, :members, :centroid_lat, :centroid_lon, :fb_group, :fb_page, :website)
         end
 
         def authenticate

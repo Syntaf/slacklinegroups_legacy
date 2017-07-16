@@ -20,7 +20,7 @@
     </tr>
 
     <% @groups.each do |group| %>
-    <tr>
+    <tr <%= if group.fb_group != nil && !group.fb_page && !group.website && (!group.centroid_lon || !group.centroid_lat || !group.members); "class=red-out"; end %>>
         <td style="width: 10%;"><%= group.name %></td>
         <td style="width: 5%;"><%= group.cords %></td>
         <td style="width: 3%;"><%= group.centroid_lat %></td>

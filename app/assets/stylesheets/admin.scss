@@ -10,6 +10,9 @@ body {
     max-width: 1200px;
     margin: 0 auto;
 }
+.red-out {
+    background-color: #f4bcbc;
+}
 #map {
     height: 400px;
     width: 100%;
@@ -60,6 +63,9 @@ td {
     #nm, #cd, #mm, #lk {
         display: inline-block;
         margin: 0;
+    }
+    #cd {
+        width: 25%;
     }
     label {
         font-weight: bold;
