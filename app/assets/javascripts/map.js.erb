@@ -6,7 +6,7 @@ var clickEvent = null;
 
 var createPopUp = function(f) {
 return  "<div class=\"title-bar\">"                                         +
-            "<p class=\"title\">"+f[0].properties.name+"e</p>"              +
+            "<p class=\"title\">"+f[0].properties.name+"</p>"              +
         "</div>"                                                            +
         "<div class=\"content\">"                                           +
             "<table>"                                                       +
@@ -58,6 +58,41 @@ $(document).ready(function() {
         style: 'mapbox://styles/syntaf/cj3rys2fx000q2qodb7zlbh2v'
     });
 
+    function unclusteredPointClicked(e)
+    {
+        console.log(e);
+        clickEvent = e;
+        // if (map.getZoom() < 7.7) {
+        //     var lngLat = getCords(e.features);
+        //     map.flyTo({
+        //         center: {
+        //             lng: lngLat[0],
+        //             lat: lngLat[1]
+        //         },
+        //         zoom: 7.7
+        //     });
+        // } else {
+            new mapboxgl.Popup()
+                .setLngLat(getCords(clickEvent.features, 0))
+                .setHTML(createPopUp(clickEvent.features))
+                .addTo(map);
+            clickEvent = null;
+        //}
+    }
+
+    function unclusteredPointZoomend(e)
+    {
+        if (clickEvent)
+        {
+            console.log(clickEvent);
+            new mapboxgl.Popup()
+                .setLngLat(getCords(clickEvent.features, 0.04))
+                .setHTML(createPopUp(clickEvent.features))
+                .addTo(map);
+            clickEvent = null;
+        }
+    }
+
     map.on('load', function () {
         geoPointJSON.done(function(data) {
             map.addSource('group-points', {
@@ -69,7 +104,15 @@ $(document).ready(function() {
                 cluster: true,
                 clusterMaxZoom: 14,
                 clusterRadius: 35
-            })
+            });
+
+            map.addSource('ungrouped-points', {
+                type: 'geojson',
+                data: {
+                    type: 'FeatureCollection',
+                    features: data
+                }
+            });
 
             map.addLayer({
                 id: 'group-clusters',
@@ -115,48 +158,30 @@ $(document).ready(function() {
             });
 
             map.addLayer({
-                id: "unclustered-point",
+                id: "unclustered-local-point",
                 type: "symbol",
                 source: 'group-points',
-                filter: ["!has", "point_count"],
+                filter: ["all", ["!has", "point_count"], ["==", "isRegional", false]],
                 layout: {
                     'icon-image': 'slackgroup',
                     'icon-size': 1
                 }
             });
+            map.on('click', 'unclustered-local-point', unclusteredPointClicked);
+            map.on('zoomend', 'unclustered-local-point', unclusteredPointZoomend);
 
-            map.on('click', 'unclustered-point', function(e) {
-                var cover = $.ajax({
-                    url: '/map/cover',
-                    dataType: 'json'
-                });
-                cover.done(function(log) {
-                    console.log(log);
-                });
-
-                clickEvent = e;
-                var lngLat = getCords(e.features);
-                map.flyTo({
-                    center: {
-                        lng: lngLat[0],
-                        lat: lngLat[1]
-                    },
-                    zoom: 7.7
-                });
-            });
-
-            map.on('zoomend', 'unclustered-point', function() {
-                if (clickEvent)
-                {
-                    console.log(clickEvent);
-                    new mapboxgl.Popup()
-                        .setLngLat(getCords(clickEvent.features, 0.04))
-                        .setHTML(createPopUp(clickEvent.features))
-                        .addTo(map);
-                    clickEvent = null;
+            map.addLayer({
+                id: "unclustered-regional-point",
+                type: "symbol",
+                source: 'group-points',
+                filter: ["all", ["!has", "point_count"], ["==", "isRegional", true]],
+                layout: {
+                    'icon-image': 'regionalGroup',
+                    'icon-size': 1
                 }
-
             });
+            map.on('click', 'unclustered-regional-point', unclusteredPointClicked);
+            map.on('zoomend', 'unclustered-regional-point', unclusteredPointZoomend);
 
             map.on('click', 'group-clusters', function(e) {
                 clickEvent = null;
@@ -178,8 +203,6 @@ $(document).ready(function() {
                 }
             });
 
-
-
             map.on('mouseenter', 'group-clusters', function () {
                 map.getCanvas().style.cursor = 'pointer';
             });
@@ -188,11 +211,11 @@ $(document).ready(function() {
                 map.getCanvas().style.cursor = '';
             });
 
-            map.on('mouseenter', 'unclustered-point', function () {
+            map.on('mouseenter', 'unclustered-local-point', function () {
                 map.getCanvas().style.cursor = 'pointer';
             });
 
-            map.on('mouseleave', 'unclustered-point', function () {
+            map.on('mouseleave', 'unclustered-local-point', function () {
                 map.getCanvas().style.cursor = '';
             });
 

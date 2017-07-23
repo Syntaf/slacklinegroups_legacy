@@ -55,7 +55,7 @@ class AdminController < ApplicationController
         end
 
         def group_params
-            params.require(:group).permit(:name, :members, :centroid_lat, :centroid_lon, :fb_group, :fb_page, :website)
+            params.require(:group).permit(:name, :members, :centroid_lat, :centroid_lon, :fb_group, :fb_page, :website, :isRegional)
         end
 
         def authenticate

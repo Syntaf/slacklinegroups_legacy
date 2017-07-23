@@ -1,4 +1,4 @@
-// Place all the styles related to the Map controller here.
+// Place all the styles related to the regionalmap controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 .mapboxgl-popup-content {
@@ -83,7 +83,7 @@
     height: 100vh;
     width: 100vw;
 }
-.card {
+.card-search {
     z-index: 2;
     top: 10px;
     left: calc(10px + 0.5rem);
@@ -99,11 +99,7 @@
     margin-top: 16px;
     cursor: pointer;
 }
-.zoom-out {
-    position: absolute;
-    top: 25px;
-    left: calc(370px + 0.5rem);
-}
+
 #search-field {
     position: absolute;
     margin-top: -1px;
@@ -147,9 +143,14 @@
         text-align: center;
     }
     li {
+        a:hover {
+            background-color: transparent;
+            text-decoration: none;
+        }
         text-align: center;
         display: inline-block;
         a {
+
             padding: 0;
             i {
                 font-size: 24px;

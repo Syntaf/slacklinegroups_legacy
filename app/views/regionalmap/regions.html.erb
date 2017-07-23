@@ -1,10 +1,9 @@
 <div id="map">
-    <div class="search-bar card">
+    <div class="search-bar card-search card">
         <i class="fa fa-bars menu button-collapse" data-activates="slide-out" aria-hidden="true"></i>
         <input placeholder="Search Groups" type="text" id="search-field">
         <i class="fa fa-search search" aria-hidden="true"></i>
     </div>
-    <a class="zoom-out btn-floating btn-small waves-effect waves-light red"><i class="fa fa-search-minus" aria-hidden="true"></i></a>
 </div>
 <ul id="slide-out" class="side-nav">
     <li>
@@ -16,6 +15,10 @@
     <li><a target="_blank" href="https://www.facebook.com/groups/slackchat/"><i class="fa fa-comments" aria-hidden="true"></i> Slackchat</a></li>
     <li><a target="_blank" href="https://slackmap.com/"><i class="fa fa-globe" aria-hidden="true"></i> Find slackline spots</a></li>
     <hr>
+    <li>
+        <%= link_to "regions" do %>
+            <i class="fa fa-search" aria-hidden="true"></i> Search Regions Instead
+        <% end %>
     <li><a target="_blank" href="https://slackline.us/what-is-slacklining/"><i class="fa fa-question-circle" aria-hidden="true"></i> What's Slacklining?</a></li>
     <li><a href="http://localhost:3000/about"><i class="fa fa-code" aria-hidden="true"></i> About</a></li>
     <div class="bottom-bar">

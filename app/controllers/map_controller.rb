@@ -56,12 +56,12 @@ class MapController < ApplicationController
                 type = "Group"
                 members = group.members
                 link = group.fb_group
-                if !link
+                if !link || link.blank?
                     type = "Page"
                     members = "N/A"
                     link = group.fb_page
                 end
-                if !link
+                if !link || link.blank?
                     type = "Website"
                     members = "N/A"
                     link = group.website
@@ -76,7 +76,8 @@ class MapController < ApplicationController
                         name: group.name,
                         members: members,
                         type: type,
-                        link: link
+                        link: link,
+                        isRegional: group.isRegional
                     }
                 }
             end

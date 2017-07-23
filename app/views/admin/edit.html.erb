@@ -62,27 +62,35 @@
 
                     <% if :fb_group %>
                     <p id="lk">
-                        <%= f.label :link, 'Link to group' %><br>
+                        <%= f.label :fb_group, 'Link to group' %><br>
                         <%= f.text_field :fb_group %>
                     </p>
                     <% end %>
                     <br>
                     <% if :fb_page %>
                     <p id="lk">
-                        <%= f.label :link, 'Link to page' %><br>
+                        <%= f.label :fb_page, 'Link to page' %><br>
                         <%= f.text_field :fb_page %>
                     </p>
                     <% end %>
 
                     <% if :website %>
                     <p id="lk">
-                        <%= f.label :link, 'Link to website' %><br>
+                        <%= f.label :website, 'Link to website' %><br>
                         <%= f.text_field :website %>
                     </p>
                     <% end %>
+                    
+                    <br>
+                    <p>
+                        <%= f.check_box :isRegional, id:'groupRegional' %>
+                        <%= f.label 'Regional?', for: 'groupRegional', id: 'groupRegional' %>
+                    </p>
+
                     <p>
                         <%= f.submit class: 'waves-effect waves-light btn' %>
                     </p>
+
                 <% end %>
             </td>
         </tr>
