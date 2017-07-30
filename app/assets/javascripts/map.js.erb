@@ -55,7 +55,7 @@ $(document).ready(function() {
         center: [0, 35],
         zoom: 1.75,
         container: 'map',
-        style: 'mapbox://styles/syntaf/cj3rys2fx000q2qodb7zlbh2v'
+        style: 'mapbox://styles/syntaf/cj5pmkvmt11vb2so0k2foq0i9'
     });
 
     function unclusteredPointClicked(e)
@@ -92,6 +92,16 @@ $(document).ready(function() {
             clickEvent = null;
         }
     }
+
+    $(".zoom-out").click(function(){
+        map.flyTo({
+            center: {
+                lng: 0,
+                lat: 35
+            },
+            zoom: 1.75
+        });
+    });
 
     map.on('load', function () {
         geoPointJSON.done(function(data) {

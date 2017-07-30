@@ -29,24 +29,60 @@
                         <%= f.text_field :name %>
                     </p>
 
+                    <!-- DEPRECATED FOR NOW!
                     <p id="cd">
-                        <%= f.label :cords, 'Coordinates (this field is generated via export!)' %><br>
+                        <%= f.label :cords, 'Coordinates (deprecated for now!)' %><br>
                         <input type="text" name="group[cords]" id="group_cords" value="<%= @group.cords %>">
                     </p>
+                    -->
+
+                    <p id="cd">
+                        <%= f.label :centroid_lat, 'Latitude' %><br>
+                        <%= f.text_field :centroid_lat %>
+                    </p>
+                    <p id="cd">
+                        <%= f.label :centroid_lon, 'Longitude' %><br>
+                        <%= f.text_field :centroid_lon %>
+                    </p>
+
                     <br>
+
                     <p id="mm">
                         <%= f.label :members %><br>
                         <%= f.text_field :members %>
                     </p>
 
+                    <% if :fb_group %>
                     <p id="lk">
-                        <%= f.label :link, 'Link to group' %><br>
-                        <%= f.text_field :link %>
+                        <%= f.label :fb_group, 'Link to group' %><br>
+                        <%= f.text_field :fb_group %>
+                    </p>
+                    <% end %>
+                    <br>
+                    <% if :fb_page %>
+                    <p id="lk">
+                        <%= f.label :fb_page, 'Link to page' %><br>
+                        <%= f.text_field :fb_page %>
+                    </p>
+                    <% end %>
+
+                    <% if :website %>
+                    <p id="lk">
+                        <%= f.label :website, 'Link to website' %><br>
+                        <%= f.text_field :website %>
+                    </p>
+                    <% end %>
+                    
+                    <br>
+                    <p>
+                        <%= f.check_box :isRegional, id:'groupRegional' %>
+                        <%= f.label 'Regional?', for: 'groupRegional', id: 'groupRegional' %>
                     </p>
 
                     <p>
                         <%= f.submit class: 'waves-effect waves-light btn' %>
                     </p>
+
                 <% end %>
             </td>
         </tr>
@@ -56,21 +92,86 @@
 <script>
     mapboxgl.accessToken = 'pk.eyJ1Ijoic3ludGFmIiwiYSI6ImNqM2Z2bzZhbTAxZWwycW4wcmI5cjk4MW0ifQ.YOd5yuJfLARC2oOfqY-KoA'
     var map = new mapboxgl.Map({
-        center: [-90, 45],
-        zoom: 2.5,
+        center: [-20, 45],
+        zoom: 1.5,
         container: 'map',
         style: 'mapbox://styles/syntaf/cj3rys2fx000q2qodb7zlbh2v'
     });
     var draw = new MapboxDraw({
         displayControlsDefault: false,
         controls: {
-            polygon: true,
+            point: true,
             trash: true
         }
     });
     map.addControl(draw);
+    var lon = $('#group_centroid_lon').val();
+    var lat = $('#group_centroid_lat').val();
+    console.log(lon, lat);
+    if(lon && lat) {
+        map.on('load', function() {
+            map.addLayer({
+                id: 'group-location',
+                type: 'circle',
+                source: {
+                    type: 'geojson',
+                    data: {
+                        type: 'Feature',
+                        geometry: {
+                            type: 'Point',
+                            coordinates: [lon, lat]
+                        }
+                    }
+                },
+                layout: {},
+                paint: {
+                    "circle-radius": 6,
+                    "circle-color": "#B42222"
+                }
+            });
+        });
+
+        $('.mapbox-gl-draw_trash').click(function() {
+            map.setLayoutProperty('group-location', 'visibility', 'none');
+            $('#group_centroid_lon').val('');
+            $('#group_centroid_lat').val('');
+        });
+    }
+    // var cords = $('#group_cords').val();
+    // // if cords are non-empty, we should display that polygon
+    // if(cords !== '[]') {
+    //     var arr = JSON.parse(cords);
+    //     map.on('load', function() {
+    //         map.addLayer({
+    //             id: 'group-location',
+    //             type: 'fill',
+    //             source: {
+    //                 type: 'geojson',
+    //                 data: {
+    //                     type: 'Feature',
+    //                     geometry: {
+    //                         type: 'Polygon',
+    //                         coordinates: arr
+    //                     }
+    //                 }
+    //             },
+    //             layout: {},
+    //             paint: {
+    //                 'fill-outline-color': '#FF1E1E',
+    //                 'fill-color': '#FE5F55',
+    //                 'fill-opacity': 0.8
+    //             }
+    //         });
+
+    //         $('.mapbox-gl-draw_trash').click(function() {
+    //             map.setLayoutProperty('group-location', 'visibility', 'none');
+    //             $('#group_cords').val('');
+    //         });
+    //     });
+    // }
     $('#export').click(function() {
         var data = draw.getAll();
-        $('#group_cords').val(JSON.stringify(data.features[0].geometry.coordinates));
+        $('#group_centroid_lat').val(data.features[0].geometry.coordinates[1]);
+        $('#group_centroid_lon').val(data.features[0].geometry.coordinates[0]);
     });
 </script>
