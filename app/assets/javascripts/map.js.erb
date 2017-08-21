@@ -45,6 +45,40 @@ var geoPointJSON = $.ajax({
 });
 
 $(document).ready(function() {
+
+    var availableTags = [
+      "ActionScript",
+      "AppleScript",
+      "Asp",
+      "BASIC",
+      "C",
+      "C++",
+      "Clojure",
+      "COBOL",
+      "ColdFusion",
+      "Erlang",
+      "Fortran",
+      "Groovy",
+      "Haskell",
+      "Java",
+      "JavaScript",
+      "Lisp",
+      "Perl",
+      "PHP",
+      "Python",
+      "Ruby",
+      "Scala",
+      "Scheme"
+    ];
+
+    $( "#search-field" ).autocomplete({
+      source: function(request, response) {
+            var results = $.ui.autocomplete.filter(availableTags, request.term);
+
+            response(results.slice(0, 7));
+        }
+    });
+
     $(".button-collapse").sideNav({
         closeOnClick: true
     });

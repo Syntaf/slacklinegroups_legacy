@@ -157,3 +157,21 @@
         }
     }
 }
+.ui-autocomplete {
+    background-color: #fff;
+    width: 349px;
+    left: calc(10px + 0.5rem) !important;
+    z-index: 100;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+    
+    .ui-menu-item {
+        padding: 10px;
+        padding-left: 50px;
+        border-top: 1px solid #e0e0e0;
+    }
+
+    .ui-menu-item:hover {
+        background-color: #eee;
+        cursor: pointer;
+    }
+}

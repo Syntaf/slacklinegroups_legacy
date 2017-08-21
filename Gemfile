@@ -8,6 +8,7 @@ end
 # material library
 gem 'materialize-sass'
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'font-awesome-rails'
 gem 'seed_dump'
 gem 'figaro'
