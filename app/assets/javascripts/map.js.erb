@@ -65,10 +65,8 @@ $(document).ready(function() {
             response(results.slice(0, 7));
             $('.ui-menu-item-wrapper').click(function() {
                 var slackGroupName = $(this).html();
-                console.log(groupList);
                 for(var i = 0; i < groupList.length; i++) {
                     var group = groupList[i];
-                    console.log(group);
                     if(group.properties.name.toLowerCase() === slackGroupName.toLowerCase()) {
                         unclusteredPointClicked({
                             features: 
@@ -96,7 +94,6 @@ $(document).ready(function() {
 
     function unclusteredPointClicked(e)
     {
-        console.log(e);
         clickEvent = e;
         if (map.getZoom() < 7.7) {
             var lngLat = getCords(e.features);

@@ -21,50 +21,6 @@ class MapController < ApplicationController
         end
     end
 
-    def autocomplete
-        @groups = Group.all
-        @json = Array.new
-
-        @groups.each do |group|
-            @json << {
-                name: group.name,
-                lon: group.centroid_lon,
-                lat: group.centroid_lat
-            }
-        end
-
-        respond_to do |format|
-            format.html
-            format.json { render :json => @json }
-        end
-    end
-
-    def groups
-        @groups = Group.all
-        @geojson = Array.new
-
-        @groups.each do |group|
-            if !group.cords.empty?
-                @geojson << {
-                    type: 'Feature',
-                    geometry: {
-                        type: 'Polygon',
-                        coordinates: group.cords
-                    },
-                    properties: {
-                        name: group.name,
-                        members: group.members
-                    }
-                }
-            end
-        end
-
-        respond_to do |format|
-            format.html
-            format.json { render :json => @geojson }
-        end
-    end
-
     def pointclouds
         @groups = Group.all
         @geojson = Array.new
