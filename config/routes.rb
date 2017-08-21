@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'map/groups'
   get 'map/pointclouds'
   get 'map/cover'
+  get 'map/autocomplete'
   get 'about', to: 'about#index'
   resources :groups
   resources :admin

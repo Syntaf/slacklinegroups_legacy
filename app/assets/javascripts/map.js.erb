@@ -3,6 +3,7 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoic3ludGFmIiwiYSI6ImNqM2Z2bzZhbTAxZWwycW4wcmI5c
 var zoomThresh = 4.5;
 var isPointZoom = false;
 var clickEvent = null;
+var groupNames = null;
 
 var createPopUp = function(f) {
 return  "<div class=\"title-bar\">"                                         +
@@ -44,39 +45,30 @@ var geoPointJSON = $.ajax({
     dataType: 'json'
 });
 
+var groups = $.ajax({
+    url: '/map/autocomplete',
+    dataType: 'json'
+});
+
+var source = [
+    "Apples",
+    "Bad"
+];
+
 $(document).ready(function() {
 
-    var availableTags = [
-      "ActionScript",
-      "AppleScript",
-      "Asp",
-      "BASIC",
-      "C",
-      "C++",
-      "Clojure",
-      "COBOL",
-      "ColdFusion",
-      "Erlang",
-      "Fortran",
-      "Groovy",
-      "Haskell",
-      "Java",
-      "JavaScript",
-      "Lisp",
-      "Perl",
-      "PHP",
-      "Python",
-      "Ruby",
-      "Scala",
-      "Scheme"
-    ];
-
-    $( "#search-field" ).autocomplete({
-      source: function(request, response) {
-            var results = $.ui.autocomplete.filter(availableTags, request.term);
-
+    $("#search-field").prop("disabled", true);
+    $("#search-field").autocomplete({
+        source: function(request, response) {
+            var results = $.ui.autocomplete.filter(groupNames, request.term);
             response(results.slice(0, 7));
         }
+    });
+
+    groups.done(function(groupList) {
+        groupNames = groupList.map(function(group) { return group.name });
+        $(".loader").remove();
+        $("#search-field").prop("disabled", false);
     });
 
     $(".button-collapse").sideNav({
@@ -85,6 +77,7 @@ $(document).ready(function() {
     $("a").click(function() {
         $("#sidenav-overlay").remove();
     });
+    
     var map = new mapboxgl.Map({
         center: [0, 35],
         zoom: 1.75,
