@@ -13,27 +13,65 @@
         </div>
     <% end %>
 
-    <p id="nm">
-        <%= f.label :name %><br>
-        <%= f.text_field :name %>
-    </p>
+    <div class="row">
+        <div class="input-field col s6">
+            <i class="prefix fa fa-id-card"></i>
+            <%= f.text_field :name %>
+            <%= f.label :name %>
+        </div>
 
-    <p id="cd">
-        <%= f.label :cords, 'Coordinates (this field is generated via export!)' %><br>
-        <input type="text" name="group[cords]" id="group_cords" value="<%= @group.cords %>">
-    </p>
-    <br>
-    <p id="mm">
-        <%= f.label :members %><br>
-        <%= f.text_field :members %>
-    </p>
+        <div class="input-field col s6">
+            <i class="prefix fa fa-users"></i>
+            <%= f.text_field :members %>
+            <%= f.label :members, "Member Count" %>
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="input-field col s3">
+            <select>
+                <option value="" disabled selected>Group Type</option>
+                <option value="group">Facebook Group</option>
+                <option value="page">Facebook Page</option>
+                <option value="other">Website/Other</option>
+            </select>
+            <label>Group Type Selection</label>
+        </div>
+
+    </div>
+
+    <%= hidden_field(:centroid_lat, :group_centroid_lat) %>
+    <%= hidden_field(:centroid_lon, :group_centroid_lon) %>
+
+    <% if :fb_group %>
     <p id="lk">
-        <%= f.label :link, 'Link to group' %><br>
-        <%= f.text_field :link %>
+        <%= f.label :fb_group, 'Link to group' %><br>
+        <%= f.text_field :fb_group %>
+    </p>
+    <% end %>
+    <br>
+    <% if :fb_page %>
+    <p id="lk">
+        <%= f.label :fb_page, 'Link to page' %><br>
+        <%= f.text_field :fb_page %>
+    </p>
+    <% end %>
+
+    <% if :website %>
+    <p id="lk">
+        <%= f.label :website, 'Link to website' %><br>
+        <%= f.text_field :website %>
+    </p>
+    <% end %>
+    
+    <br>
+    <p>
+        <%= f.check_box :isRegional, id:'groupRegional' %>
+        <%= f.label 'Regional?', for: 'groupRegional', id: 'groupRegional' %>
     </p>
 
     <p>
         <%= f.submit class: 'waves-effect waves-light btn' %>
     </p>
+
 <% end %>

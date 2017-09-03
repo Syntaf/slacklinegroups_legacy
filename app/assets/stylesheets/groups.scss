@@ -3,8 +3,11 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "materialize/components/color";
 body {
-    @extend .cyan;
-    @extend .lighten-5;
+    // @extend .cyan;
+    // @extend .lighten-5;
+}
+.new-group-title {
+    color: #0097a7;
 }
 .my-container {
     max-width: 1200px;
@@ -26,8 +29,15 @@ td {
     overflow-x: auto;
     white-space: nowrap;
 }
+.prefix {
+    top: 15px;
+    left: 5px;
+}
+.select-dropdown {
+    margin-top: 10px;
+}
 .header {
-    height: 15vh;
+    height: 10vh;
     @extend .cyan;
     @extend .darken-2;
     text-align: center;
