@@ -37,32 +37,26 @@
             </select>
             <label>Group Type Selection</label>
         </div>
-
+        <div class="col s9">
+            <div class="input-field other">
+                <%= f.label :website, 'Link to website' %><br>
+                <%= f.text_field :website %>
+            </div>
+            <div class="input-field fb-group">
+                <%= f.label :fb_group, 'Link to group' %><br>
+                <%= f.text_field :fb_group %>
+            </div>
+            <div class="input-field fb-page">
+                <%= f.label :fb_page, 'Link to page' %><br>
+                <%= f.text_field :fb_page %>
+            </div>
+        </div>
     </div>
 
     <%= hidden_field(:centroid_lat, :group_centroid_lat) %>
     <%= hidden_field(:centroid_lon, :group_centroid_lon) %>
 
-    <% if :fb_group %>
-    <p id="lk">
-        <%= f.label :fb_group, 'Link to group' %><br>
-        <%= f.text_field :fb_group %>
-    </p>
-    <% end %>
-    <br>
-    <% if :fb_page %>
-    <p id="lk">
-        <%= f.label :fb_page, 'Link to page' %><br>
-        <%= f.text_field :fb_page %>
-    </p>
-    <% end %>
 
-    <% if :website %>
-    <p id="lk">
-        <%= f.label :website, 'Link to website' %><br>
-        <%= f.text_field :website %>
-    </p>
-    <% end %>
     
     <br>
     <p>
