@@ -3,12 +3,12 @@
 </div>
 
 <div class="my-container">
-    <%= link_to 'New Group', new_admin_path, :class => "new-group waves-effect waves-light btn" %>
+    <%= link_to 'New Active Group', new_admin_path, :class => "new-group waves-effect waves-light btn" %>
 
     <div class="card">
     <ul id="db-tabs" class="tabs">
-        <li class="tab col s3"><a class="tab-text active" href="#activegroups">Active Groups</a></li>
-        <li class="tab col s3"><a class="tab-text" href="#submittedgroups">Submitted Groups</a></li>
+        <li class="tab col s3"><a class="tab-text" href="#activegroups">Active Groups</a></li>
+        <li class="tab col s3"><a class="tab-text active" href="#submittedgroups">Submitted Groups</a></li>
     </ul>
     <div id="activegroups" class="col s12">
         <table class="bordered highlight">
@@ -47,6 +47,43 @@
             </tbody>
         </table>
     </div>
-    <div id="submittedgroups" class="col s12">Test 2</div>
+    <div id="submittedgroups" class="col s12">
+        <table class="bordered highlight">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Name</th>
+                    <th>FB Group</th>
+                    <th>FB Page</th>
+                    <th>Website</th>
+                    <th style="text-align: right;">Lat</th>
+                    <th style="text-align: right;">Long</th>
+                    <th style="text-align: right;">Members</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+            <% @userSubmittedGroups.each do |group| %>
+            <tr <%= if group.fb_group != nil && !group.fb_page && !group.website && (!group.centroid_lon || !group.centroid_lat || !group.members); "class=red-out"; end %>>
+                <td class="email-td"><%= group.email %></td>
+                <td class="name-td"><%= group.name %></td>
+                <td class="link-td"><a target="_blank" href="<%= group.fb_group %>"><%= group.fb_group.nil? ? '' : group.fb_group.gsub("https://www.facebook.com/groups", "") %></a></td>
+                <td class="link-td"><a target="_blank" href="<%= group.fb_page %>"><%= group.fb_page.nil? ? '' : group.fb_page.gsub("https://www.facebook.com/", "") %></a></td>
+                <td class="link-td"><a target="_blank" href="<%= group.website %>"><%= group.website %></a></td>
+                <td class="cord-td"><%= "%.3f" % group.centroid_lat %></td>
+                <td class="cord-td"><%= "%.3f" % group.centroid_lon %></td>
+                <td style="text-align: right; width: 115px;"><%= group.members %></td>
+                <td class="icon-td"><%= link_to url: admin_path(group) do %><i class="fa fa-eye"></i><% end %></td>
+                <td class="icon-td"><%= link_to url: edit_admin_path(group) do %><i class="fa fa-check"></i><% end %></td>
+                <td class="icon-td"><%= link_to url: admin_path(group),
+                    method: :delete,
+                    data: { confirm: 'Are you sure?' } do %><i class="fa fa-trash-o"></i><% end %></td>
+            </tr>
+            <% end %>
+            </tbody>
+        </table>
     </div>
 </div>

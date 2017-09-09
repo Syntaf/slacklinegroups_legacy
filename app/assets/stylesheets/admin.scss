@@ -6,8 +6,8 @@ body {
     background-color: #E9EBEE;
 }
 #db-tabs {
-    @extend .purple;
-    @extend .lighten-4;
+    @extend .grey;
+    @extend .lighten-3;
 }
 .tab-text {
     color: #00838f !important;
@@ -35,12 +35,16 @@ body {
         left: 10px;
     }
 }
-#activegroups {
+#activegroups, #submittedgroups {
     overflow-x: scroll;
     max-width: 1400px;
-
     .name-td {
         max-width: 250px;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+    }
+    .email-td {
+        width: 250px;
         overflow-x: hidden;
         text-overflow: ellipsis;
     }
@@ -48,6 +52,21 @@ body {
         max-width: 200px;
         overflow-x: hidden;
         text-overflow: ellipsis;
+    }
+    .cord-td {
+        text-align: right;
+        width: 100px;
+        
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+    }
+    .icon-td {
+        text-align: center;
+        width: 50px;
+        i {
+            font-size: 18px;
+            cursor: pointer;
+        }
     }
 }
 td {

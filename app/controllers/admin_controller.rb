@@ -38,6 +38,7 @@ class AdminController < ApplicationController
     def index
         p Rails.application.routes.named_routes.helper_names
         @groups = Group.all
+        @userSubmittedGroups = UserSubmittedGroup.all
     end
 
     def destroy
