@@ -3,16 +3,16 @@ require "json"
 class GroupsController < ApplicationController
 
     def new
-        @group = Group.new
+        @group = UserSubmittedGroup.new
     end
 
     def edit
-        @group = Group.find(params[:id])
+        @group = UserSubmittedGroup.find(params[:id])
         p @group.cords
     end
 
     def update
-        @group = Group.find(params[:id])
+        @group = UserSubmittedGroup.find(params[:id])
 
         if @group.update(group_params)
             redirect_to @group
@@ -22,7 +22,7 @@ class GroupsController < ApplicationController
     end
 
     def show
-        @group = Group.find(params[:id])
+        @group = UserSubmittedGroup.find(params[:id])
     end
 
     private

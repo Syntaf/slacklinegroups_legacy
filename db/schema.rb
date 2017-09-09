@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170716210827) do
+ActiveRecord::Schema.define(version: 20170909010633) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,23 @@ ActiveRecord::Schema.define(version: 20170716210827) do
     t.string "fb_page"
     t.string "website"
     t.boolean "isRegional", default: false
+  end
+
+  create_table "user_submitted_groups", force: :cascade do |t|
+    t.text "cords"
+    t.string "name"
+    t.integer "members"
+    t.decimal "centroid_lat"
+    t.decimal "centroid_lon"
+    t.string "order"
+    t.string "country"
+    t.string "fb_group"
+    t.string "fb_page"
+    t.string "website"
+    t.string "email"
+    t.boolean "isRegional", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
