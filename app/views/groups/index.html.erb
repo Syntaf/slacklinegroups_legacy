@@ -1,4 +1,41 @@
-<div style="text-align: center;">
-    <h1>Access Restricted</h1>
-    <p>sorry bud</p>
-</div>
+<h1>Temporary Panel</h1>
+<hr>
+<h3>Active DB Objects</h3>
+
+<%= link_to 'New Group', new_group_path %>
+
+<table>
+    <tr>
+        <th>Email</th>
+        <th>Name</th>
+        <th>Cords</th>
+        <th>Lat</th>
+        <th>Long</th>
+        <th>Members</th>
+        <th>FB Group</th>
+        <th>FB Page</th>
+        <th>Website</th>
+        <th>View</th>
+        <th>Edit</th>
+        <th>Delete</th>
+    </tr>
+
+    <% @groups.each do |group| %>
+    <tr <%= if group.fb_group != nil && !group.fb_page && !group.website && (!group.centroid_lon || !group.centroid_lat || !group.members); "class=red-out"; end %>>
+        <td style="width: 10%;"><%= group.email %></td>
+        <td style="width: 10%;"><%= group.name %></td>
+        <td style="width: 5%;"><%= group.cords %></td>
+        <td style="width: 3%;"><%= group.centroid_lat %></td>
+        <td style="width: 3%;"><%= group.centroid_lon %></td>
+        <td style="width: 5%; text-align: center;"><%= group.members %></td>
+        <td style="width: 10%;"><a target="_blank" href="<%= group.fb_group %>"><%= group.fb_group %></a></td>
+        <td style="width: 10%;"><a target="_blank" href="<%= group.fb_page %>"><%= group.fb_page %></a></td>
+        <td style="width: 10%;"><a target="_blank" href="<%= group.website %>"><%= group.website %></a></td>
+        <td style="width: 3%;"><%= link_to 'Show', group_path(group) %></td>
+        <td style="width: 3%;"><%= link_to 'Delete', group_path(group),
+            method: :delete,
+            data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+    <% end %>
+
+</table>

@@ -58,8 +58,8 @@
         var data = draw.getAll();
         if (data.features.length > 0) {
             $('#export').text('Saved!');
-            $('#group_centroid_lat').val(data.features[0].geometry.coordinates[1]);
-            $('#group_centroid_lon').val(data.features[0].geometry.coordinates[0]);
+            $('#user_submitted_group_centroid_lat').val(data.features[0].geometry.coordinates[1]);
+            $('#user_submitted_group_centroid_lon').val(data.features[0].geometry.coordinates[0]);
         } else {
             $('#modal1').modal('open');
         }

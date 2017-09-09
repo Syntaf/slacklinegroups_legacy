@@ -2,22 +2,32 @@ require "json"
 
 class GroupsController < ApplicationController
 
+    def index
+        @groups = UserSubmittedGroup.all
+    end
+
     def new
+        # helpers = Rails.application.routes.named_routes.helper_names
+        # p helpers
         @group = UserSubmittedGroup.new
     end
 
-    def edit
+    def destroy
         @group = UserSubmittedGroup.find(params[:id])
-        p @group.cords
+        @group.destroy()
     end
 
-    def update
-        @group = UserSubmittedGroup.find(params[:id])
+    def show
+        @group = Group.find(params[:id])
+    end
 
-        if @group.update(group_params)
-            redirect_to @group
+    def create
+        @group = UserSubmittedGroup.new(group_params)
+
+        if @group.save
+            redirect_to '/'
         else
-            render 'edit'
+            render 'new'
         end
     end
 
@@ -28,11 +38,11 @@ class GroupsController < ApplicationController
     private
         def cords_to_a
             # get the params[:group][:cords], if empty use '[]'
-            cords = params.dig(:group, :cords).presence || "[]"
+            cords = params.dig(:user_submitted_group, :cords).presence || "[]"
             JSON.parse cords
         end
 
         def group_params
-            params.require(:group).permit(:name, :members, :link).merge({cords: cords_to_a})
+            params.require(:user_submitted_group).permit(:name, :members, :centroid_lat, :centroid_lon, :fb_group, :fb_page, :website, :isRegional, :email).merge({cords: cords_to_a})
         end
 end
