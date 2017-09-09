@@ -1,40 +1,52 @@
-<h1>Adminitrative Panel</h1>
-<hr>
-<h3>Active DB Objects</h3>
+<div class="header">
+    <h2>Adminitrative Panel</h2>
+</div>
 
-<%= link_to 'New Group', new_admin_path %>
+<div class="my-container">
+    <%= link_to 'New Group', new_admin_path, :class => "new-group waves-effect waves-light btn" %>
 
-<table>
-    <tr>
-        <th>Name</th>
-        <th>Cords</th>
-        <th>Lat</th>
-        <th>Long</th>
-        <th>Members</th>
-        <th>FB Group</th>
-        <th>FB Page</th>
-        <th>Website</th>
-        <th>View</th>
-        <th>Edit</th>
-        <th>Delete</th>
-    </tr>
+    <div class="card">
+    <ul id="db-tabs" class="tabs">
+        <li class="tab col s3"><a class="tab-text active" href="#activegroups">Active Groups</a></li>
+        <li class="tab col s3"><a class="tab-text" href="#submittedgroups">Submitted Groups</a></li>
+    </ul>
+    <div id="activegroups" class="col s12">
+        <table class="bordered highlight">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Lat</th>
+                    <th>Long</th>
+                    <th>Members</th>
+                    <th>FB Group</th>
+                    <th>FB Page</th>
+                    <th>Website</th>
+                    <th>View</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
 
-    <% @groups.each do |group| %>
-    <tr <%= if group.fb_group != nil && !group.fb_page && !group.website && (!group.centroid_lon || !group.centroid_lat || !group.members); "class=red-out"; end %>>
-        <td style="width: 10%;"><%= group.name %></td>
-        <td style="width: 5%;"><%= group.cords %></td>
-        <td style="width: 3%;"><%= group.centroid_lat %></td>
-        <td style="width: 3%;"><%= group.centroid_lon %></td>
-        <td style="width: 5%; text-align: center;"><%= group.members %></td>
-        <td style="width: 10%;"><a target="_blank" href="<%= group.fb_group %>"><%= group.fb_group %></a></td>
-        <td style="width: 10%;"><a target="_blank" href="<%= group.fb_page %>"><%= group.fb_page %></a></td>
-        <td style="width: 10%;"><a target="_blank" href="<%= group.website %>"><%= group.website %></a></td>
-        <td style="width: 3%;"><%= link_to 'Show', admin_path(group) %></td>
-        <td style="width: 3%;"><%= link_to 'Edit', edit_admin_path(group) %></td>
-        <td style="width: 3%;"><%= link_to 'Delete', admin_path(group),
-            method: :delete,
-            data: { confirm: 'Are you sure?' } %></td>
-    </tr>
-    <% end %>
-
-</table>
+            <tbody>
+            <% @groups.each do |group| %>
+            <tr <%= if group.fb_group != nil && !group.fb_page && !group.website && (!group.centroid_lon || !group.centroid_lat || !group.members); "class=red-out"; end %>>
+                <td class="name-td"><%= group.name %></td>
+                <td><%= group.centroid_lat %></td>
+                <td><%= group.centroid_lon %></td>
+                <td style="text-align: center;"><%= group.members %></td>
+                <td class="link-td"><a target="_blank" href="<%= group.fb_group %>"><%= group.fb_group.nil? ? '' : group.fb_group.gsub("https://www.facebook.com/groups", "") %></a></td>
+                <td class="link-td"><a target="_blank" href="<%= group.fb_page %>"><%= group.fb_page.nil? ? '' : group.fb_page.gsub("https://www.facebook.com/", "") %></a></td>
+                <td class="link-td"><a target="_blank" href="<%= group.website %>"><%= group.website %></a></td>
+                <td><%= link_to 'Show', admin_path(group) %></td>
+                <td><%= link_to 'Edit', edit_admin_path(group) %></td>
+                <td><%= link_to 'Delete', admin_path(group),
+                    method: :delete,
+                    data: { confirm: 'Are you sure?' } %></td>
+            </tr>
+            <% end %>
+            </tbody>
+        </table>
+    </div>
+    <div id="submittedgroups" class="col s12">Test 2</div>
+    </div>
+</div>

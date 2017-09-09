@@ -3,12 +3,24 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "materialize/components/color";
 body {
-    @extend .cyan;
-    @extend .lighten-5;
+    background-color: #E9EBEE;
+}
+#db-tabs {
+    @extend .purple;
+    @extend .lighten-4;
+}
+.tab-text {
+    color: #00838f !important;
+}
+.indicator {
+    background-color: #00838f !important;
 }
 .my-container {
-    max-width: 1200px;
+    max-width: 1400px;
     margin: 0 auto;
+}
+.new-group {
+    margin: 10px 0;
 }
 .red-out {
     background-color: #f4bcbc;
@@ -23,14 +35,28 @@ body {
         left: 10px;
     }
 }
+#activegroups {
+    overflow-x: scroll;
+    max-width: 1400px;
+
+    .name-td {
+        max-width: 250px;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+    }
+    .link-td {
+        max-width: 200px;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+    }
+}
 td {
     vertical-align: top;
-    max-width: 200px;
     overflow-x: auto;
     white-space: nowrap;
 }
 .header {
-    height: 15vh;
+    height: 10vh;
     @extend .cyan;
     @extend .darken-2;
     text-align: center;

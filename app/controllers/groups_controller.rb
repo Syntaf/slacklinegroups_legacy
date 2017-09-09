@@ -3,7 +3,7 @@ require "json"
 class GroupsController < ApplicationController
 
     def index
-        @groups = UserSubmittedGroup.all
+        redirect_to admin_index_path
     end
 
     def new
@@ -15,6 +15,8 @@ class GroupsController < ApplicationController
     def destroy
         @group = UserSubmittedGroup.find(params[:id])
         @group.destroy()
+
+        redirect_to groups_path
     end
 
     def show
