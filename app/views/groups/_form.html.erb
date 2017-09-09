@@ -29,7 +29,7 @@
 
     <div class="row">
         <div class="input-field col s3">
-            <select>
+            <select id="url-type">
                 <option value="" disabled selected>Group Type</option>
                 <option value="group">Facebook Group</option>
                 <option value="page">Facebook Page</option>
@@ -37,32 +37,37 @@
             </select>
             <label>Group Type Selection</label>
         </div>
-        <div class="col s9">
-            <div class="input-field other">
-                <%= f.label :website, 'Link to website' %><br>
-                <%= f.text_field :website %>
+        <div class="input-field col s9 other">
+            <%= f.label :website, 'Link to website' %>
+            <%= f.text_field :website %>
+        </div>
+        <div class="input-field col s9 fb-group">
+            <%= f.label :fb_group, 'Link to group' %>
+            <%= f.text_field :fb_group %>
+        </div>
+        <div class="input-field col s9 fb-page">
+            <%= f.label :fb_page, 'Link to page' %>
+            <%= f.text_field :fb_page %>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col s2">
+            <%= f.check_box :isRegional, id:'groupRegional' %>
+            <%= f.label 'Regional?', for: 'groupRegional', id: 'groupRegional' %>
+            <div class="tooltip">
+                <sup><i class="fa fa-question-circle">What's this?</i></sup>
+                <span class="tooltiptext">If the group is for a region<br> and not just a local city,<br> please select this option.</span>
             </div>
-            <div class="input-field fb-group">
-                <%= f.label :fb_group, 'Link to group' %><br>
-                <%= f.text_field :fb_group %>
-            </div>
-            <div class="input-field fb-page">
-                <%= f.label :fb_page, 'Link to page' %><br>
-                <%= f.text_field :fb_page %>
-            </div>
+        </div>
+        <div class="col s10">
+            <%= f.label :email, 'Email' %>
+            <%= f.text_field :email %>
         </div>
     </div>
 
     <%= hidden_field(:centroid_lat, :group_centroid_lat) %>
     <%= hidden_field(:centroid_lon, :group_centroid_lon) %>
-
-
-    
-    <br>
-    <p>
-        <%= f.check_box :isRegional, id:'groupRegional' %>
-        <%= f.label 'Regional?', for: 'groupRegional', id: 'groupRegional' %>
-    </p>
 
     <p>
         <%= f.submit class: 'waves-effect waves-light btn' %>

@@ -8,9 +8,17 @@
 .other, .fb-group, .fb-page {
     display: none;
 }
+.fb-group {
+    display: block;
+    padding-top: none;
+    margin-top: none;
+}
 .my-container {
     max-width: 1200px;
     margin: 0 auto;
+}
+#groupRegional {
+    padding-left: 25px;
 }
 #map {
     height: 400px;
@@ -74,4 +82,45 @@ td {
         font-weight: bold;
         color: #1b1b1b;
     }
+}
+sup {
+    cursor: pointer;
+}
+/* Tooltip container */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    font-size: 14px;
+    visibility: hidden;
+    width: 200px;
+    background-color: black;
+    color: #fff;
+    text-align: left;
+    padding: 5px 5px;
+    border-radius: 6px;
+ 
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 20;
+
+    top: -25px;
+    left: 120%; 
+}
+.tooltip .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    right: 100%; /* To the left of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent black transparent transparent;
+}
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
 }
