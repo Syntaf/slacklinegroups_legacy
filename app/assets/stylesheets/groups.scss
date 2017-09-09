@@ -104,7 +104,8 @@ sup {
     padding: 5px 5px;
     border-radius: 6px;
  
-    /* Position the tooltip text - see examples below! */
+    /* Position
+    position: the tooltip text - see examples below! */
     position: absolute;
     z-index: 20;
 
@@ -124,4 +125,9 @@ sup {
 /* Show the tooltip text when you mouse over the tooltip container */
 .tooltip:hover .tooltiptext {
     visibility: visible;
+}
+/* Successful submission modal styling */
+#groupSubmitted {
+    top: 20% !important;
+    width: 35%;
 }

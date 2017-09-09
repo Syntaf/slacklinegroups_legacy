@@ -15,7 +15,7 @@
         </tr>
         <tr>
             <td class="form-td">
-                <%= form_for @group, url: groups_path, html: { method: :post } do |f| %>
+                <%= form_for @group, url: new_group_path, html: { method: :post } do |f| %>
                 <%= render 'form', f: f %>
                 <% end %>
             </td>
@@ -33,10 +33,27 @@
     </div>
     </div>
 </div>
+<% if !local_assigns[:successfullSubmit].nil? %>
+    <!-- Modal Structure -->
+    <div id="groupSubmitted" class="modal">
+        <div class="modal-content">
+            <h4>Submit successful</h4>
+            <p>Thanks for your submission <i class="fa fa-hand-peace-o"></i>!. We'll review your group shortly and verify that it can be included.</p>
+        </div>
+        <div class="modal-footer">
+            <a href="/" class="modal-action modal-close waves-effect waves-green btn-flat">Back to home</a>
+            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Submit Another</a>
+        </div>
+    </div>
+<% end %>
 <script>
     $(document).ready(function() {
         $('select').material_select();
         $('.modal').modal();
+
+        if ($('#groupSubmitted').length > 0) {
+            $('#groupSubmitted').modal('open');
+        }
     });
 
     mapboxgl.accessToken = 'pk.eyJ1Ijoic3ludGFmIiwiYSI6ImNqM2Z2bzZhbTAxZWwycW4wcmI5cjk4MW0ifQ.YOd5yuJfLARC2oOfqY-KoA'

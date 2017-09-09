@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   get 'map/pointclouds'
   get 'map/cover'
   get 'about', to: 'about#index'
+
+  
+  post 'groups/new', to: 'groups#create'
   resources :groups
   resources :admin
 

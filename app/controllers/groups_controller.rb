@@ -25,7 +25,7 @@ class GroupsController < ApplicationController
         @group = UserSubmittedGroup.new(group_params)
 
         if @group.save
-            redirect_to '/'
+            render 'new', locals: { successfullSubmit: true }
         else
             render 'new'
         end
