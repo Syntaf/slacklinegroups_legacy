@@ -5,6 +5,7 @@ var isPointZoom = false;
 var clickEvent = null;
 var groupNames = null;
 var groupList = null;
+var defaultOffset = 0;
 
 var createPopUp = function(f) {
 return  "<div class=\"title-bar\">"                                         +
@@ -30,7 +31,7 @@ return  "<div class=\"title-bar\">"                                         +
         "<a class=\"bottom right\">See Something Wrong?</a>"
 }
 
-var getCords = function(f, offset=0) {
+var getCords = function(f, offset) {
     var x = f[0].geometry.coordinates;
     x[1] += offset;
     return x;
@@ -96,7 +97,7 @@ $(document).ready(function() {
     {
         clickEvent = e;
         if (map.getZoom() < 7.7) {
-            var lngLat = getCords(e.features);
+            var lngLat = getCords(e.features, defaultOffset);
             map.flyTo({
                 center: {
                     lng: lngLat[0],
@@ -106,7 +107,7 @@ $(document).ready(function() {
             });
         } else {
             new mapboxgl.Popup()
-                .setLngLat(getCords(clickEvent.features, 0))
+                .setLngLat(getCords(clickEvent.features, defaultOffset))
                 .setHTML(createPopUp(clickEvent.features))
                 .addTo(map);
             clickEvent = null;
