@@ -37,11 +37,11 @@
                 <td class="cord-td"><%= "%.3f" % (group.centroid_lat.nil? ? 0 : group.centroid_lat) %></td>
                 <td class="cord-td"><%= "%.3f" % (group.centroid_lon.nil? ? 0 : group.centroid_lon) %></td>
                 <td class="number-td small-td"><%= group.members %></td>
-                <td class="icon-td"><%= link_to url: admin_path(group) do %><i class="fa fa-eye"></i><% end %></td></td>
-                <td class="icon-td"><%= link_to url: edit_admin_path(group) do %><i class="fa fa-pencil"></i><% end %></td>
-                <td class="icon-td"><%= link_to url: admin_path(group),
+                <td class="icon-td"><%= link_to(admin_path(group)) do %><i class="fa fa-eye"></i><% end %></td></td>
+                <td class="icon-td"><%= link_to(edit_admin_path(group)) do %><i class="fa fa-pencil"></i><% end %></td>
+                <td class="icon-td"><%= link_to(admin_url(group),
                     method: :delete,
-                    data: { confirm: 'Are you sure?' } do %><i class="fa fa-trash-o"></i><% end %>
+                    data: { confirm: 'Are you sure?' }) do %><i class="fa fa-trash-o"></i><% end %>
                 </td>
             </tr>
             <% end %>
@@ -77,11 +77,11 @@
                 <td class="cord-td"><%= "%.3f" % group.centroid_lat %></td>
                 <td class="cord-td"><%= "%.3f" % group.centroid_lon %></td>
                 <td style="text-align: right; width: 115px;"><%= group.members %></td>
-                <td class="icon-td"><%= link_to url: admin_path(group) do %><i class="fa fa-eye"></i><% end %></td>
-                <td class="icon-td"><%= link_to url: edit_admin_path(group) do %><i class="fa fa-check"></i><% end %></td>
-                <td class="icon-td"><%= link_to url: group_path(group),
+                <td class="icon-td"><%= link_to(admin_path(group)) do %><i class="fa fa-eye"></i><% end %></td>
+                <td class="icon-td"><%= link_to(edit_admin_path(group)) do %><i class="fa fa-check"></i><% end %></td>
+                <td class="icon-td"><%= link_to(group_path(group),
                     method: :delete,
-                    data: { confirm: 'Are you sure?' } do %><i class="fa fa-trash-o"></i><% end %>
+                    data: { confirm: 'Are you sure?' }) do %><i class="fa fa-trash-o"></i><% end %>
                 </td>
             </tr>
             <% end %>
