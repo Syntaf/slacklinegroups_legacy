@@ -15,15 +15,15 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Lat</th>
-                    <th>Long</th>
-                    <th>Members</th>
                     <th>FB Group</th>
                     <th>FB Page</th>
                     <th>Website</th>
-                    <th>View</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
+                    <th class="number-td">Lat</th>
+                    <th class="number-td">Long</th>
+                    <th class="number-td">Members</th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
                 </tr>
             </thead>
 
@@ -31,17 +31,18 @@
             <% @groups.each do |group| %>
             <tr <%= if group.fb_group != nil && !group.fb_page && !group.website && (!group.centroid_lon || !group.centroid_lat || !group.members); "class=red-out"; end %>>
                 <td class="name-td"><%= group.name %></td>
-                <td><%= group.centroid_lat %></td>
-                <td><%= group.centroid_lon %></td>
-                <td style="text-align: center;"><%= group.members %></td>
                 <td class="link-td"><a target="_blank" href="<%= group.fb_group %>"><%= group.fb_group.nil? ? '' : group.fb_group.gsub("https://www.facebook.com/groups", "") %></a></td>
                 <td class="link-td"><a target="_blank" href="<%= group.fb_page %>"><%= group.fb_page.nil? ? '' : group.fb_page.gsub("https://www.facebook.com/", "") %></a></td>
                 <td class="link-td"><a target="_blank" href="<%= group.website %>"><%= group.website %></a></td>
-                <td><%= link_to 'Show', admin_path(group) %></td>
-                <td><%= link_to 'Edit', edit_admin_path(group) %></td>
-                <td><%= link_to 'Delete', admin_path(group),
+                <td class="cord-td"><%= "%.3f" % (group.centroid_lat.nil? ? 0 : group.centroid_lat) %></td>
+                <td class="cord-td"><%= "%.3f" % (group.centroid_lon.nil? ? 0 : group.centroid_lon) %></td>
+                <td class="number-td small-td"><%= group.members %></td>
+                <td class="icon-td"><%= link_to url: admin_path(group) do %><i class="fa fa-eye"></i><% end %></td></td>
+                <td class="icon-td"><%= link_to url: edit_admin_path(group) do %><i class="fa fa-pencil"></i><% end %></td>
+                <td class="icon-td"><%= link_to url: admin_path(group),
                     method: :delete,
-                    data: { confirm: 'Are you sure?' } %></td>
+                    data: { confirm: 'Are you sure?' } do %><i class="fa fa-trash-o"></i><% end %>
+                </td>
             </tr>
             <% end %>
             </tbody>
@@ -56,9 +57,9 @@
                     <th>FB Group</th>
                     <th>FB Page</th>
                     <th>Website</th>
-                    <th style="text-align: right;">Lat</th>
-                    <th style="text-align: right;">Long</th>
-                    <th style="text-align: right;">Members</th>
+                    <th class="number-td">Lat</th>
+                    <th class="number-td">Long</th>
+                    <th class="number-td">Members</th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -78,9 +79,10 @@
                 <td style="text-align: right; width: 115px;"><%= group.members %></td>
                 <td class="icon-td"><%= link_to url: admin_path(group) do %><i class="fa fa-eye"></i><% end %></td>
                 <td class="icon-td"><%= link_to url: edit_admin_path(group) do %><i class="fa fa-check"></i><% end %></td>
-                <td class="icon-td"><%= link_to url: admin_path(group),
+                <td class="icon-td"><%= link_to url: group_path(group),
                     method: :delete,
-                    data: { confirm: 'Are you sure?' } do %><i class="fa fa-trash-o"></i><% end %></td>
+                    data: { confirm: 'Are you sure?' } do %><i class="fa fa-trash-o"></i><% end %>
+                </td>
             </tr>
             <% end %>
             </tbody>

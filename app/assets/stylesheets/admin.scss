@@ -15,16 +15,6 @@ body {
 .indicator {
     background-color: #00838f !important;
 }
-.my-container {
-    max-width: 1400px;
-    margin: 0 auto;
-}
-.new-group {
-    margin: 10px 0;
-}
-.red-out {
-    background-color: #f4bcbc;
-}
 #map {
     height: 400px;
     width: 100%;
@@ -35,40 +25,65 @@ body {
         left: 10px;
     }
 }
-#activegroups, #submittedgroups {
-    overflow-x: scroll;
+.my-container {
     max-width: 1400px;
-    .name-td {
-        max-width: 250px;
-        overflow-x: hidden;
-        text-overflow: ellipsis;
+    margin: 0 auto;
+
+    .new-group {
+        margin: 10px 0;
     }
-    .email-td {
-        width: 250px;
-        overflow-x: hidden;
-        text-overflow: ellipsis;
+
+    .card {
+        padding: 10px;
     }
-    .link-td {
-        max-width: 200px;
-        overflow-x: hidden;
-        text-overflow: ellipsis;
+
+    /* class for highlighting incomplete rows */
+    .red-out {
+        background-color: #f4bcbc;
     }
-    .cord-td {
-        text-align: right;
-        width: 100px;
-        
-        overflow-x: hidden;
-        text-overflow: ellipsis;
-    }
-    .icon-td {
-        text-align: center;
-        width: 50px;
-        i {
-            font-size: 18px;
-            cursor: pointer;
+
+    #activegroups, #submittedgroups {
+        overflow-x: scroll;
+        max-width: 1400px;
+        .name-td {
+            max-width: 250px;
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+        }
+        .email-td {
+            width: 250px;
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+        }
+        .link-td {
+            max-width: 200px;
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+        }
+        .cord-td {
+            text-align: right;
+            width: 100px;
+            
+            overflow-x: hidden;
+            text-overflow: ellipsis;
+        }
+        .icon-td {
+            text-align: center;
+            width: 50px;
+            i {
+                font-size: 18px;
+                cursor: pointer;
+            }
+        }
+        .number-td {
+            text-align: right;
+        }
+        .small-td {
+            width: 115px;
         }
     }
 }
+
 td {
     vertical-align: top;
     overflow-x: auto;
