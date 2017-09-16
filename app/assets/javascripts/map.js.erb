@@ -28,7 +28,8 @@ return  "<div class=\"title-bar\">"                                         +
         "</div>"                                                            +
         "<a class=\"bottom left\" target=\"_blank\" "                       +
             "href=\""+f[0].properties.link+"\">Go to Group</a>"             +
-        "<a class=\"bottom right\">See Something Wrong?</a>"
+        "<a class=\"bottom right issue\" "                                  +
+            "id=\""+f[0].properties.id+"\">See Something Wrong?</a>"
 }
 
 var getCords = function(f, offset) {
@@ -43,14 +44,13 @@ var geoPointJSON = $.ajax({
 });
 
 $(document).ready(function() {
-
+    $('.modal').modal();
     $('.button-collapse').sideNav({
         closeOnClick: true
     });
     $('a').click(function() {
         $('#sidenav-overlay').remove();
     });
-
     
     var map = new mapboxgl.Map({
         center: [0, 35],
@@ -93,6 +93,10 @@ $(document).ready(function() {
         }
     });
 
+    function submitIssue() {
+        
+    }
+
     function unclusteredPointClicked(e)
     {
         clickEvent = e;
@@ -123,10 +127,17 @@ $(document).ready(function() {
                 .setHTML(createPopUp(clickEvent.features))
                 .addTo(map);
             clickEvent = null;
+            $('.issue').click(function() {
+                var id = $(this).attr('id');
+                $('#issue-modal').modal('open');
+                $('.submit-issue').click(function() {
+                    $('#issue-modal').modal('close');
+                })
+            });
         }
     }
 
-    $('.zoom-out').click(function(){
+    $('.zoom-out').click(function() {
         map.flyTo({
             center: {
                 lng: 0,

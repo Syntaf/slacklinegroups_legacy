@@ -51,6 +51,7 @@ class MapController < ApplicationController
                         members: members,
                         type: type,
                         link: link,
+                        id: group.id,
                         isRegional: group.isRegional
                     }
                 }

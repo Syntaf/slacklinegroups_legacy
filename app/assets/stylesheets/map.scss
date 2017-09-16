@@ -78,6 +78,13 @@
         font-size: 18px;
         font-weight: bold;
     }
+
+    .issue {
+        cursor: pointer;
+    }
+}
+#issue-modal {
+    width: 40%;
 }
 #map {
     height: 100vh;
