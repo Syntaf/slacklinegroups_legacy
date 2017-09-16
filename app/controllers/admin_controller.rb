@@ -1,13 +1,20 @@
 class AdminController < ApplicationController
     # before_action :authenticate
     
+    def index
+        p Rails.application.routes.named_routes.helper_names
+        @groups = Group.all
+
+        # status of 1 in approval field represents pending status. 0 = approved, 2 = rejected
+        @userSubmittedGroups = UserSubmittedGroup.where(approved: 0)
+    end
+
     def new
         @group = Group.new
     end
 
     def edit
         @group = Group.find(params[:id])
-        p @group.cords
     end
 
     def create
@@ -35,17 +42,53 @@ class AdminController < ApplicationController
         @group = Group.find(params[:id])
     end
 
-    def index
-        p Rails.application.routes.named_routes.helper_names
-        @groups = Group.all
-        @userSubmittedGroups = UserSubmittedGroup.all
-    end
-
     def destroy
         @group = Group.find(params[:id])
         @group.destroy
 
         redirect_to admin_index_path
+    end
+
+    def approve
+        @response = Array.new
+
+        @apprGroup = UserSubmittedGroup.find(params[:id])
+
+        @newGroup = Group.new(
+            name: @apprGroup.name,
+            fb_group: @apprGroup.fb_group,
+            fb_page: @apprGroup.fb_page,
+            website: @apprGroup.website,
+            centroid_lat: @apprGroup.centroid_lat,
+            centroid_lon: @apprGroup.centroid_lon,
+            members: @apprGroup.members,
+            cords: @apprGroup.cords
+        )
+
+        if @newGroup.save
+            @apprGroup.approved = 1
+            if @apprGroup.save
+                @response = {
+                    status: 200,
+                    group: @newGroup.as_json
+                }
+            else
+                @response = {
+                    status: 500,
+                    errors: @apprGroup.errors.full_messages
+                }
+            end
+        else
+            @response = {
+                status: 500,
+                errors: @newGroup.errors.full_messages
+            }
+        end
+
+        respond_to do |format|
+            format.html
+            format.json { render :json => @response }
+        end
     end
 
     private

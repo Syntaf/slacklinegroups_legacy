@@ -14,9 +14,10 @@ class GroupsController < ApplicationController
 
     def destroy
         @group = UserSubmittedGroup.find(params[:id])
-        @group.destroy()
+        @group.approved = 2
+        @group.save
 
-        redirect_to groups_path
+        redirect_to admin_index_path
     end
 
     def show

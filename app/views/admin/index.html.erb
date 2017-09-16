@@ -11,7 +11,7 @@
         <li class="tab col s3"><a class="tab-text" href="#submittedgroups">Submitted Groups</a></li>
     </ul>
     <div id="activegroups" class="col s12">
-        <table class="bordered highlight">
+        <table class="bordered highlight" id="curated-groups-table">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -41,7 +41,7 @@
                 <td class="icon-td"><%= link_to(edit_admin_path(group)) do %><i class="fa fa-pencil"></i><% end %></td>
                 <td class="icon-td"><%= link_to(admin_url(group),
                     method: :delete,
-                    data: { confirm: 'Are you sure?' }) do %><i class="fa fa-trash-o"></i><% end %>
+                    data: { confirm: 'Are you sure you wish to delete this item?' }) do %><i class="fa fa-trash-o"></i><% end %>
                 </td>
             </tr>
             <% end %>
@@ -49,7 +49,7 @@
         </table>
     </div>
     <div id="submittedgroups" class="col s12">
-        <table class="bordered highlight">
+        <table class="bordered highlight" id="pending-review-table">
             <thead>
                 <tr>
                     <th>Email</th>
@@ -68,7 +68,7 @@
 
             <tbody>
             <% @userSubmittedGroups.each do |group| %>
-            <tr <%= if group.fb_group != nil && !group.fb_page && !group.website && (!group.centroid_lon || !group.centroid_lat || !group.members); "class=red-out"; end %>>
+            <tr id="row-<%= group.id %>" <%= if group.fb_group != nil && !group.fb_page && !group.website && (!group.centroid_lon || !group.centroid_lat || !group.members); "class=red-out"; end %>>
                 <td class="email-td"><%= group.email %></td>
                 <td class="name-td"><%= group.name %></td>
                 <td class="link-td"><a target="_blank" href="<%= group.fb_group %>"><%= group.fb_group.nil? ? '' : group.fb_group.gsub("https://www.facebook.com/groups", "") %></a></td>
@@ -77,11 +77,11 @@
                 <td class="cord-td"><%= "%.3f" % group.centroid_lat %></td>
                 <td class="cord-td"><%= "%.3f" % group.centroid_lon %></td>
                 <td style="text-align: right; width: 115px;"><%= group.members %></td>
-                <td class="icon-td"><%= link_to(admin_path(group)) do %><i class="fa fa-eye"></i><% end %></td>
-                <td class="icon-td"><%= link_to(edit_admin_path(group)) do %><i class="fa fa-check"></i><% end %></td>
+                <td class="icon-td"><%= link_to(edit_group_path(group)) do %><i class="fa fa-eye"></i><% end %></td>
+                <td class="icon-td approve-action" id="<%= group.id %>"><a><i class="fa fa-check"></i></a></td>
                 <td class="icon-td"><%= link_to(group_path(group),
                     method: :delete,
-                    data: { confirm: 'Are you sure?' }) do %><i class="fa fa-trash-o"></i><% end %>
+                    data: { confirm: 'Are you sure you wish to delete this item?' }) do %><i class="fa fa-trash-o"></i><% end %>
                 </td>
             </tr>
             <% end %>
