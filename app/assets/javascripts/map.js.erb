@@ -85,7 +85,7 @@ $(document).ready(function() {
                                     }
                                 }
                             ]
-                        });
+                        }, true);
                         break;
                     }
                 }
@@ -93,14 +93,10 @@ $(document).ready(function() {
         }
     });
 
-    function submitIssue() {
-        
-    }
-
-    function unclusteredPointClicked(e)
+    function unclusteredPointClicked(e, fromSearch=false)
     {
         clickEvent = e;
-        if (map.getZoom() < 7.7) {
+        if (map.getZoom() < 7.7 || fromSearch) {
             var lngLat = getCords(e.features, defaultOffset);
             map.flyTo({
                 center: {
