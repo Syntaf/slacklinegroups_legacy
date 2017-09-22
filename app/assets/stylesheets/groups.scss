@@ -13,6 +13,13 @@
     padding-top: none;
     margin-top: none;
 }
+.left-align {
+    text-align: left;
+}
+.error {
+    border-bottom: 1px solid red !important;
+    box-shadow: 0 1px 0 0 red !important;
+}
 .my-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -98,8 +105,8 @@ sup {
     font-size: 14px;
     visibility: hidden;
     width: 200px;
-    background-color: black;
-    color: #fff;
+    background-color: white;
+    border: 1px solid black;
     text-align: left;
     padding: 5px 5px;
     border-radius: 6px;
@@ -110,7 +117,7 @@ sup {
     z-index: 20;
 
     top: -25px;
-    left: 120%; 
+    left: 135%; 
 }
 .tooltip .tooltiptext::after {
     content: " ";

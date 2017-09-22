@@ -14,14 +14,12 @@
 
 <div class="row">
     <div class="input-field col s6">
-        <i class="prefix fa fa-id-card"></i>
         <% active = @group.name ? "active" : "" %>
         <%= f.text_field :name %>
         <%= f.label :name, :class => active %>
     </div>
 
     <div class="input-field col s6">
-        <i class="prefix fa fa-users"></i>
         <% active = @group.members ? "active" : "" %>
         <%= f.text_field :members %>
         <%= f.label :members, "Member Count", :class => active %>
@@ -29,7 +27,22 @@
 </div>
 
 <div class="row">
-    <div class="input-field col s3">
+    <div class="input-field col s6 other">
+        <% active = @group.website ? "active" : "" %>
+        <%= f.label :website, 'Link to website', :class => active %>
+        <%= f.text_field :website %>
+    </div>
+    <div class="input-field col s6 fb-group">
+        <% active = @group.fb_group ? "active" : "" %>
+        <%= f.label :fb_group, 'Link to group', :class => active %>
+        <%= f.text_field :fb_group %>
+    </div>
+    <div class="input-field col s6 fb-page">
+        <% active = @group.fb_page ? "active" : "" %>
+        <%= f.label :fb_page, 'Link to page', :class => active %>
+        <%= f.text_field :fb_page %>
+    </div>
+    <div class="input-field col s6">
         <select id="url-type">
             <option value="" disabled selected>Group Type</option>
             <option value="group">Facebook Group</option>
@@ -38,36 +51,21 @@
         </select>
         <label>Group Type Selection</label>
     </div>
-    <div class="input-field col s9 other">
-        <% active = @group.website ? "active" : "" %>
-        <%= f.label :website, 'Link to website', :class => active %>
-        <%= f.text_field :website %>
-    </div>
-    <div class="input-field col s9 fb-group">
-        <% active = @group.fb_group ? "active" : "" %>
-        <%= f.label :fb_group, 'Link to group', :class => active %>
-        <%= f.text_field :fb_group %>
-    </div>
-    <div class="input-field col s9 fb-page">
-        <% active = @group.fb_page ? "active" : "" %>
-        <%= f.label :fb_page, 'Link to page', :class => active %>
-        <%= f.text_field :fb_page %>
-    </div>
 </div>
 
 <div class="row">
-    <div class="input-field col s3">
-        <%= f.check_box :isRegional, id:'groupRegional' %>
-        <%= f.label 'Regional?', for: 'groupRegional', id: 'groupRegional' %>
-        <div class="tooltip">
-            <sup><i class="fa fa-question-circle">What's this?</i></sup>
-            <span class="tooltiptext">If the group is for a region<br> and not just a local city,<br> please select this option.</span>
-        </div>
-    </div>
-    <div class="input-field col s9">
+    <div class="input-field col s6">
         <% active = @group.email ? "active" : "" %>
         <%= f.label :email, 'Email', :class => active %>
         <%= f.text_field :email %>
+    </div>
+    <div class="input-field col s6 left-align">
+        <%= f.check_box :isRegional, id:'groupRegional' %>
+        <%= f.label 'Regional Group', for: 'groupRegional', id: 'groupRegional' %>
+        <div class="tooltip">
+            <i class="fa fa-question-circle-o"></i>
+            <span class="tooltiptext">If the group is for a region<br> and not just a local city,<br> please select this option.</span>
+        </div>
     </div>
 </div>
 
@@ -75,5 +73,5 @@
 <%= hidden_field(:user_submitted_group, :centroid_lon, :value => @group.centroid_lon) %>
 
 <p>
-    <%= f.submit 'Submit for Review', class: 'waves-effect waves-light btn' %>
+    <%= f.submit 'Submit for Review', class: 'waves-effect waves-light btn submit-button' %>
 </p>
