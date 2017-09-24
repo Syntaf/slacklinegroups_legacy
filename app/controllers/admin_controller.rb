@@ -1,5 +1,5 @@
 class AdminController < ApplicationController
-    # before_action :authenticate
+    before_action :authenticate
     
     def index
         p Rails.application.routes.named_routes.helper_names
