@@ -73,5 +73,5 @@
 <%= hidden_field(:user_submitted_group, :centroid_lon, :value => @group.centroid_lon) %>
 
 <p>
-    <%= f.submit 'Submit for Review', class: 'waves-effect waves-light btn submit-button' %>
+    <%= f.submit 'Submit for Review', class: 'waves-effect waves-light btn submit-button', data: { disable_with: false } %>
 </p>
