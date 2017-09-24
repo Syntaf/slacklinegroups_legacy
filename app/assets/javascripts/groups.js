@@ -25,7 +25,6 @@ $(document).ready(function() {
     })
 
     $('#new_user_submitted_group').submit(function(e) {
-        console.log('heya');
         var form = $('#new_user_submitted_group');
         var groupName = $('#user_submitted_group_name');
         var error = $('#error_explanation');
