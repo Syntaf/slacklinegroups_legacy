@@ -5,6 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
 
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-81736530-3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments)};
+      gtag('js', new Date());
+
+      gtag('config', 'UA-81736530-3');
+    </script>
+
+
     <%= favicon_link_tag 'favicon.ico' %>
     <%= javascript_include_tag 'https://api.mapbox.com/mapbox-gl-js/v0.38.0/mapbox-gl.js' %>
     <%= stylesheet_link_tag 'https://api.mapbox.com/mapbox-gl-js/v0.38.0/mapbox-gl.css' %>
