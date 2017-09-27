@@ -98,93 +98,39 @@
     width: 350px;
     height: 50px;
     background-color: #fff;
-}
-#search-field {
-    position: absolute;
-    margin-top: -1px;
-    width: 300px;
-    height: 100%;
-    box-shadow: none;
-    border-bottom: none;
-    display: inline-block;
-    font-size: 16px;
-    margin-left: 20px;
+
+    .menu {
+        display: inline-block;
+        margin-left: 15px;
+        font-size: 18px;
+        margin-top: 16px;
+        cursor: pointer;
+    }
+
+    #search-field {
+        position: absolute;
+        margin-top: -1px;
+        width: 300px;
+        height: 100%;
+        box-shadow: none;
+        border-bottom: none;
+        display: inline-block;
+        font-size: 16px;
+        margin-left: 20px;
+    }
+
+    .search {
+        position: absolute;
+        font-size: 18px;
+        left: calc(100% - 33px);
+        margin-top: 16px;
+        color: grey;
+    }
 }
 .zoom-out {
     position: absolute;
     top: 23px;
     left: calc(370px + 0.5rem);
-}
-@media screen and (max-width: 450px) {
-    .zoom-out {
-        left: calc(50% + 130px);
-    }
-    .card {
-        width: 300px;
-        left: calc(50% - 175px);
-    }
-}
-@media screen and (max-width: 400px) {
-    .zoom-out {
-        left: calc(50% + 110px);
-    }
-    .card {
-        width: 250px;
-        left: calc(50% - 145px);
-    }
-}
-.menu {
-    display: inline-block;
-    margin-left: 15px;
-    font-size: 18px;
-    margin-top: 16px;
-    cursor: pointer;
-}
-.search {
-    position: absolute;
-    font-size: 18px;
-    left: calc(100% - 33px);
-    margin-top: 16px;
-    color: grey;
-}
-.headerview {
-    background-image: linear-gradient(to top, transparentize(rgb(83, 188, 226), 0.5), transparentize(rgb(83, 188, 226), 0.5)), image-url('headerbg.png');
-    background-size: cover;
-    height: 90px;
-    width: 100%;
-    margin-bottom: 10px;
-
-    h3 {
-        text-align: center;
-        font-weight: bold;
-        font-size: 22px;
-        margin: 0;
-        padding-top: 34px;
-        color: #fff;
-    }
-}
-.bottom-bar {
-    position: absolute;
-    top: calc(100% - 110px);
-    width: 100%;
-    ul {
-        width: 100%;
-        text-align: center;
-    }
-    li {
-        text-align: center;
-        display: inline-block;
-        a {
-            padding: 0;
-            i {
-                font-size: 24px;
-            }
-        }
-
-        a:hover {
-            background-color: #fff;
-        }
-    }
 }
 .ui-autocomplete {
     background-color: #fff;
@@ -204,6 +150,84 @@
         cursor: pointer;
     }
 }
+.side-nav {
+    .headerview {
+        background-image: linear-gradient(to top, transparentize(rgb(83, 188, 226), 0.5), transparentize(rgb(83, 188, 226), 0.5)), image-url('headerbg.png');
+        background-size: cover;
+        height: 90px;
+        width: 100%;
+        margin-bottom: 10px;
+    
+        h3 {
+            text-align: center;
+            font-weight: bold;
+            font-size: 22px;
+            margin: 0;
+            padding-top: 34px;
+            color: #fff;
+        }
+    }
+
+    .bottom-bar {
+        position: absolute;
+        top: calc(100% - 110px);
+        width: 100%;
+        ul {
+            width: 100%;
+            text-align: center;
+        }
+        li {
+            text-align: center;
+            display: inline-block;
+            a {
+                padding: 0;
+                i {
+                    font-size: 24px;
+                }
+            }
+    
+            a:hover {
+                background-color: #fff;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .zoom-out {
+        left: calc(50% + 130px);
+    }
+    .card {
+        width: 300px;
+        left: calc(50% - 175px);
+
+        #search-field {
+            width: 250px;
+        }
+    }
+    .ui-autocomplete {
+        width: 299px;
+        left: calc(50% - 175px) !important;
+    }
+}
+@media screen and (max-width: 400px) {
+    .zoom-out {
+        left: calc(50% + 110px);
+    }
+    .card {
+        width: 250px;
+        left: calc(50% - 145px);
+
+        #search-field {
+            width: 200px;
+        }
+    }
+    .ui-autocomplete {
+        width: 249px;
+        left: calc(50% - 145px) !important;
+    }
+}
+
 .loader,
 .loader:after {
     border-radius: 50%;
