@@ -7,6 +7,8 @@ var groupNames = null;
 var groupList = null;
 var defaultOffset = 0;
 
+var zoomOffsetLat = 0;
+
 var createPopUp = function(f) {
 return  "<div class=\"title-bar\">"                                         +
             "<p class=\"title\">"+f[0].properties.name+"</p>"              +
@@ -44,6 +46,12 @@ var geoPointJSON = $.ajax({
 });
 
 $(document).ready(function() {
+    var window_width = $(window).width();
+    if(window_width < 450) {
+        zoomOffsetLat = .1;
+    } else if(window_width < 400) {
+        zoomOffsetLat = .2;
+    }
     $('.modal').modal();
     $('.button-collapse').sideNav({
         closeOnClick: true
@@ -102,7 +110,7 @@ $(document).ready(function() {
             map.flyTo({
                 center: {
                     lng: lngLat[0],
-                    lat: lngLat[1]
+                    lat: lngLat[1] + zoomOffsetLat
                 },
                 zoom: 7.7
             });
