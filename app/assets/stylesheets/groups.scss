@@ -97,13 +97,19 @@ td {
 sup {
     cursor: pointer;
 }
+.text-content {
+    max-width: 95%;
+    margin: 0 auto;
+    h3 {
+        font-size: 24px;
+    }
+}
 /* Tooltip container */
 .tooltip {
     position: relative;
     display: inline-block;
     left: 10px;
 }
-
 /* Tooltip text */
 .tooltip .tooltiptext {
     font-size: 14px;
@@ -141,4 +147,9 @@ sup {
 #groupSubmitted {
     top: 20% !important;
     width: 35%;
+}
+@media screen and (max-width: 450px) {
+    .header h2 {
+        font-size: 26px;
+    }
 }
