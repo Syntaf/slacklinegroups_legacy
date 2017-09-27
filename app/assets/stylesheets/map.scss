@@ -99,18 +99,6 @@
     height: 50px;
     background-color: #fff;
 }
-.menu {
-    display: inline-block;
-    margin-left: 15px;
-    font-size: 18px;
-    margin-top: 16px;
-    cursor: pointer;
-}
-.zoom-out {
-    position: absolute;
-    top: 23px;
-    left: calc(370px + 0.5rem);
-}
 #search-field {
     position: absolute;
     margin-top: -1px;
@@ -121,6 +109,36 @@
     display: inline-block;
     font-size: 16px;
     margin-left: 20px;
+}
+.zoom-out {
+    position: absolute;
+    top: 23px;
+    left: calc(370px + 0.5rem);
+}
+@media screen and (max-width: 450px) {
+    .zoom-out {
+        left: calc(50% + 130px);
+    }
+    .card {
+        width: 300px;
+        left: calc(50% - 175px);
+    }
+}
+@media screen and (max-width: 400px) {
+    .zoom-out {
+        left: calc(50% + 110px);
+    }
+    .card {
+        width: 250px;
+        left: calc(50% - 145px);
+    }
+}
+.menu {
+    display: inline-block;
+    margin-left: 15px;
+    font-size: 18px;
+    margin-top: 16px;
+    cursor: pointer;
 }
 .search {
     position: absolute;
