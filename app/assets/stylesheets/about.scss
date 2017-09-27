@@ -2,7 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 @import "materialize/components/color";
-
+html {
+    @extend .cyan;
+    @extend .lighten-5;
+}
 .header {
     height: 15vh;
     @extend .cyan;
@@ -18,7 +21,7 @@
 .body {
     @extend .cyan;
     @extend .lighten-5;
-    height: 85vh;
+    height: 100%;
     width: 100%;
 
     .content {
