@@ -5,7 +5,88 @@ class MapController < ApplicationController
     # before_action :authenticate
 
     def index
+        @json = Array.new
+        if params[:id] != nil
+            p 'inside here'
+            @group = Group.find(params[:id])
+            link = @group.fb_group
+            type = "Group"
+            members = @group.members
+            if !link || link.blank?
+                type = "Page"
+                members = "N/A"
+                link = @group.fb_page
+            end
+            if !link || link.blank?
+                type = "Website"
+                members = "N/A"
+                link = @group.website
+            end
+    
+            @json << {
+                features:
+                [
+                    {
+                        geometry:
+                        {
+                            coordinates: @group.cords? ? centroid(@group.cords) : [@group.centroid_lon.to_f, @group.centroid_lat.to_f]
+                        },
+                        properties:
+                        {
+                            name: @group.name,
+                            link: link,
+                            members: members,
+                            type: type,
+                            id: @group.id
+                        }
+                    }
+                ],
+                fromSearch: true
+            }
+        end
+        javascript_variables(group: @json)
+        p @json
         p Rails.application.routes.named_routes.helper_names
+    end
+
+    def groupinfo
+        @group = Group.find(params[:id])
+        @json = Array.new
+        link = @group.fb_group
+        type = "Group"
+        members = @group.members
+        if !link || link.blank?
+            type = "Page"
+            members = "N/A"
+            link = @group.fb_page
+        end
+        if !link || link.blank?
+            type = "Website"
+            members = "N/A"
+            link = @group.website
+        end
+
+        @json << {
+            features:
+            [
+                {
+                    geometry:
+                    {
+                        coordinates: @group.cords? ? centroid(@group.cords) : [@group.centroid_lon.to_f, @group.centroid_lat.to_f]
+                    },
+                    properties:
+                    {
+                        name: @group.name,
+                        link: link,
+                        members: members,
+                        type: type,
+                        id: @group.id
+                    }
+                }
+            ]
+        }
+
+        render 'index', :group => @json
     end
 
     def cover

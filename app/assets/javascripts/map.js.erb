@@ -89,7 +89,9 @@ $(document).ready(function() {
                                     {
                                         name: group.properties.name,
                                         members: group.properties.members,
-                                        type: group.properties.type
+                                        type: group.properties.type,
+                                        link: group.properties.link,
+                                        id: group.properties.id
                                     }
                                 }
                             ],
@@ -284,6 +286,10 @@ $(document).ready(function() {
                 map.getCanvas().style.cursor = '';
             });
 
+            if (group.length !== 0)
+            {
+                unclusteredPointClicked(group[0]);
+            }
         });
     });
 });

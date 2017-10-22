@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'group/:id', to: 'map#index'
   get 'map/index'
   get 'map/pointclouds'
   get 'map/cover'
