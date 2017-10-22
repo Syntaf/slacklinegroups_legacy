@@ -77,6 +77,7 @@ $(document).ready(function() {
                 for(var i = 0; i < groupList.length; i++) {
                     var group = groupList[i];
                     if(group.properties.name.toLowerCase() === slackGroupName.toLowerCase()) {
+                        $('.mapboxgl-popup').remove();
                         unclusteredPointClicked({
                             features: 
                             [
@@ -107,6 +108,7 @@ $(document).ready(function() {
     function unclusteredPointClicked(e)
     {
         clickEvent = e;
+        history.pushState({}, '', '/group/' + e.features[0].properties.id);
         if (map.getZoom() < 7.7 || e.fromSearch == true) {
             var lngLat = getCords(e.features, defaultOffset);
             map.flyTo({
@@ -145,6 +147,8 @@ $(document).ready(function() {
     }
 
     $('.zoom-out').click(function() {
+        $('.mapboxgl-popup').remove();
+        history.pushState({}, '', '/');
         map.flyTo({
             center: {
                 lng: 0,
