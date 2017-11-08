@@ -12,6 +12,7 @@ gem 'jquery-ui-rails'
 gem 'font-awesome-rails'
 gem 'seed_dump'
 gem 'figaro'
+gem 'bundler'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.1'

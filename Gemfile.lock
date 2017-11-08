@@ -187,6 +187,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bundler
   byebug
   capybara (~> 2.13)
   coffee-rails (~> 4.2)
@@ -214,4 +215,4 @@ RUBY VERSION
    ruby 2.4.0p0
 
 BUNDLED WITH
-   1.14.6
+   1.16.0
