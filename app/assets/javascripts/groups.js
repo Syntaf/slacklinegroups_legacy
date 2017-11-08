@@ -98,7 +98,7 @@ $(document).ready(function() {
         var centroid_lat = $('#user_submitted_group_centroid_lat');
         var centroid_lon = $('#user_submitted_group_centroid_lon');
 
-        if (centroid_lat.val().trim() <= 0 || centroid_lon.val().trim() <= 0) {
+        if (!centroid_lat.val().trim() || !centroid_lon.val().trim()) {
             e.preventDefault();
             $('#no-location').modal('open');
             $('.no-redirect').click(function(){
