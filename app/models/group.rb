@@ -1,3 +1,3 @@
 class Group < ApplicationRecord
-    serialize :cords,Array
+    self.table_name = "group"
 end

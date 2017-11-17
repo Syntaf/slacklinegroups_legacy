@@ -10,43 +10,48 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170916152748) do
+ActiveRecord::Schema.define(version: 20171117060610) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "groups", force: :cascade do |t|
-    t.text "cords"
+  create_table "group", force: :cascade do |t|
     t.string "name"
-    t.integer "members"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.string "fb_group"
-    t.decimal "centroid_lat"
-    t.decimal "centroid_lon"
-    t.string "order"
-    t.string "country"
-    t.string "fb_page"
-    t.string "website"
-    t.boolean "isRegional", default: false
+    t.string "group_type"
+    t.integer "location_id"
+    t.integer "info_id"
   end
 
-  create_table "user_submitted_groups", force: :cascade do |t|
-    t.text "cords"
-    t.string "name"
+  create_table "info", force: :cascade do |t|
+    t.string "link"
     t.integer "members"
-    t.decimal "centroid_lat"
-    t.decimal "centroid_lon"
-    t.string "order"
-    t.string "country"
-    t.string "fb_group"
-    t.string "fb_page"
-    t.string "website"
-    t.string "email"
-    t.boolean "isRegional", default: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "approved", default: 0
+    t.boolean "is_regional"
+  end
+
+  create_table "location", force: :cascade do |t|
+    t.decimal "lat"
+    t.decimal "lon"
+  end
+
+  create_table "submitted_group", force: :cascade do |t|
+    t.string "name"
+    t.string "type"
+    t.decimal "lat"
+    t.decimal "lon"
+    t.string "link"
+    t.integer "members"
+    t.boolean "is_regional"
+  end
+
+  create_table "submitted_group_history", force: :cascade do |t|
+    t.string "name"
+    t.string "type"
+    t.decimal "lat"
+    t.decimal "lon"
+    t.string "link"
+    t.integer "members"
+    t.boolean "is_regional"
+    t.datetime "verified_time"
   end
 
 end
