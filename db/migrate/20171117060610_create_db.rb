@@ -5,17 +5,23 @@ class CreateDb < ActiveRecord::Migration[5.1]
       t.string  :group_type
       t.integer :location_id
       t.integer :info_id
+
+      t.timestamps
     end
 
     create_table :location do |t|
       t.decimal :lat
       t.decimal :lon
+
+      t.timestamps
     end
 
     create_table :info do |t|
       t.string  :link
       t.integer :members
       t.boolean :is_regional
+
+      t.timestamps
     end
 
     create_table :submitted_group do |t|
@@ -26,6 +32,8 @@ class CreateDb < ActiveRecord::Migration[5.1]
       t.string    :link
       t.integer   :members
       t.boolean   :is_regional
+
+      t.timestamps
     end
 
     create_table :submitted_group_history do |t|
@@ -37,6 +45,8 @@ class CreateDb < ActiveRecord::Migration[5.1]
       t.integer   :members
       t.boolean   :is_regional
       t.timestamp :verified_time
+
+      t.timestamps
     end
   end
 end
