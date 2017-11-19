@@ -1,3 +1,4 @@
 class Group < ApplicationRecord
-    self.table_name = "group"
+    has_one :info
+    has_one :location
 end

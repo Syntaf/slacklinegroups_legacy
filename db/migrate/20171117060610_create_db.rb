@@ -1,15 +1,14 @@
 class CreateDb < ActiveRecord::Migration[5.1]
   def change
-    create_table :group do |t|
+    create_table :groups do |t|
       t.string  :name
       t.string  :group_type
-      t.integer :location_id
-      t.integer :info_id
-
+      
       t.timestamps
     end
 
     create_table :location do |t|
+      t.belongs_to :group, index: true
       t.decimal :lat
       t.decimal :lon
 
@@ -17,6 +16,7 @@ class CreateDb < ActiveRecord::Migration[5.1]
     end
 
     create_table :info do |t|
+      t.belongs_to :group, index: true
       t.string  :link
       t.integer :members
       t.boolean :is_regional

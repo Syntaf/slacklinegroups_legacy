@@ -15,28 +15,30 @@ ActiveRecord::Schema.define(version: 20171117060610) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "group", force: :cascade do |t|
+  create_table "groups", force: :cascade do |t|
     t.string "name"
     t.string "group_type"
-    t.integer "location_id"
-    t.integer "info_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "info", force: :cascade do |t|
+    t.bigint "group_id"
     t.string "link"
     t.integer "members"
     t.boolean "is_regional"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_info_on_group_id"
   end
 
   create_table "location", force: :cascade do |t|
+    t.bigint "group_id"
     t.decimal "lat"
     t.decimal "lon"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["group_id"], name: "index_location_on_group_id"
   end
 
   create_table "submitted_group", force: :cascade do |t|
