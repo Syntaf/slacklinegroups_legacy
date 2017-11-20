@@ -1,13 +1,25 @@
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3ludGFmIiwiYSI6ImNqM2Z2bzZhbTAxZWwycW4wcmI5cjk4MW0ifQ.YOd5yuJfLARC2oOfqY-KoA'
 
-var zoomThresh = 4.5;
-var isPointZoom = false;
+// Keeps track of what feature was clicked between unclusteredPointClicked and
+// unclusteredPointZoomend. If a zoom needs to be done before the popup appears,
+// we set the clickEvent which is used to build the popup after the zoom is finished.
 var clickEvent = null;
+
+// List of group names to be used in autocomplete. After the data is loaded, this variable
+// is populated with every group name
 var groupNames = null;
+
+// Holds the data returned by a GET to /map/clusters
 var groupList = null;
+
+// Sometimes the popup needs to be shifted manually, but by default it is usually fine
 var defaultOffset = 0;
+
+// Contains a mapboxgl.Popup which we store so we can call .remove() on it when we shift views
 var currentPopup = null;
 
+// For mobile parity, we don't want to actually zoom to a point being at the center (we'd have
+// no room for the popup). Instead, we zoom to the point being offset lower on the screen.
 var zoomOffsetLat = 0;
 
 var createPopUp = function(f) {

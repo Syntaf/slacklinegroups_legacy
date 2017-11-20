@@ -2,16 +2,18 @@ require "json"
 
 class GroupsController < ApplicationController
 
+    # Don't allow an index path for groups, instead redirect to admin
     def index
         redirect_to admin_index_path
     end
 
     def new
-        # helpers = Rails.application.routes.named_routes.helper_names
-        # p helpers
         @group = UserSubmittedGroup.new
     end
 
+    # Never actually delete a user submitted group. Setting the approved
+    # tag to 2 will mean the group was rejected, and no longer show it
+    # in the admin pending panel
     def destroy
         @group = UserSubmittedGroup.find(params[:id])
         @group.approved = 2
@@ -20,10 +22,13 @@ class GroupsController < ApplicationController
         redirect_to admin_index_path
     end
 
+    # Grabs the corresponding group for displaying use in the template
     def show
-        @group = Group.find(params[:id])
+        @group = UserSubmittedGroup.find(params[:id])
     end
 
+    # Attempts to submit a group from a user. If successful, sends back a local
+    # which is used to open a prompt if true.
     def create
         @group = UserSubmittedGroup.new(group_params)
 
@@ -34,18 +39,8 @@ class GroupsController < ApplicationController
         end
     end
 
-    def show
-        @group = UserSubmittedGroup.find(params[:id])
-    end
-
     private
-        def cords_to_a
-            # get the params[:group][:cords], if empty use '[]'
-            cords = params.dig(:user_submitted_group, :cords).presence || "[]"
-            JSON.parse cords
-        end
-
         def group_params
-            params.require(:user_submitted_group).permit(:name, :members, :centroid_lat, :centroid_lon, :fb_group, :fb_page, :website, :isRegional, :email).merge({cords: cords_to_a})
+            params.require(:user_submitted_group).permit(:name, :members, :lat, :lon, :link, :is_regional, :email)
         end
 end
