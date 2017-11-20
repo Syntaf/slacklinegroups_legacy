@@ -232,7 +232,7 @@ $(document).ready(function() {
                 id: 'unclustered-local-point',
                 type: 'symbol',
                 source: 'group-points',
-                filter: ['all', ['!has', 'point_count'], ['==', 'isRegional', false]],
+                filter: ['all', ['!has', 'point_count'], ['==', 'is_regional', false]],
                 layout: {
                     'icon-image': 'slackgroup',
                     'icon-size': 1
@@ -245,7 +245,7 @@ $(document).ready(function() {
                 id: 'unclustered-regional-point',
                 type: 'symbol',
                 source: 'group-points',
-                filter: ['all', ['!has', 'point_count'], ['==', 'isRegional', true]],
+                filter: ['all', ['!has', 'point_count'], ['==', 'is_regional', true]],
                 layout: {
                     'icon-image': 'regionalGroup',
                     'icon-size': 1

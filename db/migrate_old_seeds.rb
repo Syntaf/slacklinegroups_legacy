@@ -20,7 +20,7 @@ data_hash['groups'].each do |group|
         link = group['website']
         type = 'website'
     end
-    ngroup.create_info(link: link, members: group['members'])
+    ngroup.create_info(link: link, members: group['members'], is_regional: group['isRegional'])
     ngroup.create_location(lat: group['centroid_lat'], lon: group['centroid_lon'])
     
     ngroup.created_at = group['created_at']
