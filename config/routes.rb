@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   get 'group/:id', to: 'map#index'
   get 'map/index'
-  get 'map/clusters', to: 'map#getclusters'
+  get 'map/clusters', to: 'map#clusters'
   get 'map/cover'
   get 'about', to: 'about#index'
 

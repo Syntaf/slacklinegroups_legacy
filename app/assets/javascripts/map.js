@@ -6,6 +6,7 @@ var clickEvent = null;
 var groupNames = null;
 var groupList = null;
 var defaultOffset = 0;
+var currentPopup = null;
 
 var zoomOffsetLat = 0;
 
@@ -77,7 +78,10 @@ $(document).ready(function() {
                 for(var i = 0; i < groupList.length; i++) {
                     var group = groupList[i];
                     if(group.properties.name.toLowerCase() === slackGroupName.toLowerCase()) {
-                        $('.mapboxgl-popup').remove();
+                        if (currentPopup != null) {
+                            currentPopup.remove();
+                            currentPopup = null;
+                        }
                         unclusteredPointClicked({
                             features: 
                             [
@@ -119,7 +123,7 @@ $(document).ready(function() {
                 zoom: 7.7
             });
         } else {
-            new mapboxgl.Popup()
+            currentPopup = new mapboxgl.Popup()
                 .setLngLat(getCords(clickEvent.features, defaultOffset))
                 .setHTML(createPopUp(clickEvent.features))
                 .addTo(map);
@@ -131,7 +135,7 @@ $(document).ready(function() {
     {
         if (clickEvent)
         {
-            new mapboxgl.Popup()
+            currentPopup = new mapboxgl.Popup()
                 .setLngLat(getCords(clickEvent.features, 0.04))
                 .setHTML(createPopUp(clickEvent.features))
                 .addTo(map);
@@ -147,7 +151,10 @@ $(document).ready(function() {
     }
 
     $('.zoom-out').click(function() {
-        $('.mapboxgl-popup').remove();
+        if (currentPopup != null) {
+            currentPopup.remove();
+            currentPopup = null;
+        }
         history.pushState({}, '', '/');
         map.flyTo({
             center: {
@@ -160,7 +167,6 @@ $(document).ready(function() {
 
     map.on('load', function () {
         geoPointJSON.done(function(data) {
-            console.log(data);
             groupList = data;
             groupNames = groupList.map(function(group) { return group.properties.name });
             $('.loader').remove();
@@ -292,7 +298,7 @@ $(document).ready(function() {
 
             if (group.length !== 0)
             {
-                unclusteredPointClicked(group[0]);
+                unclusteredPointClicked(group);
             }
         });
     });

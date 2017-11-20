@@ -7,23 +7,11 @@ class MapController < BaseMap
 
     def index
         @json = Array.new
-        # if params[:id] != nil
-        #     p 'inside here'
-        #     @group = Group.find(params[:id])
-        #     link = @group.fb_group
-        #     type = "Group"
-        #     members = @group.members
-        #     if !link || link.blank?
-        #         type = "Page"
-        #         members = "N/A"
-        #         link = @group.fb_page
-        #     end
-        #     if !link || link.blank?
-        #         type = "Website"
-        #         members = "N/A"
-        #         link = @group.website
-        #     end
-    
+        if params[:id] != nil
+            @json = self.class.superclass.instance_method(:get_group).bind(self).call
+            p @json
+        end
+        p @json
         #     @json << {
         #         features:
         #         [
@@ -89,7 +77,7 @@ class MapController < BaseMap
         render 'index', :group => @json
     end
 
-    def getclusters
+    def clusters
         super
     end
 
