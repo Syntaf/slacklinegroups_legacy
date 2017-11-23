@@ -1,16 +1,18 @@
 class AdminController < ApplicationController
-    before_action :authenticate
+    # before_action :authenticate
     
     def index
         p Rails.application.routes.named_routes.helper_names
-        @groups = Group.all
+        @groups = Group.joins(:info, :location).includes(:info, :location)
 
         # status of 1 in approval field represents pending status. 0 = approved, 2 = rejected
-        @userSubmittedGroups = UserSubmittedGroup.where(approved: 0)
+        @userSubmittedGroups = SubmittedGroup.where(approved: 0)
     end
 
     def new
         @group = Group.new
+        @group.build_info
+        @group.build_location
     end
 
     def edit
@@ -19,10 +21,12 @@ class AdminController < ApplicationController
 
     def create
         @group = Group.new(group_params)
+        @group.create_info(info_params)
+        @group.create_location(location_params)
 
         if @group.save
             p @group
-            redirect_to admin_path(@group)
+            redirect_to admin_index_path
         else
             render 'new'
         end
@@ -62,7 +66,6 @@ class AdminController < ApplicationController
             centroid_lat: @apprGroup.centroid_lat,
             centroid_lon: @apprGroup.centroid_lon,
             members: @apprGroup.members,
-            cords: @apprGroup.cords
         )
 
         if @newGroup.save
@@ -92,14 +95,16 @@ class AdminController < ApplicationController
     end
 
     private
-        def cords_to_a
-            # get the params[:group][:cords], if empty use '[]'
-            cords = params.dig(:group, :cords).presence || "[]"
-            JSON.parse cords
+        def group_params
+            params.require(:group).permit(:name, :group_type)
         end
 
-        def group_params
-            params.require(:group).permit(:name, :members, :centroid_lat, :centroid_lon, :fb_group, :fb_page, :website, :isRegional)
+        def info_params
+            params.require(:info).permit(:link, :members, :is_regional)
+        end
+
+        def location_params
+            params.require(:location).permit(:lat, :lon)
         end
 
         def authenticate

@@ -1,92 +1,78 @@
 <h1>New Group</h1>
 <hr>
 <div class="my-container">
-    <table>
-        <tr>
-            <td style="width: 50%;">
-                <div id="map">
-                    <a class="waves-effect waves-light btn" id="export">Export</a>
-                </div>
-            </td>
-            <td style="width: 50%;">
-                <%= form_for @group, :url => {:action => 'create'} do |f| %>
-                    <% if @group.errors.any? %>
-                        <div id="error_explanation">
-                            <h4>
-                                <%= pluralize(@group.errors.count, "error") %> prohibited
-                                this article from being saved:
-                            </h4>
-                            <ul>
-                                <% @group.errors.full_messages.each do |msg| %>
-                                    <li><%= msg %></li>
-                                <% end %>
-                            </ul>
-                        </div>
+    <div id="map">
+        <a class="waves-effect waves-light btn" id="export">Export</a>
+    </div>
+    <%= simple_form_for @group, :url => admin_index_path do |f| %>
+        <% if @group.errors.any? %>
+            <div id="error_explanation">
+                <h4>
+                    <%= pluralize(@group.errors.count, "error") %> prohibited
+                    this article from being saved:
+                </h4>
+                <ul>
+                    <% @group.errors.full_messages.each do |msg| %>
+                        <li><%= msg %></li>
                     <% end %>
+                </ul>
+            </div>
+        <% end %>
 
+        <table>
+        <tbody>
+            <tr>
+                <td style="width: 50%;">
                     <p id="nm">
                         <%= f.label :name %><br>
                         <%= f.text_field :name %>
                     </p>
 
-                    <!-- DEPRECATED FOR NOW!
-                    <p id="cd">
-                        <%= f.label :cords, 'Coordinates (deprecated for now!)' %><br>
-                        <input type="text" name="group[cords]" id="group_cords" value="<%= @group.cords %>">
-                    </p>
-                    -->
-
-                    <p id="cd">
-                        <%= f.label :centroid_lat, 'Latitude' %><br>
-                        <%= f.text_field :centroid_lat %>
-                    </p>
-                    <p id="cd">
-                        <%= f.label :centroid_lon, 'Longitude' %><br>
-                        <%= f.text_field :centroid_lon %>
-                    </p>
-
-                    <br>
-
-                    <p id="mm">
-                        <%= f.label :members %><br>
-                        <%= f.text_field :members %>
-                    </p>
-
-                    <% if :fb_group %>
-                    <p id="lk">
-                        <%= f.label :fb_group, 'Link to group' %><br>
-                        <%= f.text_field :fb_group %>
-                    </p>
-                    <% end %>
-                    <br>
-                    <% if :fb_page %>
-                    <p id="lk">
-                        <%= f.label :fb_page, 'Link to page' %><br>
-                        <%= f.text_field :fb_page %>
-                    </p>
+                    <%= simple_fields_for :location do |l| %>
+                        <p id="cd">
+                            <%= l.label :lat, 'Latitude' %><br>
+                            <%= l.text_field :lat %>
+                        </p>
+                        <p id="cd">
+                            <%= l.label :lon, 'Longitude' %><br>
+                            <%= l.text_field :lon %>
+                        </p>
                     <% end %>
 
-                    <% if :website %>
-                    <p id="lk">
-                        <%= f.label :website, 'Link to website' %><br>
-                        <%= f.text_field :website %>
+                    <p id="nm">
+                        <div class="input-field col s6">
+                            <%= f.input :group_type, label: false, :collection => ['facebook group', 'facebook page', 'website'] %>
+                        </div>
                     </p>
+                </td>
+                <td style="width: 50%;">
+                    <%= simple_fields_for :info do |i| %>
+                        <p id="mm">
+                            <%= i.label :members %><br>
+                            <%= i.text_field :members %>
+                        </p>
+
+                        <p id="lk">
+                            <%= i.label :link, 'Link to group' %><br>
+                            <%= i.text_field :link %>
+                        </p>
+                        
+                        <br>
+                        <p>
+                            <%= i.check_box :is_regional, id:'groupRegional' %>
+                            <%= i.label 'Regional?', for: 'groupRegional', id: 'groupRegional' %>
+                        </p>
                     <% end %>
-                    
-                    <br>
-                    <p>
-                        <%= f.check_box :isRegional, id:'groupRegional' %>
-                        <%= f.label 'Regional?', for: 'groupRegional', id: 'groupRegional' %>
-                    </p>
+                </td>
+            </tr>
+        </tbody>
+        </table>
 
-                    <p>
-                        <%= f.submit class: 'waves-effect waves-light btn' %>
-                    </p>
+        <p>
+            <%= f.submit class: 'waves-effect waves-light btn' %>
+        </p>
 
-                <% end %>
-            </td>
-        </tr>
-    </table>
+    <% end %>
 </div>
 <%= link_to 'Back', admin_index_path %>
 <script>
@@ -105,8 +91,8 @@
         }
     });
     map.addControl(draw);
-    var lon = $('#group_centroid_lon').val();
-    var lat = $('#group_centroid_lat').val();
+    var lon = $('#location_lon').val();
+    var lat = $('#location_lat').val();
     console.log(lon, lat);
     if(lon && lat) {
         map.on('load', function() {
@@ -133,45 +119,13 @@
 
         $('.mapbox-gl-draw_trash').click(function() {
             map.setLayoutProperty('group-location', 'visibility', 'none');
-            $('#group_centroid_lon').val('');
-            $('#group_centroid_lat').val('');
+            $('#location_lon').val('');
+            $('#location_lat').val('');
         });
     }
-    // var cords = $('#group_cords').val();
-    // // if cords are non-empty, we should display that polygon
-    // if(cords !== '[]') {
-    //     var arr = JSON.parse(cords);
-    //     map.on('load', function() {
-    //         map.addLayer({
-    //             id: 'group-location',
-    //             type: 'fill',
-    //             source: {
-    //                 type: 'geojson',
-    //                 data: {
-    //                     type: 'Feature',
-    //                     geometry: {
-    //                         type: 'Polygon',
-    //                         coordinates: arr
-    //                     }
-    //                 }
-    //             },
-    //             layout: {},
-    //             paint: {
-    //                 'fill-outline-color': '#FF1E1E',
-    //                 'fill-color': '#FE5F55',
-    //                 'fill-opacity': 0.8
-    //             }
-    //         });
-
-    //         $('.mapbox-gl-draw_trash').click(function() {
-    //             map.setLayoutProperty('group-location', 'visibility', 'none');
-    //             $('#group_cords').val('');
-    //         });
-    //     });
-    // }
     $('#export').click(function() {
         var data = draw.getAll();
-        $('#group_centroid_lat').val(data.features[0].geometry.coordinates[1]);
-        $('#group_centroid_lon').val(data.features[0].geometry.coordinates[0]);
+        $('#location_lat').val(data.features[0].geometry.coordinates[1]);
+        $('#location_lon').val(data.features[0].geometry.coordinates[0]);
     });
 </script>

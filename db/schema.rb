@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 20171117060610) do
     t.string "link"
     t.integer "members"
     t.boolean "is_regional"
+    t.integer "approved"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -56,10 +57,12 @@ ActiveRecord::Schema.define(version: 20171117060610) do
   create_table "submitted_group_history", force: :cascade do |t|
     t.string "name"
     t.string "type"
+    t.string "reason"
     t.decimal "lat"
     t.decimal "lon"
     t.string "link"
     t.integer "members"
+    t.integer "approved"
     t.boolean "is_regional"
     t.datetime "verified_time"
     t.datetime "created_at", null: false

@@ -15,6 +15,9 @@ body {
 .indicator {
     background-color: #00838f !important;
 }
+abbr {
+    display: none;
+}
 #map {
     height: 400px;
     width: 100%;
@@ -26,7 +29,7 @@ body {
     }
 }
 .my-container {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
 
     .new-group {
@@ -86,7 +89,6 @@ body {
 
 td {
     vertical-align: top;
-    overflow-x: auto;
     white-space: nowrap;
 }
 .header {

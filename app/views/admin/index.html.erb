@@ -15,9 +15,7 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>FB Group</th>
-                    <th>FB Page</th>
-                    <th>Website</th>
+                    <th>Link</th>
                     <th class="number-td">Lat</th>
                     <th class="number-td">Long</th>
                     <th class="number-td">Members</th>
@@ -29,15 +27,23 @@
 
             <tbody>
             <% @groups.each do |group| %>
-            <tr <%= if group.fb_group != nil && !group.fb_page && !group.website && (!group.centroid_lon || !group.centroid_lat || !group.members); "class=red-out"; end %>>
+            <tr <%= if missing_information(group) then "class=red-out"; end %>>
                 <td class="name-td"><%= group.name %></td>
-                <td class="link-td"><a target="_blank" href="<%= group.fb_group %>"><%= group.fb_group.nil? ? '' : group.fb_group.gsub("https://www.facebook.com/groups", "") %></a></td>
-                <td class="link-td"><a target="_blank" href="<%= group.fb_page %>"><%= group.fb_page.nil? ? '' : group.fb_page.gsub("https://www.facebook.com/", "") %></a></td>
-                <td class="link-td"><a target="_blank" href="<%= group.website %>"><%= group.website %></a></td>
-                <td class="cord-td"><%= "%.3f" % (group.centroid_lat.nil? ? 0 : group.centroid_lat) %></td>
-                <td class="cord-td"><%= "%.3f" % (group.centroid_lon.nil? ? 0 : group.centroid_lon) %></td>
-                <td class="number-td small-td"><%= group.members %></td>
-                <td class="icon-td"><%= link_to(admin_path(group)) do %><i class="fa fa-eye"></i><% end %></td></td>
+                <td class="link-td">
+                    <a target="_blank" href="<%= group.info.link %>">
+                        <% if group.group_type == "facebook group" %>
+                            <%= group.info.link.gsub("https://www.facebook.com/groups", "") %>
+                        <% elsif group.group_type == "facebook page" %>
+                            <%= group.info.link.gsub("https://www.facebook.com/", "") %>
+                        <% else %>
+                            <%= group.info.link %>
+                        <% end %>
+                    </a>
+                </td>
+                <td class="cord-td"><%= "%.3f" % (group.location.lat ? group.location.lat : 0) %></td>
+                <td class="cord-td"><%= "%.3f" % (group.location.lon ? group.location.lon : 0) %></td>
+                <td class="number-td small-td"><%= group.info.members %></td>
+                <td class="icon-td"><%= link_to("group/#{group.id}") do %><i class="fa fa-eye"></i><% end %></td></td>
                 <td class="icon-td"><%= link_to(edit_admin_path(group)) do %><i class="fa fa-pencil"></i><% end %></td>
                 <td class="icon-td"><%= link_to(admin_url(group),
                     method: :delete,
@@ -54,9 +60,7 @@
                 <tr>
                     <th>Email</th>
                     <th>Name</th>
-                    <th>FB Group</th>
-                    <th>FB Page</th>
-                    <th>Website</th>
+                    <th>Link</th>
                     <th class="number-td">Lat</th>
                     <th class="number-td">Long</th>
                     <th class="number-td">Members</th>
@@ -68,14 +72,22 @@
 
             <tbody>
             <% @userSubmittedGroups.each do |group| %>
-            <tr id="row-<%= group.id %>" <%= if group.fb_group != nil && !group.fb_page && !group.website && (!group.centroid_lon || !group.centroid_lat || !group.members); "class=red-out"; end %>>
+            <tr id="row-<%= group.id %>" <%= if missing_information(group) then "class=red-out"; end %>>
                 <td class="email-td"><%= group.email %></td>
                 <td class="name-td"><%= group.name %></td>
-                <td class="link-td"><a target="_blank" href="<%= group.fb_group %>"><%= group.fb_group.nil? ? '' : group.fb_group.gsub("https://www.facebook.com/groups", "") %></a></td>
-                <td class="link-td"><a target="_blank" href="<%= group.fb_page %>"><%= group.fb_page.nil? ? '' : group.fb_page.gsub("https://www.facebook.com/", "") %></a></td>
-                <td class="link-td"><a target="_blank" href="<%= group.website %>"><%= group.website %></a></td>
-                <td class="cord-td"><%= "%.3f" % group.centroid_lat %></td>
-                <td class="cord-td"><%= "%.3f" % group.centroid_lon %></td>
+                <td class="link-td">
+                    <a target="_blank" href="<%= group.info.link %>">
+                        <% if group.group_type == "facebook_group" %>
+                            <%= group.info.link.gsub("https://www.facebook.com/groups", "") %>
+                        <% elsif group.group_type == "facebook_page" %>
+                            <%= group.info.link.gsub("https://www.facebook.com/", "") %>
+                        <% else %>
+                            <%= group.info.link %>
+                        <% end %>
+                    </a>
+                </td>
+                <td class="cord-td"><%= "%.3f" % (group.location.lat ? group.location.lat : 0) %></td>
+                <td class="cord-td"><%= "%.3f" % (group.location.lon ? group.location.lon : 0) %></td>
                 <td style="text-align: right; width: 115px;"><%= group.members %></td>
                 <td class="icon-td"><%= link_to(edit_group_path(group)) do %><i class="fa fa-eye"></i><% end %></td>
                 <td class="icon-td approve-action" id="<%= group.id %>"><a><i class="fa fa-check"></i></a></td>
