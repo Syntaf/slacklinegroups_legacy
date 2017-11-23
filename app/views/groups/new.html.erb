@@ -17,7 +17,7 @@
         </tr>
         <tr>
             <td class="form-td">
-                <%= form_for @group, url: new_group_path, html: { method: :post } do |f| %>
+                <%= simple_form_for @group, url: new_group_path, html: { method: :post } do |f| %>
                 <%= render 'form', f: f %>
                 <% end %>
             </td>
@@ -86,8 +86,8 @@
         var data = draw.getAll();
         if (data.features.length > 0) {
             $('#export').text('Saved!');
-            $('#user_submitted_group_centroid_lat').val(data.features[0].geometry.coordinates[1]);
-            $('#user_submitted_group_centroid_lon').val(data.features[0].geometry.coordinates[0]);
+            $('#submitted_group_lat').val(data.features[0].geometry.coordinates[1]);
+            $('#submitted_group_lon').val(data.features[0].geometry.coordinates[0]);
         } else {
             $('#modal1').modal('open');
         }

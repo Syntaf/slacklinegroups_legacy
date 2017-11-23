@@ -26,26 +26,26 @@ class CreateDb < ActiveRecord::Migration[5.1]
 
     create_table :submitted_group do |t|
       t.string    :name
-      t.string    :type
+      t.string    :group_type
       t.decimal   :lat
       t.decimal   :lon
       t.string    :link
+      t.string    :email
       t.integer   :members
       t.boolean   :is_regional
-      t.integer   :approved
-
       t.timestamps
     end
 
     create_table :submitted_group_history do |t|
       t.string    :name
-      t.string    :type
+      t.string    :group_type
       t.string    :reason
       t.decimal   :lat
       t.decimal   :lon
       t.string    :link
+      t.string    :email
       t.integer   :members
-      t.integer   :approved
+      t.boolean   :approved
       t.boolean   :is_regional
       t.timestamp :verified_time
 

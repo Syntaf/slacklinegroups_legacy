@@ -4,31 +4,23 @@ function validateEmail(email) {
 }
 
 $(document).ready(function() {
-    $('#url-type').change(function() {
-        switch ($('#url-type').find(':selected').val()) {
-            case 'group':
-                $('.fb-page').hide();
-                $('.other').hide();
-                $('.fb-group').show();
-            break;
-            case 'page':
-                $('.fb-group').hide();
-                $('.other').hide();
-                $('.fb-page').show();
-            break;
-            case 'other':
-                $('.fb-group').hide();
-                $('.fb-page').hide();
-                $('.other').show();
-            break;
+    $('#submitted_group_group_type').change(function() {
+        var type = $('li.active span').text();
+        if (type == 'Facebook Group' || type == 'Facebook Page' || type == 'Website') {
+            $('label[for="submitted_group_group_type"]').hide();
+        } else {
+            $('label[for="submitted_group_group_type"]').show();
         }
     })
 
-    $('#new_user_submitted_group').submit(function(e) {
-        var form = $('#new_user_submitted_group');
-        var groupName = $('#user_submitted_group_name');
+    $('#new_submitted_group').submit(function(e) {
+        var form = $('#new_submitted_group');
+        var groupName = $('#submitted_group_name');
         var error = $('#error_explanation');
-        var groupType = $('#url-type').find(":selected").text();
+        var groupType = $('li.active span').text();
+        var link = $('#submitted_group_link');
+        var groupEmail = $('#submitted_group_email');
+        var memberCount = $('#submitted_group_members');
         console.log(groupType);
 
         if (groupName.val().trim().length <= 0) {
@@ -38,54 +30,36 @@ $(document).ready(function() {
             return;
         }
 
+        // remove error incase it was previously there, since the check passed
         groupName.removeClass('error');
         
-        if (groupType === 'Group Type') {
+        if (groupType === '') {
             e.preventDefault();
             $('#error-msg').remove();
             $('.select-dropdown').addClass('error');
             return;
         }
 
+        // remove error incase it was previously there, since the check passed
         $('.select-dropdown').removeClass('error')
-        
-        switch (groupType) {
-            case 'Facebook Group':
-                var groupGroupUrl = $('#user_submitted_group_fb_group');
-                
-                if (groupGroupUrl.val().trim().length <= 0 ) {
-                    e.preventDefault();
-                    groupGroupUrl.addClass('error');
-                    return;
-                }
 
-                groupGroupUrl.removeClass('error');
-            break;
-            case 'Facebook Page':
-                var groupPageUrl = $('#user_submitted_group_fb_page');
-                
-                if (groupPageUrl.val().trim().length <= 0) {
-                    e.preventDefault();
-                    groupPageUrl.addClass('error');
-                    return;
-                }
-
-                groupPageUrl.removeClass('error');
-            break;
-            case 'Website/Other':
-                var groupOtherUrl = $('#user_submitted_group_website');
-            
-                if (groupOtherUrl.val().trim().length <= 0) {
-                    e.preventDefault();
-                    groupOtherUrl.addClass('error');
-                    return;
-                }
-
-                groupOtherUrl.removeClass('error');
-            break;
+        if (groupType === 'Facebook Group' && memberCount.val().trim().length <= 0) {
+            e.preventDefault();
+            memberCount.addClass('error');
+            return;
         }
 
-        var groupEmail = $('#user_submitted_group_email');
+        // remove error incase it was previously there, since the check passed
+        memberCount.removeClass('error');
+        
+        if (link.val().trim().length <= 0) {
+            e.preventDefault();
+            link.addClass('error');
+            return;
+        }
+
+        // remove error incase it was previously there, since the check passed
+        link.removeClass('error');
 
         if (groupEmail.val().trim().length <= 0 || !validateEmail(groupEmail.val())) {
             e.preventDefault();
@@ -93,12 +67,13 @@ $(document).ready(function() {
             return;
         }
 
+        // remove error incase it was previously there, since the check passed
         groupEmail.removeClass('error');
 
-        var centroid_lat = $('#user_submitted_group_centroid_lat');
-        var centroid_lon = $('#user_submitted_group_centroid_lon');
+        var lat = $('#submitted_group_lat');
+        var lon = $('#submitted_group_lon');
 
-        if (!centroid_lat.val().trim() || !centroid_lon.val().trim()) {
+        if (!lat.val().trim() || !lon.val().trim()) {
             e.preventDefault();
             $('#no-location').modal('open');
             $('.no-redirect').click(function(){

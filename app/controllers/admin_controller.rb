@@ -2,11 +2,9 @@ class AdminController < ApplicationController
     # before_action :authenticate
     
     def index
-        p Rails.application.routes.named_routes.helper_names
         @groups = Group.joins(:info, :location).includes(:info, :location)
 
-        # status of 1 in approval field represents pending status. 0 = approved, 2 = rejected
-        @userSubmittedGroups = SubmittedGroup.where(approved: 0)
+        @userSubmittedGroups = SubmittedGroup.all
     end
 
     def new
