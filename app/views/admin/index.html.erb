@@ -72,22 +72,22 @@
 
             <tbody>
             <% @userSubmittedGroups.each do |group| %>
-            <tr id="row-<%= group.id %>" <%= if missing_information(group) then "class=red-out"; end %>>
+            <tr id="row-<%= group.id %>">
                 <td class="email-td"><%= group.email %></td>
                 <td class="name-td"><%= group.name %></td>
                 <td class="link-td">
-                    <a target="_blank" href="<%= group.info.link %>">
+                    <a target="_blank" href="<%= group.link %>">
                         <% if group.group_type == "facebook_group" %>
-                            <%= group.info.link.gsub("https://www.facebook.com/groups", "") %>
+                            <%= group.link.gsub("https://www.facebook.com/groups", "") %>
                         <% elsif group.group_type == "facebook_page" %>
-                            <%= group.info.link.gsub("https://www.facebook.com/", "") %>
+                            <%= group.link.gsub("https://www.facebook.com/", "") %>
                         <% else %>
-                            <%= group.info.link %>
+                            <%= group.link %>
                         <% end %>
                     </a>
                 </td>
-                <td class="cord-td"><%= "%.3f" % (group.location.lat ? group.location.lat : 0) %></td>
-                <td class="cord-td"><%= "%.3f" % (group.location.lon ? group.location.lon : 0) %></td>
+                <td class="cord-td"><%= "%.3f" % (group.lat ? group.lat : 0) %></td>
+                <td class="cord-td"><%= "%.3f" % (group.lon ? group.lon : 0) %></td>
                 <td style="text-align: right; width: 115px;"><%= group.members %></td>
                 <td class="icon-td"><%= link_to(edit_group_path(group)) do %><i class="fa fa-eye"></i><% end %></td>
                 <td class="icon-td approve-action" id="<%= group.id %>"><a><i class="fa fa-check"></i></a></td>
