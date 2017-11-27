@@ -1,10 +1,10 @@
 <div class="my-container">
-    <h3 class="new-group-title">Viewing an added group</h3>
+    <a style="display: inline-block;" href="/admin#submittedgroups">Back to Submitted groups</a>
+    <h3 style="display: inline-block;" class="new-group-title">Viewing an added group</h3>
     <table>
         <tr>
             <td style="width: 100%;">
                 <div id="map">
-                    <a class="waves-effect waves-light btn" id="export">Set Location</a>
                 </div>
             </td>
         </tr>
@@ -47,8 +47,8 @@
     $(document).ready(function() {
         $('select').material_select();
         $('.modal').modal();
-        var lon = $('#user_submitted_group_centroid_lon').val();
-        var lat = $('#user_submitted_group_centroid_lat').val();
+        var lon = $('#submitted_group_lon').val();
+        var lat = $('#submitted_group_lat').val();
         if(lon && lat) {
             map.on('load', function() {
                 map.addLayer({
@@ -74,21 +74,10 @@
 
             $('.mapbox-gl-draw_trash').click(function() {
                 map.setLayoutProperty('group-location', 'visibility', 'none');
-                $('#user_submitted_group_centroid_lon').val('');
-                $('#user_submitted_group_centroid_lat').val('');
+                $('#submitted_group_lon').val('');
+                $('#submitted_group_lat').val('');
             });
         }
-
-        $('#export').click(function() {
-            var data = draw.getAll();
-            if (data.features.length > 0) {
-                $('#export').text('Saved!');
-                $('#user_submitted_group_centroid_lat').val(data.features[0].geometry.coordinates[1]);
-                $('#user_submitted_group_centroid_lon').val(data.features[0].geometry.coordinates[0]);
-            } else {
-                $('#modal1').modal('open');
-            }
-        });
         $("input[type='submit']").hide();
     });
 </script>
