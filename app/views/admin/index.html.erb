@@ -64,6 +64,7 @@
                     <th class="number-td">Lat</th>
                     <th class="number-td">Long</th>
                     <th class="number-td">Members</th>
+                    <th class="number-td">Submitted</th>
                     <th></th>
                     <th></th>
                     <th></th>
@@ -89,7 +90,8 @@
                 <td class="cord-td"><%= "%.3f" % (group.lat ? group.lat : 0) %></td>
                 <td class="cord-td"><%= "%.3f" % (group.lon ? group.lon : 0) %></td>
                 <td style="text-align: right; width: 115px;"><%= group.members %></td>
-                <td class="icon-td"><%= link_to(edit_group_path(group)) do %><i class="fa fa-eye"></i><% end %></td>
+                <td style="text-align: right; width: 130px;"><%= group.created_at.strftime('%d %b %H:%M') %></td>
+                <td class="icon-td"><%= link_to(group_path(group)) do %><i class="fa fa-eye"></i><% end %></td>
                 <td class="icon-td approve-action" id="<%= group.id %>"><a><i class="fa fa-check"></i></a></td>
                 <td class="icon-td"><%= link_to(group_path(group),
                     method: :delete,

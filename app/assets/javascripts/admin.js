@@ -1,6 +1,7 @@
 $(document).ready(function() {
+    
+
     $('#group_group_type').material_select();
-    $('ul.tabs').tabs();
     $('.approve-action').click(function() {
         var group_id = $(this).attr('id');
         $.ajax({

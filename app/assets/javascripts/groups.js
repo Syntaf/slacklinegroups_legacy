@@ -4,7 +4,14 @@ function validateEmail(email) {
 }
 
 $(document).ready(function() {
-    $('#submitted_group_group_type').change(function() {
+    var $selectType = $('#submitted_group_group_type');
+    var type = $('option[selected="selected"]').val();
+
+    if (type == 'facebook group' || type == 'facebook page' || type == 'website') {
+        $('label[for="submitted_group_group_type"]').hide();
+    }
+
+    $selectType.change(function() {
         var type = $('li.active span').text();
         if (type == 'Facebook Group' || type == 'Facebook Page' || type == 'Website') {
             $('label[for="submitted_group_group_type"]').hide();

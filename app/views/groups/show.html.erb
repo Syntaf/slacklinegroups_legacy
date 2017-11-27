@@ -10,7 +10,7 @@
         </tr>
         <tr>
             <td class="form-td">
-                <%= form_for @group, url: groups_path, html: { method: :post } do |f| %>
+                <%= simple_form_for @group, url: groups_path, html: { method: :post } do |f| %>
                 <%= render 'form', f: f %>
                 <% end %>
             </td>
