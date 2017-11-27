@@ -19,8 +19,6 @@ class AdminController < ApplicationController
 
     def create
         @group = Group.new(group_params)
-        @group.create_info(info_params)
-        @group.create_location(location_params)
 
         if @group.save
             p @group
@@ -54,21 +52,44 @@ class AdminController < ApplicationController
     def approve
         @response = Array.new
 
-        @apprGroup = UserSubmittedGroup.find(params[:id])
+        @approvedGroup = SubmittedGroup.find(params[:id])
 
+        # Create new group and relationships using submitted group information
         @newGroup = Group.new(
-            name: @apprGroup.name,
-            fb_group: @apprGroup.fb_group,
-            fb_page: @apprGroup.fb_page,
-            website: @apprGroup.website,
-            centroid_lat: @apprGroup.centroid_lat,
-            centroid_lon: @apprGroup.centroid_lon,
-            members: @apprGroup.members,
+            name: @approvedGroup.name,
+            group_type: @approvedGroup.group_type
+        )
+
+        @newGroup.create_info(
+            members: @approvedGroup.members,
+            link: @approvedGroup.link
+        )
+
+        @newGroup.create_location(
+            lat: @approvedGroup.lat,
+            lon: @approvedGroup.lon
         )
 
         if @newGroup.save
-            @apprGroup.approved = 1
-            if @apprGroup.save
+            # Create a history entry for the submitted group
+            @historyEntry = SubmittedGroupHistory.new(
+                name: @approvedGroup.name,
+                group_type: @approvedGroup.group_type,
+                reason: 'Approved',
+                lat: @approvedGroup.lat,
+                lon: @approvedGroup.lon,
+                link: @approvedGroup.link,
+                email: @approvedGroup.email,
+                members: @approvedGroup.members,
+                approved: true,
+                is_regional: @approvedGroup.is_regional,
+                verified_time: DateTime.now
+            )
+            if @historyEntry.save
+                # Save successful, meaning we can now delete the submit entry
+                @approvedGroup.destroy
+
+                # Return success response with new group info so it can be added during AJAX call
                 @response = {
                     status: 200,
                     group: @newGroup.as_json
@@ -76,7 +97,7 @@ class AdminController < ApplicationController
             else
                 @response = {
                     status: 500,
-                    errors: @apprGroup.errors.full_messages
+                    errors: @historyEntry.errors.full_messages
                 }
             end
         else
@@ -94,15 +115,7 @@ class AdminController < ApplicationController
 
     private
         def group_params
-            params.require(:group).permit(:name, :group_type)
-        end
-
-        def info_params
-            params.require(:info).permit(:link, :members, :is_regional)
-        end
-
-        def location_params
-            params.require(:location).permit(:lat, :lon)
+            params.require(:group).permit(:name, :group_type, location_attributes: [:lat, :lon], info_attributes: [:members, :link, :is_regional])
         end
 
         def authenticate

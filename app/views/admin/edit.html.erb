@@ -1,109 +1,20 @@
-<div class="header">
-    <h2>SlacklineGroups<sub>beta</sub></h2>
-    <p>Admin Panel</p>
+<div class="header" style="margin-bottom: 10px;">
+    <h2>SlacklineGroups</h2>
 </div>
+<%= link_to 'Back', admin_path %>
 <div class="my-container">
-    <h5>Editing your slackline group:</h5>
-    <p>To draw an area that encompasses your groups activities, select the <b>Polygon Tool (p)</b> on the right side of the map, and click to create vertices. Upon clicking on an existing vertex, the shape will close and you will be able to click <em>Export</em>. This will automatically fill the <em>Cords</em> field below, so no need to touch it after.
-    <br><br>After filling out or verifying the remaining information, click <em>Update Group</em> to submit your changes. All done, thanks!
-    </p>
-    <table>
-        <tr>
-            <td style="width: 100%;">
-                <div id="map">
-                    <a class="waves-effect waves-light btn" id="export">Export</a>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td class="form-td">
-                <%= form_for @group, :url => {:action => 'update'} do |f| %>
-                    <% if @group.errors.any? %>
-                        <div id="error_explanation">
-                            <h4>
-                                <%= pluralize(@group.errors.count, "error") %> prohibited
-                                this article from being saved:
-                            </h4>
-                            <ul>
-                                <% @group.errors.full_messages.each do |msg| %>
-                                    <li><%= msg %></li>
-                                <% end %>
-                            </ul>
-                        </div>
-                    <% end %>
-
-                    <p id="nm">
-                        <%= f.label :name %><br>
-                        <%= f.text_field :name %>
-                    </p>
-
-                    <!-- DEPRECATED FOR NOW!
-                    <p id="cd">
-                        <%= f.label :cords, 'Coordinates (deprecated for now!)' %><br>
-                        <input type="text" name="group[cords]" id="group_cords" value="<%= @group.cords %>">
-                    </p>
-                    -->
-
-                    <p id="cd">
-                        <%= f.label :centroid_lat, 'Latitude' %><br>
-                        <%= f.text_field :centroid_lat %>
-                    </p>
-                    <p id="cd">
-                        <%= f.label :centroid_lon, 'Longitude' %><br>
-                        <%= f.text_field :centroid_lon %>
-                    </p>
-
-                    <br>
-
-                    <p id="mm">
-                        <%= f.label :members %><br>
-                        <%= f.text_field :members %>
-                    </p>
-
-                    <% if :fb_group %>
-                    <p id="lk">
-                        <%= f.label :fb_group, 'Link to group' %><br>
-                        <%= f.text_field :fb_group %>
-                    </p>
-                    <% end %>
-                    <br>
-                    <% if :fb_page %>
-                    <p id="lk">
-                        <%= f.label :fb_page, 'Link to page' %><br>
-                        <%= f.text_field :fb_page %>
-                    </p>
-                    <% end %>
-
-                    <% if :website %>
-                    <p id="lk">
-                        <%= f.label :website, 'Link to website' %><br>
-                        <%= f.text_field :website %>
-                    </p>
-                    <% end %>
-                    
-                    <br>
-                    <p>
-                        <%= f.check_box :isRegional, id:'groupRegional' %>
-                        <%= f.label 'Regional?', for: 'groupRegional', id: 'groupRegional' %>
-                    </p>
-
-                    <p>
-                        <%= f.submit class: 'waves-effect waves-light btn' %>
-                    </p>
-
-                <% end %>
-            </td>
-        </tr>
-    </table>
-    <%= link_to 'Back', admin_path %>
+    <div id="map">
+        <a class="waves-effect waves-light btn" id="export">Export</a>
+    </div>
+    <%= simple_form_for @group, :url => {:action => 'update'} do |f| %>
+    <%= render 'form', f: f %>
+    <% end %>
 </div>
 <script>
-    var lon = $('#group_centroid_lon').val();
-    var lat = $('#group_centroid_lat').val();
     mapboxgl.accessToken = 'pk.eyJ1Ijoic3ludGFmIiwiYSI6ImNqM2Z2bzZhbTAxZWwycW4wcmI5cjk4MW0ifQ.YOd5yuJfLARC2oOfqY-KoA'
     var map = new mapboxgl.Map({
-        center: (lon && lat) ? [lon, lat] : [-20, 45],
-        zoom: 4.5,
+        center: [-20, 45],
+        zoom: 1.5,
         container: 'map',
         style: 'mapbox://styles/syntaf/cj3rys2fx000q2qodb7zlbh2v'
     });
@@ -115,6 +26,8 @@
         }
     });
     map.addControl(draw);
+    var lon = $('#location_lon').val();
+    var lat = $('#location_lat').val();
     console.log(lon, lat);
     if(lon && lat) {
         map.on('load', function() {
@@ -141,45 +54,13 @@
 
         $('.mapbox-gl-draw_trash').click(function() {
             map.setLayoutProperty('group-location', 'visibility', 'none');
-            $('#group_centroid_lon').val('');
-            $('#group_centroid_lat').val('');
+            $('#location_lon').val('');
+            $('#location_lat').val('');
         });
     }
-    // var cords = $('#group_cords').val();
-    // // if cords are non-empty, we should display that polygon
-    // if(cords !== '[]') {
-    //     var arr = JSON.parse(cords);
-    //     map.on('load', function() {
-    //         map.addLayer({
-    //             id: 'group-location',
-    //             type: 'fill',
-    //             source: {
-    //                 type: 'geojson',
-    //                 data: {
-    //                     type: 'Feature',
-    //                     geometry: {
-    //                         type: 'Polygon',
-    //                         coordinates: arr
-    //                     }
-    //                 }
-    //             },
-    //             layout: {},
-    //             paint: {
-    //                 'fill-outline-color': '#FF1E1E',
-    //                 'fill-color': '#FE5F55',
-    //                 'fill-opacity': 0.8
-    //             }
-    //         });
-
-    //         $('.mapbox-gl-draw_trash').click(function() {
-    //             map.setLayoutProperty('group-location', 'visibility', 'none');
-    //             $('#group_cords').val('');
-    //         });
-    //     });
-    // }
     $('#export').click(function() {
         var data = draw.getAll();
-        $('#group_centroid_lat').val(data.features[0].geometry.coordinates[1]);
-        $('#group_centroid_lon').val(data.features[0].geometry.coordinates[0]);
+        $('#location_lat').val(data.features[0].geometry.coordinates[1]);
+        $('#location_lon').val(data.features[0].geometry.coordinates[0]);
     });
 </script>

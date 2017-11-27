@@ -16,7 +16,25 @@ class GroupsController < ApplicationController
     # in the admin pending panel
     def destroy
         @group = SubmittedGroup.find(params[:id])
-        @group.save
+
+        # Create a new history entry
+        @historyEntry = SubmittedGroupHistory.new(
+            name: @group.name,
+            group_type: @group.group_type,
+            reason: 'Denied',
+            lat: @group.lat,
+            lon: @group.lon,
+            link: @group.link,
+            email: @group.email,
+            members: @group.members,
+            approved: false,
+            is_regional: @group.is_regional,
+            verified_time: DateTime.now
+        )
+        if @historyEntry.save
+            # Only destroy the group if we successfully saved it into the history table
+            @group.destroy
+        end
 
         redirect_to admin_index_path
     end
