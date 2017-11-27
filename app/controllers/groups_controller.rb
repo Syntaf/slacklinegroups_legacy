@@ -36,7 +36,7 @@ class GroupsController < ApplicationController
             @group.destroy
         end
 
-        redirect_to admin_index_path
+        redirect_to admin_index_path + '#submittedgroups'
     end
 
     # Grabs the corresponding group for displaying use in the template

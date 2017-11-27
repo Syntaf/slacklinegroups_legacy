@@ -15,6 +15,7 @@
             <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Type</th>
                     <th>Link</th>
                     <th class="number-td">Lat</th>
                     <th class="number-td">Long</th>
@@ -29,6 +30,7 @@
             <% @groups.each do |group| %>
             <tr <%= if missing_information(group) then "class=red-out"; end %>>
                 <td class="name-td"><%= group.name %></td>
+                <td class="name-td"><%= shrink_type(group.group_type) %></td>
                 <td class="link-td">
                     <a target="_blank" href="<%= group.info.link %>">
                         <% if group.group_type == "facebook group" %>
@@ -60,6 +62,7 @@
                 <tr>
                     <th>Email</th>
                     <th>Name</th>
+                    <th>Type</th>
                     <th>Link</th>
                     <th class="number-td">Lat</th>
                     <th class="number-td">Long</th>
@@ -76,6 +79,7 @@
             <tr id="row-<%= group.id %>">
                 <td class="email-td"><%= group.email %></td>
                 <td class="name-td"><%= group.name %></td>
+                <td class="name-td"><%= shrink_type(group.group_type) %></td>
                 <td class="link-td">
                     <a target="_blank" href="<%= group.link %>">
                         <% if group.group_type == "facebook_group" %>
