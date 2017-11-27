@@ -20,7 +20,7 @@ $(document).ready(function() {
                     console.log(data.errors);
                     alert('Seems something went wrong :( , check logs');
                 } else {
-                    $("row-" + group_id).remove();
+                    $("#row-" + group_id).remove();
                 }
             }
         });

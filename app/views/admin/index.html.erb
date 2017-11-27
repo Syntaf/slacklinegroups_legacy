@@ -95,7 +95,7 @@
                 <td class="icon-td approve-action" id="<%= group.id %>"><a><i class="fa fa-check"></i></a></td>
                 <td class="icon-td"><%= link_to(group_path(group),
                     method: :delete,
-                    data: { confirm: 'Are you sure you wish to delete this item?' }) do %><i class="fa fa-trash-o"></i><% end %>
+                    data: { confirm: 'Are you sure you wish to deny this item?' }) do %><i class="fa fa-times"></i><% end %>
                 </td>
             </tr>
             <% end %>

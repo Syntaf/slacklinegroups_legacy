@@ -13,7 +13,7 @@ $(document).ready(function() {
 
     $selectType.change(function() {
         var type = $('li.active span').text();
-        if (type == 'Facebook Group' || type == 'Facebook Page' || type == 'Website') {
+        if (type == 'Facebook Group' || type == 'Facebook Page' || type == 'Website/Other') {
             $('label[for="submitted_group_group_type"]').hide();
         } else {
             $('label[for="submitted_group_group_type"]').show();

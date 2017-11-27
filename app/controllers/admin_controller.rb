@@ -62,7 +62,8 @@ class AdminController < ApplicationController
 
         @newGroup.create_info(
             members: @approvedGroup.members,
-            link: @approvedGroup.link
+            link: @approvedGroup.link,
+            is_regional: @approvedGroup.is_regional
         )
 
         @newGroup.create_location(
