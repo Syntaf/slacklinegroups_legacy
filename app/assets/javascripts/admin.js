@@ -2,6 +2,7 @@ $(document).ready(function() {
     
 
     $('#group_group_type').material_select();
+
     $('.approve-action').click(function() {
         var group_id = $(this).attr('id');
         $.ajax({
@@ -15,7 +16,6 @@ $(document).ready(function() {
             },
             dataType: 'json',
             success: function(data) {
-                console.log(data);
                 if(data.errors) {
                     console.log(data.errors);
                     alert('Seems something went wrong :( , check logs');

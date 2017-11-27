@@ -28,7 +28,6 @@ $(document).ready(function() {
         var link = $('#submitted_group_link');
         var groupEmail = $('#submitted_group_email');
         var memberCount = $('#submitted_group_members');
-        console.log(groupType);
 
         if (groupName.val().trim().length <= 0) {
             e.preventDefault();

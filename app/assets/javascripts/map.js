@@ -179,7 +179,6 @@ $(document).ready(function() {
 
     map.on('load', function () {
         geoPointJSON.done(function(data) {
-            console.log(data);
             groupList = data;
             groupNames = groupList.map(function(group) { return group.properties.name });
             $('.loader').remove();

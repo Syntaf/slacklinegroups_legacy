@@ -51,7 +51,7 @@ data_hash['groups'].each do |group|
     if group['cords'].length > 0
         p group['cords']
         from_centroid = centroid(group['cords'])
-        ngroup.create_location(lat: from_centroid[0], lon: from_centroid[1])
+        ngroup.create_location(lat: from_centroid[1], lon: from_centroid[0])
     else
         ngroup.create_location(lat: group['centroid_lat'], lon: group['centroid_lon'])
     end
