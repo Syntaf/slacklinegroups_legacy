@@ -1693,3 +1693,20 @@ SubmittedGroupHistory.create!([
   {id: 18, name: "Slackliner Halle e.V.", group_type: "facebook page", reason: "Denied", lat: "51.48242751554051", lon: "11.949268178713027", link: "https://www.facebook.com/slacklinehalle/", email: "Slackliner.Halle@gmail.com", members: 13, approved: false, is_regional: nil, verified_time: nil, created_at: "2017-09-27 20:13:13", updated_at: "2017-11-08 22:36:57"},
   {id: 19, name: "SlackNam", group_type: "facebook group", reason: "Denied", lat: "-22.567163180275003", lon: "17.088008696572786", link: "https://www.facebook.com/groups/slacknam/", email: "felix.vallat@gmail.com", members: 3, approved: false, is_regional: nil, verified_time: nil, created_at: "2017-11-12 09:16:38", updated_at: "2017-11-17 20:05:53"}
 ])
+
+res = ActiveRecord::Base.connection.execute("SELECT MAX(id)+1 AS idx FROM groups;")
+gidx = res.first['idx']
+res = ActiveRecord::Base.connection.execute("SELECT MAX(id)+1 AS idx FROM location;")
+lidx = res.first['idx']
+res = ActiveRecord::Base.connection.execute("SELECT MAX(id)+1 AS idx FROM info;")
+iidx = res.first['idx']
+res = ActiveRecord::Base.connection.execute("SELECT MAX(id)+1 AS idx FROM submitted_group;")
+sidx = res.first['idx']
+res = ActiveRecord::Base.connection.execute("SELECT MAX(id)+1 AS idx FROM submitted_group_history;")
+shidx = res.first['idx']
+
+ActiveRecord::Base.connection.execute("ALTER SEQUENCE groups_id_seq RESTART WITH #{gidx};")
+ActiveRecord::Base.connection.execute("ALTER SEQUENCE location_id_seq RESTART WITH #{lidx};")
+ActiveRecord::Base.connection.execute("ALTER SEQUENCE info_id_seq RESTART WITH #{iidx};")
+ActiveRecord::Base.connection.execute("ALTER SEQUENCE submitted_group_id_seq RESTART WITH #{sidx};")
+ActiveRecord::Base.connection.execute("ALTER SEQUENCE submitted_group_history_id_seq RESTART WITH #{shidx};")
