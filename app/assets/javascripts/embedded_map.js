@@ -122,7 +122,7 @@ $(document).ready(function() {
     function unclusteredPointClicked(e)
     {
         clickEvent = e;
-        history.pushState({}, '', '/group/' + e.features[0].properties.id);
+        history.pushState({}, '', '/embed/group/' + e.features[0].properties.id);
         if (map.getZoom() < 7.7 || e.fromSearch == true) {
             var lngLat = getCords(e.features, defaultOffset);
             map.flyTo({
@@ -165,7 +165,7 @@ $(document).ready(function() {
             currentPopup.remove();
             currentPopup = null;
         }
-        history.pushState({}, '', '/');
+        history.pushState({}, '', '/embed');
         map.flyTo({
             center: {
                 lng: 0,

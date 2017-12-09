@@ -13,7 +13,7 @@ module Slacklinegroups
 
     # Allow slacklinegroups to be placed within an iframe
     config.action_dispatch.default_headers = {
-      'X-Frame-Options' => 'SAMEORIGIN'
+      'X-Frame-Options' => 'ALLOWALL'
     }
 
     # Settings in config/environments/* take precedence over those specified here.
