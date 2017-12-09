@@ -1,3 +1,5 @@
+require 'json'
+
 class BaseMap < ApplicationController
 
     # Grabs all groups from the database and places them into a MapBox formatted
@@ -42,7 +44,7 @@ class BaseMap < ApplicationController
                     {
                         name: @group.name,
                         link: @group.info.link,
-                        members: @group.info.members,
+                        members: @group.info.members? ? @group.info.members : 'N/A',
                         type: get_type(@group.group_type),
                         id: @group.id,
                         is_regional: @group.info.is_regional
@@ -76,7 +78,7 @@ class BaseMap < ApplicationController
                     id: entity.id,
                     name: entity.name,
                     type: entity.group_type,
-                    members: entity.info.members,
+                    members: entity.info.members? ? entity.info.members : 'N/A',
                     link: entity.info.link,
                     is_regional: entity.info.is_regional 
                 }

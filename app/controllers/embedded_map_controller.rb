@@ -1,6 +1,6 @@
 require 'base_map_controller'
 
-class MapController < BaseMap
+class EmbeddedMapController < ApplicationController
     # Most functionality is implemented within BaseMap, what's left here is specific to the
     # root map and not the embeded map
 
