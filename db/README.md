@@ -6,7 +6,7 @@
 
 * Before dumping seeds, you'll want to save the information at the bottom of the seed, specifically:
 
-```
+```ruby
 res = ActiveRecord::Base.connection.execute("SELECT MAX(id)+1 AS idx FROM groups;")
 gidx = res.first['idx']
 res = ActiveRecord::Base.connection.execute("SELECT MAX(id)+1 AS idx FROM location;")
