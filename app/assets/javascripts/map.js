@@ -59,10 +59,8 @@ var geoPointJSON = $.ajax({
 });
 
 $(document).ready(function() {
-    var window_width = $(window).width();
-    if(window_width < 450) {
-        zoomOffsetLat = .1;
-    } else if(window_width < 400) {
+    var window_height = $(window).height();
+    if (window_height < 1000) {
         zoomOffsetLat = .2;
     }
     $('.modal').modal();
