@@ -44,7 +44,8 @@ class BaseMap < ApplicationController
                         link: @group.info.link,
                         members: @group.info.members,
                         type: get_type(@group.group_type),
-                        id: @group.id
+                        id: @group.id,
+                        is_regional: @group.info.is_regional
                     }
                 }
             ]
