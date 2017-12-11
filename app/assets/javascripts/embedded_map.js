@@ -47,6 +47,16 @@ return  "<div class=\"title-bar\">"                                         +
             "id=\""+f[0].properties.id+"\">See Something Wrong?</a>"
 }
 
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
 var getCords = function(f, offset) {
     var x = f[0].geometry.coordinates;
     x[1] += offset;
@@ -60,14 +70,12 @@ var geoPointJSON = $.ajax({
 
 $(document).ready(function() {
     var window_height = $(window).height();
-    var w = Math.max(document.documentElement.clientWidth, window.innerWidth || 0);
-    var h = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-    console.log(window_height, w, h);
     if (window_height < 450) {
         zoomOffsetLat = .3;
     } else if (window_height < 1000) {
         zoomOffsetLat = .2;
     }
+
     $('.modal').modal();
     $('.button-collapse').sideNav({
         closeOnClick: true
