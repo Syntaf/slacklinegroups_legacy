@@ -84,8 +84,17 @@ $(document).ready(function() {
         $('#sidenav-overlay').remove();
     });
     
+    var mapCenter = [0, 35];
+    if (typeof center !== 'undefined' && center) {
+        var parts = center.split(',');
+        if (parts.length !== 2) {
+            console.error('Invalid center supplied for map initialization...');
+        } else {
+            mapCenter = [parts[0], parts[1]];
+        }
+    }
     var map = new mapboxgl.Map({
-        center: [0, 35],
+        center: mapCenter,
         zoom: 1.75,
         container: 'map',
         style: 'mapbox://styles/syntaf/cj7f7kxzx2jw52sp82gqdlu82'
@@ -135,7 +144,6 @@ $(document).ready(function() {
     function unclusteredPointClicked(e)
     {
         clickEvent = e;
-        history.pushState({}, '', '/embed/group/' + e.features[0].properties.id);
         if (map.getZoom() < 7.7 || e.fromSearch == true) {
             var lngLat = getCords(e.features, defaultOffset);
             map.flyTo({
@@ -178,7 +186,6 @@ $(document).ready(function() {
             currentPopup.remove();
             currentPopup = null;
         }
-        history.pushState({}, '', '/embed');
         map.flyTo({
             center: {
                 lng: 0,
@@ -319,7 +326,7 @@ $(document).ready(function() {
                 map.getCanvas().style.cursor = '';
             });
 
-            if (group.length !== 0)
+            if (typeof group !== 'undefined' && group.length !== 0)
             {
                 unclusteredPointClicked(group);
             }
