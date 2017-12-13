@@ -34,7 +34,7 @@ var createFrame = function(options) {
             if (typeof options['group'] !== 'number') {
                 console.error('group option must have value of type number, given ' + typeof options['group'] + ' instead.');
             } else {
-                optionsString += '&group=' + options['group'];
+                optionsString += '&id=' + options['group'];
             }
         }
         if ('width' in options) {

@@ -27,6 +27,7 @@ class BaseMap < ApplicationController
     # Gets information for a specific group, and returns a MapBox formatted JSON
     # object.
     def get_group
+        p params[:id]
         @group = Group
             .joins(:info, :location)
             .includes(:info, :location)

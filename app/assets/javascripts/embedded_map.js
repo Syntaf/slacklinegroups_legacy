@@ -64,7 +64,7 @@ var getCords = function(f, offset) {
 }
 
 var geoPointJSON = $.ajax({
-    url: '/map/clusters',
+    url: '/embed/clusters',
     dataType: 'json'
 });
 
