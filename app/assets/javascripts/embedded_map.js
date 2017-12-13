@@ -22,6 +22,13 @@ var currentPopup = null;
 // no room for the popup). Instead, we zoom to the point being offset lower on the screen.
 var zoomOffsetLat = 0;
 
+// Embedded map specific options
+var showSearchBar = typeof showSearchBar === 'undefined' ? true : (showSearchBar === 'true');
+var showHome = typeof showHome === 'undefined' ? true : (showHome === 'true');
+var center = typeof center === 'undefined' ? [0, 35] : (function (c) {var s = c.split(','); return [parseFloat(s[0]), parseFloat(s[1])]})(center);
+var group = typeof group === 'undefined' ? null : group;
+var zoom = typeof zoom === 'undefined'? 1.75 : parseFloat(zoom);
+
 var createPopUp = function(f) {
 return  "<div class=\"title-bar\">"                                         +
             "<p class=\"title\">"+f[0].properties.name+"</p>"              +
@@ -84,62 +91,76 @@ $(document).ready(function() {
         $('#sidenav-overlay').remove();
     });
     
-    var mapCenter = [0, 35];
-    if (typeof center !== 'undefined' && center) {
-        var parts = center.split(',');
-        if (parts.length !== 2) {
-            console.error('Invalid center supplied for map initialization...');
-        } else {
-            mapCenter = [parts[0], parts[1]];
-        }
-    }
     var map = new mapboxgl.Map({
-        center: mapCenter,
-        zoom: 1.75,
+        center: center,
+        zoom: zoom,
         container: 'map',
         style: 'mapbox://styles/syntaf/cj7f7kxzx2jw52sp82gqdlu82'
     });
 
-    $('#search-field').prop('disabled', true);
-    $('#search-field').autocomplete({
-        source: function(request, response) {
-            var results = $.ui.autocomplete.filter(groupNames, request.term);
-            response(results.slice(0, 7));
-            $('.ui-menu-item-wrapper').click(function() {
-                var slackGroupName = $(this).html();
-                for(var i = 0; i < groupList.length; i++) {
-                    var group = groupList[i];
-                    if(group.properties.name.toLowerCase() === slackGroupName.toLowerCase()) {
-                        if (currentPopup != null) {
-                            currentPopup.remove();
-                            currentPopup = null;
-                        }
-                        unclusteredPointClicked({
-                            features: 
-                            [
-                                {
-                                    geometry: 
-                                    {
-                                        coordinates: [group.geometry.coordinates[0], group.geometry.coordinates[1]]
-                                    },
-                                    properties:
-                                    {
-                                        name: group.properties.name,
-                                        members: group.properties.members,
-                                        type: group.properties.type,
-                                        link: group.properties.link,
-                                        id: group.properties.id
-                                    }
-                                }
-                            ],
-                            fromSearch: true
-                        });
-                        break;
-                    }
-                }
+    if (showHome) {
+        $('.zoom-out').click(function() {
+            if (currentPopup != null) {
+                currentPopup.remove();
+                currentPopup = null;
+            }
+            map.flyTo({
+                center: {
+                    lng: 0,
+                    lat: 35
+                },
+                zoom: 1.75
             });
-        }
-    });
+        });    
+    } else {
+        $('.zoom-out').remove();
+    }
+
+    if (showSearchBar) {
+        $('#search-field').prop('disabled', true);
+        $('#search-field').autocomplete({
+            source: function(request, response) {
+                var results = $.ui.autocomplete.filter(groupNames, request.term);
+                response(results.slice(0, 7));
+                $('.ui-menu-item-wrapper').click(function() {
+                    var slackGroupName = $(this).html();
+                    for(var i = 0; i < groupList.length; i++) {
+                        var group = groupList[i];
+                        if(group.properties.name.toLowerCase() === slackGroupName.toLowerCase()) {
+                            if (currentPopup != null) {
+                                currentPopup.remove();
+                                currentPopup = null;
+                            }
+                            unclusteredPointClicked({
+                                features: 
+                                [
+                                    {
+                                        geometry: 
+                                        {
+                                            coordinates: [group.geometry.coordinates[0], group.geometry.coordinates[1]]
+                                        },
+                                        properties:
+                                        {
+                                            name: group.properties.name,
+                                            members: group.properties.members,
+                                            type: group.properties.type,
+                                            link: group.properties.link,
+                                            id: group.properties.id
+                                        }
+                                    }
+                                ],
+                                fromSearch: true
+                            });
+                            break;
+                        }
+                    }
+                });
+            }
+        });
+    } else {
+        $('.search-bar').remove();
+    }
+
 
     function unclusteredPointClicked(e)
     {
@@ -180,20 +201,6 @@ $(document).ready(function() {
             });
         }
     }
-
-    $('.zoom-out').click(function() {
-        if (currentPopup != null) {
-            currentPopup.remove();
-            currentPopup = null;
-        }
-        map.flyTo({
-            center: {
-                lng: 0,
-                lat: 35
-            },
-            zoom: 1.75
-        });
-    });
 
     map.on('load', function () {
         geoPointJSON.done(function(data) {
@@ -326,7 +333,7 @@ $(document).ready(function() {
                 map.getCanvas().style.cursor = '';
             });
 
-            if (typeof group !== 'undefined' && group.length !== 0)
+            if (group && group.length !== 0)
             {
                 unclusteredPointClicked(group);
             }

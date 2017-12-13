@@ -37,6 +37,13 @@ var createFrame = function(options) {
                 optionsString += '&id=' + options['group'];
             }
         }
+        if ('zoom' in options) {
+            if (typeof options['zoom'] !== 'number') {
+                console.error('zoom option must have value of type number, given ' + typeof options['zoom'] + ' instead.');
+            } else {
+                optionsString += '&zoom=' + options['zoom'];
+            }
+        }
         if ('width' in options) {
             if (typeof options['width'] !== 'number') {
                 console.error('width option must have value of type number, given ' + typeof options['width'] + ' instead.');

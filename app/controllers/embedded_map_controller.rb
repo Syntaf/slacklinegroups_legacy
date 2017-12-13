@@ -14,7 +14,6 @@ class EmbeddedMapController < BaseMap
             params[:group] = self.class.superclass.instance_method(:get_group).bind(self).call
         end
         
-        p params
         # params.permit(:showSearchBar, :showHome, :center, :group)
         # p params.as_json.merge!({group: @json})
 

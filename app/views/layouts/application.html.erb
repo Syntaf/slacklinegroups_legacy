@@ -32,7 +32,6 @@
     <%= stylesheet_link_tag params[:controller] if Rails.application.assets_manifest.assets["#{params[:controller]}.css"] %>
     <%= javascript_include_tag 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v0.18.0/mapbox-gl-draw.js' %>
     <%= stylesheet_link_tag 'https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-draw/v0.18.0/mapbox-gl-draw.css' %>
-    <%= yield :head %>
     <script>
       <%= javascript_variables %>
     </script>
