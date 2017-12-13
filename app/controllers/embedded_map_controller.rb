@@ -8,6 +8,9 @@ class EmbeddedMapController < ApplicationController
     # a group id is detected, grab that groups info and send it along javascript_variables
     def index
         @json = Array.new
+
+        p params
+
         if params[:id] != nil
             @json = self.class.superclass.instance_method(:get_group).bind(self).call
         end
