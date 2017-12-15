@@ -9,13 +9,10 @@ class EmbeddedMapController < BaseMap
     def index
         # @json = Array.new
 
-        params.permit(:group)
+        params.permit(:id, :showSearchBar, :showHome, :center, :zoom)
         if params[:id] != nil
             params[:group] = self.class.superclass.instance_method(:get_group).bind(self).call
         end
-        
-        # params.permit(:showSearchBar, :showHome, :center, :group)
-        # p params.as_json.merge!({group: @json})
 
         # Supply global JS variable which can be grabbed by map.js
         javascript_variables(params.as_json)

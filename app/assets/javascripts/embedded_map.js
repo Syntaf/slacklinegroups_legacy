@@ -99,7 +99,8 @@ $(document).ready(function() {
     });
 
     if (showHome) {
-        $('.zoom-out').click(function() {
+        var homeButton = $('.zoom-out');
+        homeButton.click(function() {
             if (currentPopup != null) {
                 currentPopup.remove();
                 currentPopup = null;
@@ -111,7 +112,11 @@ $(document).ready(function() {
                 },
                 zoom: 1.75
             });
-        });    
+        });
+        if (!showSearchBar) {
+            homeButton.css('top', '15px');
+            homeButton.css('left', '15px');
+        }
     } else {
         $('.zoom-out').remove();
     }
