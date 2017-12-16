@@ -7,7 +7,9 @@
         <div class="container">
             <h4>What's this about?</h4>
             <hr>
-            <p>Sometimes, finding slackline communities can be a little harder than it should be. Slacklinegroups.com wants to fix this problem, and make finding communities around the world as easy as humanly possible. Restricting our map to only our site seems a bit counter productive to the end-goal, so slacklinegroups.js is now available to any developers interested in embedding our map into their site.
+            <p>Sometimes, finding a local group can be a bit harder than it should be. Slacklinegroups.com was created to help solve that problem, and with over 560 groups in our database, we're off to a good start! If you haven't yet, check out the <a href="/">map</a> at our home page to see what we're all about.<p>
+
+            <p><b>slacklinegroups.js</b> is an extension of our map, bundled into an embedable widget. The widget is highly customizable and great for any use, whether it be highlighting a specific group and it's location or just showing the entire map.
             </p>
         </div>
     </div>
@@ -29,7 +31,7 @@
   &lt;div id="mySlacklinegroupMap"&gt;&lt;/div&gt;
 &lt;/body&gt;</code></pre>
             <div class="quickStart">
-                <p>Lastly, initialize the map in your javascript once the document is loaded. Then you're all done!</p>
+                <p>Lastly, initialize your map once the document is loaded.</p>
                 <pre class="code"><code data-language="javascript">$('#mySlacklinegroupMap').slacklinegroups({
     showSearchBar: true,
     showHome: true,
@@ -51,7 +53,9 @@ document.getElementById('mySlacklinegroupMap')
         <div class="container">
             <h4>Developer Reference</h4>
             <hr>
-            <p>A handful of options are available for developers looking to add a bit of customization to their widget:</p>
+            <p>Below you will find information each specific map option available. If you have any recommendations, please feel free to submit an issue on our Github!</p>
+            <pre class="code"><code data-language="javascript">slacklinegroups = function(options) { /* ... */ }</code></pre>
+            <p>Breakdown of possible options which can be passed (via {}):</p>
             <ul class="browser-default">
                 <li>
                     <b>showSearchBar</b>: [ <i>true</i>/<i>false</i> ]
@@ -89,6 +93,33 @@ document.getElementById('mySlacklinegroupMap')
                     <p>Specifies the starting zoom level of the map</p>
                 </li>
             </ul>
+        </div>
+    </div>
+
+    <div class="nojs">
+        <div class="container">
+            <h4>No-JS approach to embedding a map</h4>
+            <hr>
+            <p>If you beleive Javascript is the Devils language, you can still embed slacklinegroups.com without any! To do so, you'll need to use an iFrame which points to <i>slacklinegroups.com/embed</i>:</p>
+            <pre class="code"><code data-language="javascript">&lt;iframe src="http://www.slacklinegroups.com/embed" 
+  width="500px" 
+  height="500px"&gt;
+&lt;/iframe&gt;</code></pre>
+            <p>To pass options, you'll pass them into the source URL as query params, e.g. to disable the home and search button you could do:</p>
+            <div class="left">
+            <pre class="code"><code data-language="javascript">&lt;iframe
+src=".../embed?showHome=false&showSearchBar=false" 
+width="500px" 
+height="500px"&gt;
+&lt;/iframe&gt;</code></pre>
+            </div>
+            <iframe src="http://localhost:3000/embed?showHome=false&showSearchBar=false" width="500px" height="500px"></iframe>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="container">
+            <h4>Slacklinegroups.com</h4>
         </div>
     </div>
 </div> 
