@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Slacklinegroups</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Find a slackline group wherever you go. Explore our map of 500+ groups from around the world.">
+    <meta property="og:url" content="http://www.slacklinegroups.com/">
+    <meta property="og:title" content="Slacklinegroups">
+    <meta property="og:description" content="Explore a map of 500+ slackline groups from around the world">
+    <%= csrf_meta_tags %>
+
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-81736530-3"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments)};
+      gtag('js', new Date());
+
+      gtag('config', 'UA-81736530-3');
+    </script>
+
+
+    <%= favicon_link_tag 'favicon.ico' %>
+    <!-- Raleway font style -->
+    <%= stylesheet_link_tag 'https://fonts.googleapis.com/css?family=Raleway|Roboto' %>
+    <!-- Global application js and css files -->
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <!-- Page specific css files -->
+    <%= stylesheet_link_tag params[:controller] if Rails.application.assets_manifest.assets["#{params[:controller]}.css"] %>
+    <script>
+      <%= javascript_variables %>
+    </script>
+  </head>
+
+  <body data-no-turbolink>
+    <%= yield %>
+    <!-- Page specific js files -->
+    <%= javascript_include_tag params[:controller] if Rails.application.assets_manifest.assets["#{params[:controller]}.js"] %>
+  </body>
+</html>

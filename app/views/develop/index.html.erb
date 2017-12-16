@@ -1,0 +1,102 @@
+<div class="header">
+    <h2>Slacklinegroups.js</h2>
+    <p>// Embed slackline maps anywhere</p>
+</div>
+<div class="body">
+    <div class="about">
+        <div class="container">
+            <h4>What's this about?</h4>
+            <hr>
+            <p>Sometimes, finding slackline communities can be a little harder than it should be. Slacklinegroups.com wants to fix this problem, and make finding communities around the world as easy as humanly possible. Restricting our map to only our site seems a bit counter productive to the end-goal, so slacklinegroups.js is now available to any developers interested in embedding our map into their site.
+            </p>
+        </div>
+    </div>
+
+    <div class="mapShowCase">
+        <div class="container">
+            <h4>Quick Start</h4>
+            <hr>
+            <p>To embed our map in your site, include the script in your header:</p>
+            <pre class="code"><code data-language="html">&lt;head&gt;
+  <!-- normal head content, etc .... -->
+
+  <!-- include slacklinegroups.js -->
+  &lt;script src="http://www.slacklinegroups.com/slacklinegroups.min.js"&gt;&lt;/script&gt;
+&lt;/head&gt;</code></pre>
+            <p>Once you have your script, designate a <i>div</i> with an ID, which you'll use to create the map.</p>
+            <pre class="code"><code data-language="html">&lt;body&gt;
+  <!-- slackline map will go inside this div -->
+  &lt;div id="mySlacklinegroupMap"&gt;&lt;/div&gt;
+&lt;/body&gt;</code></pre>
+            <div class="quickStart">
+                <p>Lastly, initialize the map in your javascript once the document is loaded. Then you're all done!</p>
+                <pre class="code"><code data-language="javascript">$('#mySlacklinegroupMap').slacklinegroups({
+    showSearchBar: true,
+    showHome: true,
+    width: 500,
+    height: 500
+});
+
+// or if you aren't using jQuery:
+document.getElementById('mySlacklinegroupMap')
+  .slacklinegroups({
+    // ...  
+});</code></pre>
+            </div>
+            <div id="slgmap"></div>
+        </div>
+    </div>
+
+    <div class="reference">
+        <div class="container">
+            <h4>Developer Reference</h4>
+            <hr>
+            <p>A handful of options are available for developers looking to add a bit of customization to their widget:</p>
+            <ul class="browser-default">
+                <li>
+                    <b>showSearchBar</b>: [ <i>true</i>/<i>false</i> ]
+                    <p class="default">Default: <i>true</i></p>
+                    <p>Sets the visibility of the search bar. When set to <i>false</i>, the home button will be shifted left.</p>
+                </li>
+                <li>
+                    <b>showHome</b>: [ <i>true</i>/<i>false</i> ]
+                    <p class="default">Default: <i>true</i></p>
+                    <p>Sets the visibility of the home button.</p>
+                </li>
+                <li>
+                    <b>width</b>: number
+                    <p class="default">Default: <i>500</i></p>
+                    <p>The width of the widget.</p>
+                </li>
+                <li>
+                    <b>height</b>: number
+                    <p class="default">Default: <i>500</i></p>
+                    <p>The height of the widget.</p>
+                </li>
+                <li>
+                    <b>center</b>: Array(2) of form [ lon, lat ]
+                    <p class="default">Default: <i>[ 0, 35 ]</i></p>
+                    <p>Specifies the starting center point of the map. Requires <i>lon</i> and <i>lat</i> to be of type <i>number</i>.
+                </li>
+                <li>
+                    <b>group</b>: number
+                    <p class="default">Default: <i>null</i></p>
+                    <p>If set to a valid group ID, zooms to that group upon map load and displays the group information.</p>
+                </li>
+                <li>
+                    <b>zoom</b>: number
+                    <p class="default">Default: <i>1.75</i></p>
+                    <p>Specifies the starting zoom level of the map</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div> 
+<script src="http://localhost:3000/slacklinegroups.min.js"></script>
+<script src="rainbow-custom.min.js"></script>
+<script>
+    $('#slgmap').slacklinegroups({
+        width: 500,
+        height: 500
+    });
+</script>

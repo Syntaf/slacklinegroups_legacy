@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   get 'embed/clusters', to: 'embedded_map#clusters'
   get 'embed/group/:id', to: 'embedded_map#index'
 
+
+  get 'develop', to: 'develop#index'
+
   # about controller routes
   get 'about', to: 'about#index'
 
