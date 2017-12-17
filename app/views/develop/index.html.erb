@@ -5,6 +5,7 @@
 <div class="body">
     <div class="about">
         <div class="container">
+            <a href="/" class="backButton"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a>
             <h4>What's this about?</h4>
             <hr>
             <p>Sometimes, finding a local group can be a bit harder than it should be. Slacklinegroups.com was created to help solve that problem, and with over 560 groups in our database, we're off to a good start! If you haven't yet, check out the <a href="/">map</a> at our home page to see what we're all about.<p>
@@ -31,7 +32,7 @@
   &lt;div id="mySlacklinegroupMap"&gt;&lt;/div&gt;
 &lt;/body&gt;</code></pre>
             <div class="quickStart">
-                <p>Lastly, initialize your map once the document is loaded.</p>
+                <p>Lastly, initialize your map once the document is loaded:</p>
                 <pre class="code"><code data-language="javascript">$('#mySlacklinegroupMap').slacklinegroups({
     showSearchBar: true,
     showHome: true,
@@ -42,8 +43,15 @@
 // or if you aren't using jQuery:
 document.getElementById('mySlacklinegroupMap')
   .slacklinegroups({
-    // ...  
-});</code></pre>
+    showSearchBar: true,
+    showHome: true,
+    width: 500,
+    height: 500
+});
+
+
+
+</code></pre>
             </div>
             <div id="slgmap"></div>
         </div>
@@ -53,9 +61,9 @@ document.getElementById('mySlacklinegroupMap')
         <div class="container">
             <h4>Developer Reference</h4>
             <hr>
-            <p>Below you will find information each specific map option available. If you have any recommendations, please feel free to submit an issue on our Github!</p>
+            <p>During the initialization of the widget, a number of options can be passed via an object. The function definition looks like so:</p>
             <pre class="code"><code data-language="javascript">slacklinegroups = function(options) { /* ... */ }</code></pre>
-            <p>Breakdown of possible options which can be passed (via {}):</p>
+            <p>Below is a list of the possible options which can be passed (via {}):</p>
             <ul class="browser-default">
                 <li>
                     <b>showSearchBar</b>: [ <i>true</i>/<i>false</i> ]
@@ -120,6 +128,11 @@ height="500px"&gt;
     <div class="footer">
         <div class="container">
             <h4>Slacklinegroups.com</h4>
+            <ul>
+                <li><a target="_blank" href="https://www.facebook.com/Slacklinegroups-976903459112563/"><i style="color: #ffffff;" class="fa fa-facebook-square" aria-hidden="true"></i></a></li>
+                <li><a target="_blank" href="https://github.com/Syntaf/slacklinegroups"><i style="color: #ffffff;" class="fa fa-github-square" aria-hidden="true"></i></a></li>
+                <li><a target="_blank" href="https://www.linkedin.com/in/grant-mercer-82a52097/"><i style="color: #ffffff;" class="fa fa-linkedin-square" aria-hidden="true"></i></a></li>
+            </ul>
         </div>
     </div>
 </div> 

@@ -1,12 +1,13 @@
 // Place all the styles related to the develop controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-
-
-
 .container {
     max-width: 967px;
     margin: 0 auto;
+}
+
+.backButton {
+    margin: 50px 0;
 }
 
 .header {
@@ -42,6 +43,7 @@
     }
     .code {
         margin: 10px 0;
+        padding-bottom: 20px;
     }
     .quickStart {
         float: left;
@@ -78,7 +80,10 @@
     font-size: 20px;
     .left {
         float: left;
-        width: 45%;
+        width: 43%;
+        .code {
+            padding-bottom: 380px;
+        }
     }
     iframe {
         float: right;
@@ -90,8 +95,19 @@
     clear: both;
     background-color: #01579b;
     padding: 50px 0;
+    height: 150px;
     h4 {
         color: #ffffff;
+        float: left;
+    }
+    ul {
+        font-size: 26px;
+        float: right;
+        list-style: none;
+        li {
+            margin: 0 10px;
+            display: inline-block;
+        }
     }
 }
 
