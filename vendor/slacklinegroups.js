@@ -80,7 +80,9 @@ if (window.jQuery) {
     });
 }
 
-Object.defineProperty(HTMLElement.prototype, 'slacklinegroups', {
-    value: createFrame,
-    enumerable: false
-});
+if (!HTMLElement.prototype.hasOwnProperty('slacklinegroups')) {
+    Object.defineProperty(HTMLElement.prototype, 'slacklinegroups', {
+        value: createFrame,
+        enumerable: false
+    });
+}

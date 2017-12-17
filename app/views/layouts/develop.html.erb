@@ -28,6 +28,7 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <!-- Page specific css files -->
     <%= stylesheet_link_tag params[:controller] if Rails.application.assets_manifest.assets["#{params[:controller]}.css"] %>
+    <%= yield :head %>
     <script>
       <%= javascript_variables %>
     </script>
