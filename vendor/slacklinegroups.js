@@ -47,6 +47,9 @@ var createFrame = function(options) {
         if ('width' in options) {
             if (typeof options['width'] !== 'number') {
                 console.error('width option must have value of type number, given ' + typeof options['width'] + ' instead.');
+            } else if (options['width'] < 300) {
+                console.error('widget width cannot be less than 300px.');
+                return;
             } else {
                 iFrameWidth = options['width'] + 'px';
             }
@@ -54,6 +57,9 @@ var createFrame = function(options) {
         if ('height' in options) {
             if (typeof options['height'] !== 'number') {
                 console.error('height option must have value of type number, given ' + typeof options['height'] + ' instead.');
+            } else if (options['height'] < 300) {
+                console.error('widget height cannot be less than 300px');
+                return;
             } else {
                 iFrameHeight = options['height'] + 'px';
             }
