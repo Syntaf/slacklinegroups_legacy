@@ -1,5 +1,5 @@
 <% content_for :head do %>
-    <script src="http://localhost:3000/slacklinegroups.min.js"></script>
+    <script src="http://<%= hostUrl %>/slacklinegroups.min.js"></script>
     <script src="rainbow-custom.min.js"></script>
     <script>
         $('document').ready(function() {
@@ -134,7 +134,7 @@ width="500px"
 height="500px"&gt;
 &lt;/iframe&gt;</code></pre>
             </div>
-            <iframe src="http://localhost:3000/embed?showHome=false&showSearchBar=false" width="500px" height="500px"></iframe>
+            <iframe src="http://<%= hostUrl %>/embed?showHome=false&showSearchBar=false" width="500px" height="500px"></iframe>
         </div>
     </div>
 

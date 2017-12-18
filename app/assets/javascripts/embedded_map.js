@@ -57,7 +57,7 @@ var createPopUp = function(f) {
             "href=\""+f[0].properties.link+"\">Go to Group</a>"             +
         "<a class=\"bottom right issue\" "                                  +
             "id=\""+f[0].properties.id+"\">See Something Wrong?</a>";
-    } else if (height > 250) {
+    } else if (height >= 300) {
         return "<div class=\"title-bar\">"                                         +
             "<p class=\"title truncate\">"+f[0].properties.name+"</p>"              +
         "</div>"                                                            +
@@ -104,14 +104,11 @@ var geoPointJSON = $.ajax({
 
 $(document).ready(function() {
     var window_height = $(window).height();
-    console.log(window_height);
-    if (window_height < 450) {
+    if (window_height < 501) {
         zoomOffsetLat = .245;
     } else if (window_height < 1000) {
         zoomOffsetLat = .2;
     }
-
-    console.log(zoomOffsetLat);
 
     $('.modal').modal();
     $('.button-collapse').sideNav({
@@ -202,7 +199,6 @@ $(document).ready(function() {
         clickEvent = e;
         if (map.getZoom() < 7.7 || e.fromSearch == true) {
             var lngLat = getCords(e.features, defaultOffset);
-            console.log(lngLat);
             map.flyTo({
                 center: {
                     lng: lngLat[0],
@@ -240,7 +236,6 @@ $(document).ready(function() {
 
     map.on('load', function () {
         geoPointJSON.done(function(data) {
-            console.log(data);
             groupList = data;
             groupNames = groupList.map(function(group) { return group.properties.name });
             $('.loader').remove();
