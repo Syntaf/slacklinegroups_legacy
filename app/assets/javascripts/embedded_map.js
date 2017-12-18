@@ -29,8 +29,13 @@ var center = typeof center === 'undefined' ? [0, 35] : (function (c) {var s = c.
 var group = typeof group === 'undefined' ? null : group;
 var zoom = typeof zoom === 'undefined'? 1.75 : parseFloat(zoom);
 
+var width = $(window).width();
+var height = $(window).height();
+var unClusteredzoomScale = 7.7;
+
 var createPopUp = function(f) {
-return  "<div class=\"title-bar\">"                                         +
+    if (height > 400) {
+        return "<div class=\"title-bar\">"                                         +
             "<p class=\"title\">"+f[0].properties.name+"</p>"              +
         "</div>"                                                            +
         "<div class=\"content\">"                                           +
@@ -51,7 +56,29 @@ return  "<div class=\"title-bar\">"                                         +
         "<a class=\"bottom left go-to\" target=\"_blank\" "                 +
             "href=\""+f[0].properties.link+"\">Go to Group</a>"             +
         "<a class=\"bottom right issue\" "                                  +
-            "id=\""+f[0].properties.id+"\">See Something Wrong?</a>"
+            "id=\""+f[0].properties.id+"\">See Something Wrong?</a>";
+    } else if (height > 250) {
+        return "<div class=\"title-bar\">"                                         +
+            "<p class=\"title truncate\">"+f[0].properties.name+"</p>"              +
+        "</div>"                                                            +
+        "<div class=\"content\">"                                           +
+            "<table>"                                                       +
+                "<tr>"                                                      +
+                    "<td class=\"label\">Page Type:</td>"                   +
+                    "<td class=\"value\">"+f[0].properties.type+"</td>"     +
+                "</tr>"                                                     +
+                "<tr>"                                                      +
+                    "<td class=\"label\">Members</td>"       +
+                    "<td class=\"value\">"+f[0].properties.members+"</td>"  +
+                "</tr>"                                                     +
+            "</table>"                                                       +
+        "</div>"                                                            +
+        "<a class=\"bottom go-to\" target=\"_blank\" "                 +
+            "href=\""+f[0].properties.link+"\">Go to Group</a>"             +
+        "<a class=\"bottom issue\" "                                  +
+            "id=\""+f[0].properties.id+"\">See Something Wrong?</a>";
+    }
+
 }
 
 function getParameterByName(name, url) {
@@ -77,11 +104,14 @@ var geoPointJSON = $.ajax({
 
 $(document).ready(function() {
     var window_height = $(window).height();
+    console.log(window_height);
     if (window_height < 450) {
-        zoomOffsetLat = .3;
+        zoomOffsetLat = .245;
     } else if (window_height < 1000) {
         zoomOffsetLat = .2;
     }
+
+    console.log(zoomOffsetLat);
 
     $('.modal').modal();
     $('.button-collapse').sideNav({
@@ -172,12 +202,13 @@ $(document).ready(function() {
         clickEvent = e;
         if (map.getZoom() < 7.7 || e.fromSearch == true) {
             var lngLat = getCords(e.features, defaultOffset);
+            console.log(lngLat);
             map.flyTo({
                 center: {
                     lng: lngLat[0],
                     lat: lngLat[1] + zoomOffsetLat
                 },
-                zoom: 7.7
+                zoom: unClusteredzoomScale
             });
         } else {
             currentPopup = new mapboxgl.Popup()
@@ -209,6 +240,7 @@ $(document).ready(function() {
 
     map.on('load', function () {
         geoPointJSON.done(function(data) {
+            console.log(data);
             groupList = data;
             groupNames = groupList.map(function(group) { return group.properties.name });
             $('.loader').remove();

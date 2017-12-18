@@ -1,5 +1,5 @@
 class AdminController < ApplicationController
-    before_action :authenticate
+    #before_action :authenticate
     
     def index
         @groups = Group.joins(:info, :location).includes(:info, :location)
