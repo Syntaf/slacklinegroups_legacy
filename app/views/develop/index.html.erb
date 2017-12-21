@@ -1,14 +1,6 @@
 <% content_for :head do %>
     <script src="http://<%= hostUrl %>/slacklinegroups.min.js"></script>
     <script src="rainbow-custom.min.js"></script>
-    <script>
-        $('document').ready(function() {
-            $('#slgmap').slacklinegroups({
-                width: 500,
-                height: 500
-            });
-        });
-    </script>
 <% end %>
 
 <div class="header">
@@ -134,7 +126,7 @@ width="500px"
 height="500px"&gt;
 &lt;/iframe&gt;</code></pre>
             </div>
-            <iframe src="http://<%= hostUrl %>/embed?showHome=false&showSearchBar=false" width="500px" height="500px"></iframe>
+            <iframe id="nojsSLG" src="http://<%= hostUrl %>/embed?showHome=false&showSearchBar=false" width="500px" height="500px"></iframe>
         </div>
     </div>
 
