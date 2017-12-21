@@ -1,5 +1,5 @@
 var createFrame = function(options) {
-    var iFrameUrl = 'http://localhost:3000/embed';
+    var iFrameUrl = 'http://www.slacklinegroups.com/embed';
     var iFrameHeight = '450px';
     var iFrameWidth = '450px';
     var optionsString = '';
