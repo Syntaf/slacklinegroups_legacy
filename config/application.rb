@@ -16,6 +16,11 @@ module Slacklinegroups
      'Access-Control-Allow-Origin' => 'http://localhost:3000/slacklinegroups.js'
     }
 
+    config.after_initialize do
+      Rails.application.load_tasks
+      Rake::Task['minify:slg'].invoke
+    end
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
