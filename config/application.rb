@@ -10,7 +10,6 @@ module Slacklinegroups
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
-    config.web_console.whitelisted_ips = '10.0.2.2'
 
     # Allow slacklinegroups to be placed within an iframe
     config.action_dispatch.default_headers = {
