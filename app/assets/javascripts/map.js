@@ -23,6 +23,7 @@ var currentPopup = null;
 var zoomOffsetLat = 0;
 
 // calculate the top bar height
+var magicConstant = 0.027322404;
 var $card = $('.card');
 var topBarClear = parseInt($card.css('top'), 10) + parseInt($card.css('margin-top'), 10) + parseInt($card.css('height'), 10);
 
@@ -34,7 +35,7 @@ var modalWidth = 440;
 console.log(topBarClear);
 
 var createPopUp = function(f) {
-    if (height > 400) {
+    if (width > 400) {
         return "<div class=\"title-bar\">"                                         +
             "<p class=\"title\">"+f[0].properties.name+"</p>"              +
         "</div>"                                                            +
@@ -57,7 +58,7 @@ var createPopUp = function(f) {
             "href=\""+f[0].properties.link+"\">Go to Group</a>"             +
         "<a class=\"bottom right issue\" "                                  +
             "id=\""+f[0].properties.id+"\">See Something Wrong?</a>";
-    } else if (height >= 300) {
+    } else if (width >= 300) {
         return "<div class=\"title-bar\">"                                         +
             "<p class=\"title truncate\">"+f[0].properties.name+"</p>"              +
         "</div>"                                                            +
@@ -88,8 +89,9 @@ var geoPointJSON = $.ajax({
 $(document).ready(function() {
 
     if (width < 420) {
-        modalWidth = 215;
-        modalHeight = 200;
+        modalWidth = 230;
+        modalHeight = 225;
+        magicConstant *= 2;
     } else if (width < 501) {
         zoomOffsetLat = .245;
         modalWidth = 260;
@@ -175,7 +177,10 @@ $(document).ready(function() {
         console.log('height: ', modalHeight);
         console.log('top bar: ', topBarClear);
         if (centerTranslation.y - modalHeight < topBarClear) {
-            defaultOffset = 0.021857923 * (topBarClear - (centerTranslation.y - modalHeight));
+            console.log((topBarClear - (centerTranslation.y - modalHeight)));
+            defaultOffset = magicConstant * (topBarClear - (centerTranslation.y - modalHeight));
+        } else if (width < 700 && height > 400) {
+            defaultOffset = magicConstant * Math.abs((topBarClear - (centerTranslation.y - modalHeight)));
         }
         console.log('offset: ', defaultOffset);
         //defaultOffset = 2;
