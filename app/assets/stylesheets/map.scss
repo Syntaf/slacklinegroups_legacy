@@ -193,7 +193,14 @@
     }
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 1000px) {
+    #issue-modal {
+        width: 80%;
+        max-width: 90%;
+        max-width: 90%;
+    }
+}
+@media screen and (max-width: 501px) {
     .mapboxgl-popup-content {
         width: 260px;
         height: 240px;
@@ -242,7 +249,42 @@
         left: calc(50% - 175px) !important;
     }
 }
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 420px) {
+    .mapboxgl-popup-content {
+        width: 215px;
+        height: 200px;
+
+        .title-bar {
+            .title {
+                font-size: 14px;
+            }
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+
+        .go-to {
+            left: 17%;
+            top: 65%;
+            padding: 10px 35px;
+            background-color: #0077B5;
+            color: #ffffff;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.30);
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .issue {
+            padding-left: 10px;
+        }
+
+        .label, .value {
+            font-size: 14px;
+        }
+
+        td {
+            padding: 5px 5px;
+        }
+    }
     .zoom-out {
         left: calc(50% + 110px);
     }

@@ -1,3 +1,11 @@
+Adaptive zoom:
+
+    Point: (x, y)
+    Modal: (width, height)
+
+    @ (x, y), (x +/- width, y +/- height) must be within bounds
+
+
 # slacklinegroups
 
 This repo contains the code necessary to contribute to and run slacklinegroups.com. The primary focus of the site is to aggregate the worlds slackline groups into one central map. Below you will find documentation of running the site and creating a quick development environment (windows/linux).

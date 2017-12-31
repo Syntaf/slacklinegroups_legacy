@@ -27,7 +27,6 @@ class BaseMap < ApplicationController
     # Gets information for a specific group, and returns a MapBox formatted JSON
     # object.
     def get_group
-        p params[:id]
         @group = Group
             .joins(:info, :location)
             .includes(:info, :location)
@@ -69,10 +68,6 @@ class BaseMap < ApplicationController
 
         # Formats a single group entity into a MapBox feature object
         def format_entity(entity)
-            if entity.name == 'Slackline Iceland'
-                p entity.location.lon.to_f
-                p entity.location.lon
-            end
             return {
                 type: 'Feature',
                 geometry: {

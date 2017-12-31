@@ -22,8 +22,20 @@ var currentPopup = null;
 // no room for the popup). Instead, we zoom to the point being offset lower on the screen.
 var zoomOffsetLat = 0;
 
+// calculate the top bar height
+var $card = $('.card');
+var topBarClear = parseInt($card.css('top'), 10) + parseInt($card.css('margin-top'), 10) + parseInt($card.css('height'), 10);
+
+var width = $(window).width();
+var height = $(window).height();
+var modalHeight = 340;
+var modalWidth = 440;
+
+console.log(topBarClear);
+
 var createPopUp = function(f) {
-return  "<div class=\"title-bar\">"                                         +
+    if (height > 400) {
+        return "<div class=\"title-bar\">"                                         +
             "<p class=\"title\">"+f[0].properties.name+"</p>"              +
         "</div>"                                                            +
         "<div class=\"content\">"                                           +
@@ -44,13 +56,28 @@ return  "<div class=\"title-bar\">"                                         +
         "<a class=\"bottom left go-to\" target=\"_blank\" "                 +
             "href=\""+f[0].properties.link+"\">Go to Group</a>"             +
         "<a class=\"bottom right issue\" "                                  +
-            "id=\""+f[0].properties.id+"\">See Something Wrong?</a>"
-}
-
-var getCords = function(f, offset) {
-    var x = f[0].geometry.coordinates;
-    x[1] += offset;
-    return x;
+            "id=\""+f[0].properties.id+"\">See Something Wrong?</a>";
+    } else if (height >= 300) {
+        return "<div class=\"title-bar\">"                                         +
+            "<p class=\"title truncate\">"+f[0].properties.name+"</p>"              +
+        "</div>"                                                            +
+        "<div class=\"content\">"                                           +
+            "<table>"                                                       +
+                "<tr>"                                                      +
+                    "<td class=\"label\">Page Type:</td>"                   +
+                    "<td class=\"value\">"+f[0].properties.type+"</td>"     +
+                "</tr>"                                                     +
+                "<tr>"                                                      +
+                    "<td class=\"label\">Members</td>"       +
+                    "<td class=\"value\">"+f[0].properties.members+"</td>"  +
+                "</tr>"                                                     +
+            "</table>"                                                       +
+        "</div>"                                                            +
+        "<a class=\"bottom go-to\" target=\"_blank\" "                 +
+            "href=\""+f[0].properties.link+"\">Go to Group</a>"             +
+        "<a class=\"bottom issue\" "                                  +
+            "id=\""+f[0].properties.id+"\">See Something Wrong?</a>";
+    }
 }
 
 var geoPointJSON = $.ajax({
@@ -59,10 +86,18 @@ var geoPointJSON = $.ajax({
 });
 
 $(document).ready(function() {
-    var window_height = $(window).height();
-    if (window_height < 1000) {
+
+    if (width < 420) {
+        modalWidth = 215;
+        modalHeight = 200;
+    } else if (width < 501) {
+        zoomOffsetLat = .245;
+        modalWidth = 260;
+        modalHeight = 240;
+    } else if (width < 1000) {
         zoomOffsetLat = .2;
     }
+
     $('.modal').modal();
     $('.button-collapse').sideNav({
         closeOnClick: true
@@ -119,22 +154,46 @@ $(document).ready(function() {
         }
     });
 
+    function getCords(f, offset) {
+        var x = f[0].geometry.coordinates;
+        //console.log('x before: ', x);
+        var t = map.project(x);
+        console.log('point: ', t);
+        t.y -= offset;
+        var y = map.unproject(t);
+        //console.log('x after: ', y);
+
+        return y;
+    }
+
+    function calculateOffset()
+    {
+        // dead center of screen on startup
+        var center = [0, 35];
+        var centerTranslation = map.project(center);
+        console.log('center: ', centerTranslation.y);
+        console.log('height: ', modalHeight);
+        console.log('top bar: ', topBarClear);
+        if (centerTranslation.y - modalHeight < topBarClear) {
+            defaultOffset = 0.021857923 * (topBarClear - (centerTranslation.y - modalHeight));
+        }
+        console.log('offset: ', defaultOffset);
+        //defaultOffset = 2;
+    }
+
     function unclusteredPointClicked(e)
     {
         clickEvent = e;
+        var lngLat = getCords(clickEvent.features, defaultOffset);
         history.pushState({}, '', '/group/' + e.features[0].properties.id);
         if (map.getZoom() < 7.7 || e.fromSearch == true) {
-            var lngLat = getCords(e.features, defaultOffset);
             map.flyTo({
-                center: {
-                    lng: lngLat[0],
-                    lat: lngLat[1] + zoomOffsetLat
-                },
+                center: lngLat,
                 zoom: 7.7
             });
         } else {
             currentPopup = new mapboxgl.Popup()
-                .setLngLat(getCords(clickEvent.features, defaultOffset))
+                .setLngLat(lngLat)
                 .setHTML(createPopUp(clickEvent.features))
                 .addTo(map);
             clickEvent = null;
@@ -305,6 +364,8 @@ $(document).ready(function() {
             map.on('mouseleave', 'unclustered-local-point', function () {
                 map.getCanvas().style.cursor = '';
             });
+
+            calculateOffset();
 
             if (group.length !== 0)
             {
