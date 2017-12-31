@@ -2,6 +2,8 @@
 
 This repo contains the code necessary to contribute to and run slacklinegroups.com. The primary focus of the site is to aggregate the worlds slackline groups into one central map. Below you will find documentation of running the site and creating a quick development environment (windows/linux).
 
+For specific tips on contributing, see CONTRIBUTING.md
+
 ### Table of Contents
 * [Setting up your development environment](#environment-setup)
 * [Site structure](#setup)
@@ -51,15 +53,17 @@ This repo contains the code necessary to contribute to and run slacklinegroups.c
 
 ## Structure
 
-The site can be broken down into 3 main components: user submitted content, administrative controls, and the map itself.
+*Note* see the code for specific function documentation, this section aims to provide a very high level overview.s
 
-### User Submitted Content
+slacklinegroups.com can be broken down into 3 main components: *user submitted content*, *administrative controls*, and the *map* itself.
+
+#### User Submitted Content
 
 _groups\_controller.rb_ implements the logic for allowing user groups to be submitted. This controller will use the `SubmittedGroup` record, which aggregates all possible fields a user could enter for the `Location`, `Info`, and `Group` tables used by the map. 
 
 In _routes.rb_, we specify `:resources` for this controller, but hide the *show* and *index* from normals users. We only want users to be able to submit groups, so the index route redirects to the admin panel (where user submitted groups can be shown already) and the show route is never mentioned to normal users (it is used in the admin panel, but not specifically protected from users accessing if they manually enter a URL).
 
-### Administrative Panel
+#### Administrative Panel
 
 _admin\_controller.rb_ provides administrative tools for managing the site. Currently, an admin can do the following:
 
@@ -71,15 +75,17 @@ _admin\_controller.rb_ provides administrative tools for managing the site. Curr
 
 More tools are likely to come, but these are the most important pieces of the admin panel.
 
-### Active group map
+#### Active group map
 
-* Lastly, _map\_controller.rb_ and _embedded\_map\_controller.rb_ are responsible for displaying a map with all slacklinegroups on it. Both of these controllers inherit from _base\_map\_controller.rb_, which implements the core functionality of the slackline group map (whether that map be embedded or displayed on the website itself).
+Lastly, _map\_controller.rb_ and _embedded\_map\_controller.rb_ are responsible for displaying a map with all slacklinegroups on it. Both of these controllers inherit from _base\_map\_controller.rb_, which implements the core functionality of the slackline group map (whether that map be embedded or displayed on the website itself).
 
-### Controllers not mentioned in the above topics
+#### Controllers not mentioned in the above topics
 
 Any controller not mentioned in the sections above is not of critical importance, and more relates to informational content. These controllers are very simple and are mostly JS/HTML, so there isn't much to say here.
 
 ## Schema
+
+TBW
 
 ## Troubleshooting
 * If JS is not loading, try re-running `rake assets:precompile`
