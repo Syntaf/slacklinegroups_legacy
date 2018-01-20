@@ -26,8 +26,8 @@
         }
     });
     map.addControl(draw);
-    var lon = $('#location_lon').val();
-    var lat = $('#location_lat').val();
+    var lon = $('#group_location_attributes_lon').val();
+    var lat = $('#group_location_attributes_lat').val();
     console.log(lon, lat);
     if(lon && lat) {
         map.on('load', function() {
@@ -54,13 +54,13 @@
 
         $('.mapbox-gl-draw_trash').click(function() {
             map.setLayoutProperty('group-location', 'visibility', 'none');
-            $('#location_lon').val('');
-            $('#location_lat').val('');
+            $('#group_location_attributes_lon').val('');
+            $('#group_location_attributes_lat').val('');
         });
     }
     $('#export').click(function() {
         var data = draw.getAll();
-        $('#location_lat').val(data.features[0].geometry.coordinates[1]);
-        $('#location_lon').val(data.features[0].geometry.coordinates[0]);
+        $('#group_location_attributes_lat').val(data.features[0].geometry.coordinates[1]);
+        $('#group_location_attributes_lon').val(data.features[0].geometry.coordinates[0]);
     });
 </script>
