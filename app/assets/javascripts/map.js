@@ -18,13 +18,10 @@ var defaultOffset = 0;
 // Contains a mapboxgl.Popup which we store so we can call .remove() on it when we shift views
 var currentPopup = null;
 
-// For mobile parity, we don't want to actually zoom to a point being at the center (we'd have
-// no room for the popup). Instead, we zoom to the point being offset lower on the screen.
-var zoomOffsetLat = 0;
-
 // calculate the top bar height
+
+// computed value which represents how much latitude equals 1 pixel at zoom level 7.7
 var pixelToLat = 0.001903414429306;
-var magicConstant = 0.027322404;
 var $card = $('.card');
 var topBarClear = parseInt($card.css('top'), 10) + parseInt($card.css('margin-top'), 10) + parseInt($card.css('height'), 10);
 
@@ -90,13 +87,9 @@ $(document).ready(function() {
     if (width < 420) {
         modalWidth = 230;
         modalHeight = 225;
-        magicConstant *= 2;
     } else if (width < 501) {
-        zoomOffsetLat = .245;
         modalWidth = 260;
         modalHeight = 240;
-    } else if (width < 1000) {
-        zoomOffsetLat = .2;
     }
 
     $('.modal').modal();
@@ -157,46 +150,26 @@ $(document).ready(function() {
 
     function getCords(f, offset) {
         var x = f[0].geometry.coordinates;
-        //console.log('x before: ', x);
-        //var t = map.project(x);
-        //console.log('point: ', t);
-        //t.y -= offset;
-        //var y = map.unproject(t);
-        //console.log('x after: ', y);
-        x[1] += defaultOffset;
-        console.log('returning:',x);
-        return x;
+        return [x[0], x[1] + offset];
     }
 
     function calculateOffset()
     {
-        // dead center of screen on startup
-        var center = [0, 35];
-        var centerTranslation = map.project(center);
-        console.log('center: ', centerTranslation.y);
-        console.log('height: ', modalHeight);
-        console.log('top bar: ', topBarClear);
-        if (centerTranslation.y - modalHeight < topBarClear) {
-            console.log((topBarClear - (centerTranslation.y - modalHeight)));
-            defaultOffset = pixelToLat * (topBarClear - (centerTranslation.y - modalHeight));
-        } else if (width < 700 && height > 400) {
-            defaultOffset = pixelToLat * Math.abs((topBarClear - (centerTranslation.y - modalHeight)));
-        }
-        console.log('offset: ', defaultOffset);
-        //defaultOffset = 2;
+        defaultOffset = pixelToLat * modalHeight;
     }
 
     function unclusteredPointClicked(e)
     {
         clickEvent = e;
-        var lngLat = getCords(clickEvent.features);
         history.pushState({}, '', '/group/' + e.features[0].properties.id);
         if (map.getZoom() < 7.7 || e.fromSearch == true) {
+            var lngLat = getCords(clickEvent.features, defaultOffset);
             map.flyTo({
                 center: lngLat,
                 zoom: 7.7
             });
         } else {
+            var lngLat = getCords(clickEvent.features, 0.04);
             currentPopup = new mapboxgl.Popup()
                 .setLngLat(lngLat)
                 .setHTML(createPopUp(clickEvent.features))
@@ -209,9 +182,9 @@ $(document).ready(function() {
     {
         if (clickEvent)
         {
-            console.log('Click event: ', clickEvent);
+            var latLng = getCords(clickEvent.features, 0.04);
             currentPopup = new mapboxgl.Popup()
-                .setLngLat(getCords(clickEvent.features, 0.04))
+                .setLngLat(latLng)
                 .setHTML(createPopUp(clickEvent.features))
                 .addTo(map);
             clickEvent = null;
