@@ -18,10 +18,6 @@ var defaultOffset = 0;
 // Contains a mapboxgl.Popup which we store so we can call .remove() on it when we shift views
 var currentPopup = null;
 
-// For mobile parity, we don't want to actually zoom to a point being at the center (we'd have
-// no room for the popup). Instead, we zoom to the point being offset lower on the screen.
-var zoomOffsetLat = 0;
-
 // Embedded map specific options
 var showSearchBar = typeof showSearchBar === 'undefined' ? true : (showSearchBar === 'true');
 var showHome = typeof showHome === 'undefined' ? true : (showHome === 'true');
@@ -29,8 +25,13 @@ var center = typeof center === 'undefined' ? [0, 35] : (function (c) {var s = c.
 var group = typeof group === 'undefined' ? null : group;
 var zoom = typeof zoom === 'undefined'? 1.75 : parseFloat(zoom);
 
+// computed values for dynamic centering
+var pixelToLat = 0.001903414429306;
+
 var width = $(window).width();
 var height = $(window).height();
+var modalHeight = 340;
+var modalWidth = 440;
 var unClusteredzoomScale = 7.7;
 
 var createPopUp = function(f) {
@@ -93,8 +94,7 @@ function getParameterByName(name, url) {
 
 var getCords = function(f, offset) {
     var x = f[0].geometry.coordinates;
-    x[1] += offset;
-    return x;
+    return [x[0], x[1] + offset];
 }
 
 var geoPointJSON = $.ajax({
@@ -103,11 +103,13 @@ var geoPointJSON = $.ajax({
 });
 
 $(document).ready(function() {
-    var window_height = $(window).height();
-    if (window_height < 501) {
-        zoomOffsetLat = .245;
-    } else if (window_height < 1000) {
-        zoomOffsetLat = .2;
+
+    if (width < 420) {
+        modalWidth = 230;
+        modalHeight = 225;
+    } else if (width < 501) {
+        modalWidth = 260;
+        modalHeight = 240;
     }
 
     $('.modal').modal();
@@ -193,22 +195,24 @@ $(document).ready(function() {
         $('.search-bar').remove();
     }
 
+    function calculateOffset()
+    {
+        defaultOffset = pixelToLat * modalHeight;
+    }
 
     function unclusteredPointClicked(e)
     {
         clickEvent = e;
         if (map.getZoom() < 7.7 || e.fromSearch == true) {
-            var lngLat = getCords(e.features, defaultOffset);
+            var lngLat = getCords(clickEvent.features, defaultOffset);
             map.flyTo({
-                center: {
-                    lng: lngLat[0],
-                    lat: lngLat[1] + zoomOffsetLat
-                },
+                center: lngLat,
                 zoom: unClusteredzoomScale
             });
         } else {
+            var lngLat = getCords(clickEvent.features, 0.04);
             currentPopup = new mapboxgl.Popup()
-                .setLngLat(getCords(clickEvent.features, defaultOffset))
+                .setLngLat(lngLat)
                 .setHTML(createPopUp(clickEvent.features))
                 .addTo(map);
             clickEvent = null;
@@ -219,8 +223,9 @@ $(document).ready(function() {
     {
         if (clickEvent)
         {
+            var lngLat = getCords(clickEvent.features, 0.04);
             currentPopup = new mapboxgl.Popup()
-                .setLngLat(getCords(clickEvent.features, 0.04))
+                .setLngLat(lngLat)
                 .setHTML(createPopUp(clickEvent.features))
                 .addTo(map);
             clickEvent = null;
@@ -364,6 +369,8 @@ $(document).ready(function() {
             map.on('mouseleave', 'unclustered-local-point', function () {
                 map.getCanvas().style.cursor = '';
             });
+
+            calculateOffset();
 
             if (group && group.length !== 0)
             {

@@ -18,8 +18,6 @@ var defaultOffset = 0;
 // Contains a mapboxgl.Popup which we store so we can call .remove() on it when we shift views
 var currentPopup = null;
 
-// calculate the top bar height
-
 // computed value which represents how much latitude equals 1 pixel at zoom level 7.7
 var pixelToLat = 0.001903414429306;
 var $card = $('.card');
@@ -150,7 +148,9 @@ $(document).ready(function() {
 
     function getCords(f, offset) {
         var x = f[0].geometry.coordinates;
-        return [x[0], x[1] + offset];
+        console.log(x);
+        var newCords = [x[0], x[1] + offset]; 
+        return newCords;
     }
 
     function calculateOffset()
@@ -164,6 +164,10 @@ $(document).ready(function() {
         history.pushState({}, '', '/group/' + e.features[0].properties.id);
         if (map.getZoom() < 7.7 || e.fromSearch == true) {
             var lngLat = getCords(clickEvent.features, defaultOffset);
+            if (lngLat[1] > 0) {
+                //lngLat[1] -= lngLat[1] / 100.0;
+            }
+            console.log(lngLat);
             map.flyTo({
                 center: lngLat,
                 zoom: 7.7
@@ -182,9 +186,10 @@ $(document).ready(function() {
     {
         if (clickEvent)
         {
-            var latLng = getCords(clickEvent.features, 0.04);
+            var lngLat = getCords(clickEvent.features, 0.04);
+            console.log(lngLat);
             currentPopup = new mapboxgl.Popup()
-                .setLngLat(latLng)
+                .setLngLat(lngLat)
                 .setHTML(createPopUp(clickEvent.features))
                 .addTo(map);
             clickEvent = null;
