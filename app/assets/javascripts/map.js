@@ -23,6 +23,7 @@ var currentPopup = null;
 var zoomOffsetLat = 0;
 
 // calculate the top bar height
+var pixelToLat = 0.001903414429306;
 var magicConstant = 0.027322404;
 var $card = $('.card');
 var topBarClear = parseInt($card.css('top'), 10) + parseInt($card.css('margin-top'), 10) + parseInt($card.css('height'), 10);
@@ -31,8 +32,6 @@ var width = $(window).width();
 var height = $(window).height();
 var modalHeight = 340;
 var modalWidth = 440;
-
-console.log(topBarClear);
 
 var createPopUp = function(f) {
     if (width > 400) {
@@ -159,13 +158,14 @@ $(document).ready(function() {
     function getCords(f, offset) {
         var x = f[0].geometry.coordinates;
         //console.log('x before: ', x);
-        var t = map.project(x);
-        console.log('point: ', t);
-        t.y -= offset;
-        var y = map.unproject(t);
+        //var t = map.project(x);
+        //console.log('point: ', t);
+        //t.y -= offset;
+        //var y = map.unproject(t);
         //console.log('x after: ', y);
-
-        return y;
+        x[1] += defaultOffset;
+        console.log('returning:',x);
+        return x;
     }
 
     function calculateOffset()
@@ -178,9 +178,9 @@ $(document).ready(function() {
         console.log('top bar: ', topBarClear);
         if (centerTranslation.y - modalHeight < topBarClear) {
             console.log((topBarClear - (centerTranslation.y - modalHeight)));
-            defaultOffset = magicConstant * (topBarClear - (centerTranslation.y - modalHeight));
+            defaultOffset = pixelToLat * (topBarClear - (centerTranslation.y - modalHeight));
         } else if (width < 700 && height > 400) {
-            defaultOffset = magicConstant * Math.abs((topBarClear - (centerTranslation.y - modalHeight)));
+            defaultOffset = pixelToLat * Math.abs((topBarClear - (centerTranslation.y - modalHeight)));
         }
         console.log('offset: ', defaultOffset);
         //defaultOffset = 2;
@@ -189,7 +189,7 @@ $(document).ready(function() {
     function unclusteredPointClicked(e)
     {
         clickEvent = e;
-        var lngLat = getCords(clickEvent.features, defaultOffset);
+        var lngLat = getCords(clickEvent.features);
         history.pushState({}, '', '/group/' + e.features[0].properties.id);
         if (map.getZoom() < 7.7 || e.fromSearch == true) {
             map.flyTo({
@@ -209,6 +209,7 @@ $(document).ready(function() {
     {
         if (clickEvent)
         {
+            console.log('Click event: ', clickEvent);
             currentPopup = new mapboxgl.Popup()
                 .setLngLat(getCords(clickEvent.features, 0.04))
                 .setHTML(createPopUp(clickEvent.features))
