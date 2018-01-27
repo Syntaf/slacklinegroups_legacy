@@ -102,7 +102,7 @@ $(document).ready(function() {
         center: [0, 35],
         zoom: 1.75,
         container: 'map',
-        style: 'mapbox://styles/syntaf/cj7f7kxzx2jw52sp82gqdlu82'
+        style: 'mapbox://styles/syntaf/cjcwnx5yv0dx32sry8tx10buw'
     });
 
     $('#search-field').prop('disabled', true);
