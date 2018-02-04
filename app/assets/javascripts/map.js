@@ -148,7 +148,6 @@ $(document).ready(function() {
 
     function getCords(f, offset) {
         var x = f[0].geometry.coordinates;
-        console.log(x);
         var newCords = [x[0], x[1] + offset]; 
         return newCords;
     }
