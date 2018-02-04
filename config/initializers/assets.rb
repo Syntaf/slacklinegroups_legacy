@@ -14,3 +14,5 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 %w( map embedded_map about groups admin develop ).each do |controller|
   Rails.application.config.assets.precompile += ["#{controller}.js", "#{controller}.css"]
 end
+
+Rails.application.config.assets.precompile += ["mapbox-gl.js", "mapbox-gl.css"]
