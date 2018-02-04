@@ -254,11 +254,11 @@ $(document).ready(function() {
                         property: 'point_count',
                         type: 'interval',
                         stops: [
-                            [0, '#DAF7A6'],
-                            [5, '#F1A3CD'],
-                            [10, '#75cff0'],
-                            [25, '#34B7A7'],
-                            [50, '#F04950'],
+                            [0, '#E9E308'],
+                            [5, '#BD64DB'],
+                            [10, '#1B8328'],
+                            [25, '#E96619'],
+                            [50, '#E9160C'],
                         ]
                     },
                     'circle-radius': {

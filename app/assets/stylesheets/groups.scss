@@ -1,9 +1,10 @@
 // Place all the styles related to the Groups controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
-@import "materialize/components/color";
+@import "style/vars";
+
 .new-group-title {
-    color: #0097a7;
+    color: $primary-color;
 }
 .other, .fb-group, .fb-page {
     display: none;
@@ -39,6 +40,7 @@
         position: absolute;
         top: 10px;
         left: 10px;
+        background-color: $primary-color;
     }
 }
 td {
@@ -56,8 +58,7 @@ td {
 }
 .header {
     height: 10vh;
-    @extend .cyan;
-    @extend .darken-2;
+    background-color: $primary-color;
     text-align: center;
     sub {
         font-size: 12px;
@@ -92,6 +93,9 @@ td {
     label {
         font-weight: bold;
         color: #1b1b1b;
+    }
+    .submit-button {
+        background-color: $primary-color;
     }
 }
 sup {
