@@ -163,10 +163,6 @@ $(document).ready(function() {
         history.pushState({}, '', '/group/' + e.features[0].properties.id);
         if (map.getZoom() < 7.7 || e.fromSearch == true) {
             var lngLat = getCords(clickEvent.features, defaultOffset);
-            if (lngLat[1] > 0) {
-                //lngLat[1] -= lngLat[1] / 100.0;
-            }
-            console.log(lngLat);
             map.flyTo({
                 center: lngLat,
                 zoom: 7.7

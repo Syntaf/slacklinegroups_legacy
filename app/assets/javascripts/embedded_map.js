@@ -124,7 +124,7 @@ $(document).ready(function() {
         center: center,
         zoom: zoom,
         container: 'map',
-        style: 'mapbox://styles/syntaf/cj7f7kxzx2jw52sp82gqdlu82'
+        style: 'mapbox://styles/syntaf/cjcwnx5yv0dx32sry8tx10buw'
     });
 
     if (showHome) {
@@ -202,8 +202,10 @@ $(document).ready(function() {
 
     function unclusteredPointClicked(e)
     {
+
         clickEvent = e;
-        if (map.getZoom() < 7.7 || e.fromSearch == true) {
+        history.pushState({}, '', '/group/' + e.features[0].properties.id);
+        if (map.getZoom() < unClusteredzoomScale || e.fromSearch == true) {
             var lngLat = getCords(clickEvent.features, defaultOffset);
             map.flyTo({
                 center: lngLat,
@@ -275,11 +277,11 @@ $(document).ready(function() {
                         property: 'point_count',
                         type: 'interval',
                         stops: [
-                            [0, '#DAF7A6'],
-                            [5, '#F1A3CD'],
-                            [10, '#75cff0'],
-                            [25, '#34B7A7'],
-                            [50, '#F04950'],
+                            [0, '#E9E308'],
+                            [5, '#BD64DB'],
+                            [10, '#1B8328'],
+                            [25, '#E96619'],
+                            [50, '#E9160C'],
                         ]
                     },
                     'circle-radius': {
