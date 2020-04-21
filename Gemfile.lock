@@ -208,7 +208,7 @@ DEPENDENCIES
   jquery-ui-rails
   listen (>= 3.0.5, < 3.2)
   materialize-sass
-  pg
+  pg (~> 0.21)
   puma (~> 3.7)
   rails (~> 5.1.1)
   sass-rails (~> 5.0)
