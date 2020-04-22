@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class AdminController < ApplicationController
-  before_action :authenticate
+  before_action :authenticate_user!
 
   def index
     @groups = Group.joins(:info, :location).includes(:info, :location)
