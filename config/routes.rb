@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   # map controller routes
   get 'group/:id', to: 'map#index'
   get 'map/clusters', to: 'map#clusters'
