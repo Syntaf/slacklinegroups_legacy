@@ -1,83 +1,83 @@
 <div class="my-container">
-    <a style="display: inline-block;" href="/admin#submittedgroups">Back to Submitted groups</a>
-    <h3 style="display: inline-block;" class="new-group-title">Viewing an added group</h3>
-    <table>
-        <tr>
-            <td style="width: 100%;">
-                <div id="map">
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td class="form-td">
-                <%= simple_form_for @group, url: groups_path, html: { method: :post } do |f| %>
-                <%= render 'form', f: f %>
-                <% end %>
-            </td>
-        </tr>
-    </table>
-    <!-- <%= link_to 'Back', groups_path %> -->
+  <a style="display: inline-block;" href="/admin#submittedgroups">Back to Submitted groups</a>
+  <h3 style="display: inline-block;" class="new-group-title">Viewing an added group</h3>
+  <table>
+    <tr>
+      <td style="width: 100%;">
+        <div id="map">
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="form-td">
+        <%= simple_form_for @group, url: groups_path, html: { method: :post } do |f| %>
+        <%= render 'form', f: f %>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+  <!-- <%= link_to 'Back', groups_path %> -->
 </div>
 <div id="modal1" class="modal">
-    <div class="modal-content">
-        <h4>No location set</h4>
-        <p>Please use the marker tool on the right to select a location, then click 'Set Location' again.</p>
-    </div>
-    <div class="modal-footer">
-        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
-    </div>
-    </div>
+  <div class="modal-content">
+    <h4>No location set</h4>
+    <p>Please use the marker tool on the right to select a location, then click 'Set Location' again.</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+  </div>
+  </div>
 </div>
 <script>
-    mapboxgl.accessToken = 'pk.eyJ1Ijoic3ludGFmIiwiYSI6ImNqM2Z2bzZhbTAxZWwycW4wcmI5cjk4MW0ifQ.YOd5yuJfLARC2oOfqY-KoA'
-    var map = new mapboxgl.Map({
-        center: [0, 35],
-        zoom: 1.75,
-        container: 'map',
-        style: 'mapbox://styles/syntaf/cj3rys2fx000q2qodb7zlbh2v'
-    });
-    var draw = new MapboxDraw({
-        displayControlsDefault: false,
-        controls: {
-            point: true,
-            trash: true
-        }
-    });
-    map.addControl(draw);
-    $(document).ready(function() {
-        $('select').material_select();
-        $('.modal').modal();
-        var lon = $('#submitted_group_lon').val();
-        var lat = $('#submitted_group_lat').val();
-        if(lon && lat) {
-            map.on('load', function() {
-                map.addLayer({
-                    id: 'group-location',
-                    type: 'circle',
-                    source: {
-                        type: 'geojson',
-                        data: {
-                            type: 'Feature',
-                            geometry: {
-                                type: 'Point',
-                                coordinates: [lon, lat]
-                            }
-                        }
-                    },
-                    layout: {},
-                    paint: {
-                        "circle-radius": 6,
-                        "circle-color": "#B42222"
-                    }
-                });
-            });
+  mapboxgl.accessToken = 'pk.eyJ1Ijoic3ludGFmIiwiYSI6ImNqM2Z2bzZhbTAxZWwycW4wcmI5cjk4MW0ifQ.YOd5yuJfLARC2oOfqY-KoA'
+  var map = new mapboxgl.Map({
+    center: [0, 35],
+    zoom: 1.75,
+    container: 'map',
+    style: 'mapbox://styles/syntaf/cj3rys2fx000q2qodb7zlbh2v'
+  });
+  var draw = new MapboxDraw({
+    displayControlsDefault: false,
+    controls: {
+      point: true,
+      trash: true
+    }
+  });
+  map.addControl(draw);
+  $(document).ready(function() {
+    $('select').material_select();
+    $('.modal').modal();
+    var lon = $('#submitted_group_lon').val();
+    var lat = $('#submitted_group_lat').val();
+    if(lon && lat) {
+      map.on('load', function() {
+        map.addLayer({
+          id: 'group-location',
+          type: 'circle',
+          source: {
+            type: 'geojson',
+            data: {
+              type: 'Feature',
+              geometry: {
+                type: 'Point',
+                coordinates: [lon, lat]
+              }
+            }
+          },
+          layout: {},
+          paint: {
+            "circle-radius": 6,
+            "circle-color": "#B42222"
+          }
+        });
+      });
 
-            $('.mapbox-gl-draw_trash').click(function() {
-                map.setLayoutProperty('group-location', 'visibility', 'none');
-                $('#submitted_group_lon').val('');
-                $('#submitted_group_lat').val('');
-            });
-        }
-        $("input[type='submit']").hide();
-    });
+      $('.mapbox-gl-draw_trash').click(function() {
+        map.setLayoutProperty('group-location', 'visibility', 'none');
+        $('#submitted_group_lon').val('');
+        $('#submitted_group_lat').val('');
+      });
+    }
+    $("input[type='submit']").hide();
+  });
 </script>

@@ -1,3 +1,3 @@
 class SubmittedGroup < ApplicationRecord
-    self.table_name = "submitted_group"
+  self.table_name = "submitted_group"
 end

@@ -1,63 +1,63 @@
 <% if @group.errors.any? %>
-    <div id="error_explanation">
-        <h4>
-            <%= pluralize(@group.errors.count, "error") %> prohibited
-            this group from being submitted:
-        </h4>
-        <ul>
-            <% @group.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-            <% end %>
-        </ul>
-    </div>
+  <div id="error_explanation">
+    <h4>
+      <%= pluralize(@group.errors.count, "error") %> prohibited
+      this group from being submitted:
+    </h4>
+    <ul>
+      <% @group.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
 <% end %>
 
 <div class="row">
-    <div class="input-field col s6">
-        <% active = @group.name ? "active" : "" %>
-        <%= f.text_field :name %>
-        <%= f.label :name, :class => active %>
-    </div>
+  <div class="input-field col s6">
+    <% active = @group.name ? "active" : "" %>
+    <%= f.text_field :name %>
+    <%= f.label :name, :class => active %>
+  </div>
 
-    <div class="input-field col s6">
-        <%= f.input :group_type, label: 'Group Type', :collection => [['Facebook Group', 'facebook group'],['Facebook Page','facebook page'], ['Website/Other', 'website']] %>
-    </div>
+  <div class="input-field col s6">
+    <%= f.input :group_type, label: 'Group Type', :collection => [['Facebook Group', 'facebook group'],['Facebook Page','facebook page'], ['Website/Other', 'website']] %>
+  </div>
 </div>
 
 <div class="row">
-    <div class="input-field col s6">
-        <% active = @group.members ? "active" : "" %>
-        <%= f.text_field :members %>
-        <%= f.label :members, "Member Count", :class => active %>
-    </div>
+  <div class="input-field col s6">
+    <% active = @group.members ? "active" : "" %>
+    <%= f.text_field :members %>
+    <%= f.label :members, "Member Count", :class => active %>
+  </div>
 
-    <div class="input-field col s6">
-        <% active = @group.link ? "active" : "" %>
-        
-        <%= f.text_field :link %>
-        <%= f.label :link, 'Link', :class => active %>
-    </div>
+  <div class="input-field col s6">
+    <% active = @group.link ? "active" : "" %>
+    
+    <%= f.text_field :link %>
+    <%= f.label :link, 'Link', :class => active %>
+  </div>
 </div>
 
 <div class="row">
-    <div class="input-field col s6">
-        <% active = @group.email ? "active" : "" %>
-        <%= f.text_field :email %>
-        <%= f.label :email, 'Email', :class => active %>
+  <div class="input-field col s6">
+    <% active = @group.email ? "active" : "" %>
+    <%= f.text_field :email %>
+    <%= f.label :email, 'Email', :class => active %>
+  </div>
+  <div class="input-field col s6 left-align">
+    <%= f.check_box :is_regional, id:'groupRegional' %>
+    <%= f.label 'Regional Group', for: 'groupRegional', id: 'groupRegional' %>
+    <div class="tooltip">
+      <i class="fa fa-question-circle-o"></i>
+      <span class="tooltiptext">If the group is for a region<br> and not just a local city,<br> please select this option.</span>
     </div>
-    <div class="input-field col s6 left-align">
-        <%= f.check_box :is_regional, id:'groupRegional' %>
-        <%= f.label 'Regional Group', for: 'groupRegional', id: 'groupRegional' %>
-        <div class="tooltip">
-            <i class="fa fa-question-circle-o"></i>
-            <span class="tooltiptext">If the group is for a region<br> and not just a local city,<br> please select this option.</span>
-        </div>
-    </div>
+  </div>
 </div>
 
 <%= hidden_field(:submitted_group, :lat, :value => @group.lat) %>
 <%= hidden_field(:submitted_group, :lon, :value => @group.lon) %>
 
 <p>
-    <%= f.submit 'Submit for Review', class: 'waves-effect waves-light btn submit-button', data: { disable_with: false } %>
+  <%= f.submit 'Submit for Review', class: 'waves-effect waves-light btn submit-button', data: { disable_with: false } %>
 </p>

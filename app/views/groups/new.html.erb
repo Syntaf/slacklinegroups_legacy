@@ -6,98 +6,98 @@
 <% end %>
 
 <div class="header">
-    <h2><a href="/" class="no-style">SlacklineGroups</a></h2>
+  <h2><a href="/" class="no-style">SlacklineGroups</a></h2>
 </div>
 <div class="my-container">
-    <div class="text-content">
-        <h3 class="new-group-title">Add New Group</h3>
-        <p>To submit a new group for approval, please fill all fields below and select a point on the map to represent your groups location. To select a location on the map, select the tool in the top right of the map and click anywhere to set your location.
-        </p>
-    </div>
-    <table>
-        <tr>
-            <td style="width: 100%;">
-                <div id="map">
-                    <a class="waves-effect waves-light btn" id="export">Set Location</a>
-                </div>
-            </td>
-        </tr>
-        <tr>
-            <td class="form-td">
-                <%= simple_form_for @group, url: new_group_path, html: { method: :post } do |f| %>
-                <%= render 'form', f: f %>
-                <% end %>
-            </td>
-        </tr>
-    </table>
-    <!-- <%= link_to 'Back', groups_path %> -->
+  <div class="text-content">
+    <h3 class="new-group-title">Add New Group</h3>
+    <p>To submit a new group for approval, please fill all fields below and select a point on the map to represent your groups location. To select a location on the map, select the tool in the top right of the map and click anywhere to set your location.
+    </p>
+  </div>
+  <table>
+    <tr>
+      <td style="width: 100%;">
+        <div id="map">
+          <a class="waves-effect waves-light btn" id="export">Set Location</a>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td class="form-td">
+        <%= simple_form_for @group, url: new_group_path, html: { method: :post } do |f| %>
+        <%= render 'form', f: f %>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+  <!-- <%= link_to 'Back', groups_path %> -->
 </div>
 <div id="modal1" class="modal">
-    <div class="modal-content">
-        <h4>No location set</h4>
-        <p>Please use the marker tool on the right to select a location, then click 'Set Location' again.</p>
-    </div>
-    <div class="modal-footer">
-        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
-    </div>
-    </div>
+  <div class="modal-content">
+    <h4>No location set</h4>
+    <p>Please use the marker tool on the right to select a location, then click 'Set Location' again.</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">OK</a>
+  </div>
+  </div>
 </div>
 <% if !local_assigns[:successfullSubmit].nil? %>
-    <!-- Modal Structure -->
-    <div id="groupSubmitted" class="modal">
-        <div class="modal-content">
-            <h4>Submit successful</h4>
-            <p>Thanks for your submission <i class="fa fa-hand-peace-o"></i> ! We'll review your group shortly and verify that it can be included.</p>
-        </div>
-        <div class="modal-footer">
-            <a href="/" class="modal-action modal-close waves-effect waves-green btn-flat">Back to home</a>
-            <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Submit Another</a>
-        </div>
-    </div>
-<% end %>
-<div id="no-location" class="modal">
+  <!-- Modal Structure -->
+  <div id="groupSubmitted" class="modal">
     <div class="modal-content">
-        <h4>No Location Set</h4>
-        <p>Before submitting, please use the map above to select a group location</p>
+      <h4>Submit successful</h4>
+      <p>Thanks for your submission <i class="fa fa-hand-peace-o"></i> ! We'll review your group shortly and verify that it can be included.</p>
     </div>
     <div class="modal-footer">
-        <a class="modal-action no-redirect modal-close waves-effect waves-green btn-flat">Ok</a>
+      <a href="/" class="modal-action modal-close waves-effect waves-green btn-flat">Back to home</a>
+      <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Submit Another</a>
     </div>
+  </div>
+<% end %>
+<div id="no-location" class="modal">
+  <div class="modal-content">
+    <h4>No Location Set</h4>
+    <p>Before submitting, please use the map above to select a group location</p>
+  </div>
+  <div class="modal-footer">
+    <a class="modal-action no-redirect modal-close waves-effect waves-green btn-flat">Ok</a>
+  </div>
 </div>
 <script>
-    $(document).ready(function() {
-        $('select').material_select();
-        $('.modal').modal();
+  $(document).ready(function() {
+    $('select').material_select();
+    $('.modal').modal();
 
-        if ($('#groupSubmitted').length > 0) {
-            $('#groupSubmitted').modal('open');
-        }
-    });
+    if ($('#groupSubmitted').length > 0) {
+      $('#groupSubmitted').modal('open');
+    }
+  });
 
-    mapboxgl.accessToken = 'pk.eyJ1Ijoic3ludGFmIiwiYSI6ImNqM2Z2bzZhbTAxZWwycW4wcmI5cjk4MW0ifQ.YOd5yuJfLARC2oOfqY-KoA'
-    var map = new mapboxgl.Map({
-        center: [0, 35],
-        zoom: 1.75,
-        container: 'map',
-        style: 'mapbox://styles/syntaf/cj3rys2fx000q2qodb7zlbh2v'
-    });
-    var draw = new MapboxDraw({
-        displayControlsDefault: false,
-        controls: {
-            point: true,
-            trash: true
-        }
-    });
-    map.addControl(draw);
-    $('#export').click(function() {
-        var data = draw.getAll();
-        if (data.features.length > 0) {
-            $('#export').text('Saved!');
-            $('#submitted_group_lat').val(data.features[0].geometry.coordinates[1]);
-            $('#submitted_group_lon').val(data.features[0].geometry.coordinates[0]);
-        } else {
-            $('#modal1').modal('open');
-        }
+  mapboxgl.accessToken = 'pk.eyJ1Ijoic3ludGFmIiwiYSI6ImNqM2Z2bzZhbTAxZWwycW4wcmI5cjk4MW0ifQ.YOd5yuJfLARC2oOfqY-KoA'
+  var map = new mapboxgl.Map({
+    center: [0, 35],
+    zoom: 1.75,
+    container: 'map',
+    style: 'mapbox://styles/syntaf/cj3rys2fx000q2qodb7zlbh2v'
+  });
+  var draw = new MapboxDraw({
+    displayControlsDefault: false,
+    controls: {
+      point: true,
+      trash: true
+    }
+  });
+  map.addControl(draw);
+  $('#export').click(function() {
+    var data = draw.getAll();
+    if (data.features.length > 0) {
+      $('#export').text('Saved!');
+      $('#submitted_group_lat').val(data.features[0].geometry.coordinates[1]);
+      $('#submitted_group_lon').val(data.features[0].geometry.coordinates[0]);
+    } else {
+      $('#modal1').modal('open');
+    }
 
-    });
+  });
 </script>

@@ -1,109 +1,109 @@
 <div class="header">
-    <h2>Adminitrative Panel</h2>
+  <h2>Adminitrative Panel</h2>
 </div>
 
 <div class="my-container">
-    <%= link_to 'New Active Group', new_admin_path, :class => "new-group waves-effect waves-light btn" %>
+  <%= link_to 'New Active Group', new_admin_path, :class => "new-group waves-effect waves-light btn" %>
 
-    <div class="card">
-    <ul id="db-tabs" class="tabs">
-        <li class="tab col s3"><a class="tab-text active" href="#activegroups">Active Groups</a></li>
-        <li class="tab col s3"><a class="tab-text" href="#submittedgroups">Submitted Groups</a></li>
-    </ul>
-    <div id="activegroups" class="col s12">
-        <table class="bordered highlight" id="curated-groups-table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Link</th>
-                    <th class="number-td">Lat</th>
-                    <th class="number-td">Long</th>
-                    <th class="number-td">Members</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
+  <div class="card">
+  <ul id="db-tabs" class="tabs">
+    <li class="tab col s3"><a class="tab-text active" href="#activegroups">Active Groups</a></li>
+    <li class="tab col s3"><a class="tab-text" href="#submittedgroups">Submitted Groups</a></li>
+  </ul>
+  <div id="activegroups" class="col s12">
+    <table class="bordered highlight" id="curated-groups-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Link</th>
+          <th class="number-td">Lat</th>
+          <th class="number-td">Long</th>
+          <th class="number-td">Members</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
 
-            <tbody>
-            <% @groups.each do |group| %>
-            <tr <%= if missing_information(group) then "class=red-out"; end %>>
-                <td class="name-td"><%= group.name %></td>
-                <td class="name-td"><%= shrink_type(group.group_type) %></td>
-                <td class="link-td">
-                    <a target="_blank" href="<%= group.info.link %>">
-                        <% if group.group_type == "facebook group" %>
-                            <%= group.info.link.gsub("https://www.facebook.com/groups", "") %>
-                        <% elsif group.group_type == "facebook page" %>
-                            <%= group.info.link.gsub("https://www.facebook.com/", "") %>
-                        <% else %>
-                            <%= group.info.link %>
-                        <% end %>
-                    </a>
-                </td>
-                <td class="cord-td"><%= "%.3f" % (group.location.lat ? group.location.lat : 0) %></td>
-                <td class="cord-td"><%= "%.3f" % (group.location.lon ? group.location.lon : 0) %></td>
-                <td class="number-td small-td"><%= group.info.members %></td>
-                <td class="icon-td"><%= link_to("group/#{group.id}") do %><i class="fa fa-eye"></i><% end %></td></td>
-                <td class="icon-td"><%= link_to(edit_admin_path(group)) do %><i class="fa fa-pencil"></i><% end %></td>
-                <td class="icon-td"><%= link_to(admin_url(group),
-                    method: :delete,
-                    data: { confirm: 'Are you sure you wish to delete this item?' }) do %><i class="fa fa-trash-o"></i><% end %>
-                </td>
-            </tr>
+      <tbody>
+      <% @groups.each do |group| %>
+      <tr <%= if missing_information(group) then "class=red-out"; end %>>
+        <td class="name-td"><%= group.name %></td>
+        <td class="name-td"><%= shrink_type(group.group_type) %></td>
+        <td class="link-td">
+          <a target="_blank" href="<%= group.info.link %>">
+            <% if group.group_type == "facebook group" %>
+              <%= group.info.link.gsub("https://www.facebook.com/groups", "") %>
+            <% elsif group.group_type == "facebook page" %>
+              <%= group.info.link.gsub("https://www.facebook.com/", "") %>
+            <% else %>
+              <%= group.info.link %>
             <% end %>
-            </tbody>
-        </table>
-    </div>
-    <div id="submittedgroups" class="col s12">
-        <table class="bordered highlight" id="pending-review-table">
-            <thead>
-                <tr>
-                    <th>Email</th>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Link</th>
-                    <th class="number-td">Lat</th>
-                    <th class="number-td">Long</th>
-                    <th class="number-td">Members</th>
-                    <th class="number-td">Submitted</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
+          </a>
+        </td>
+        <td class="cord-td"><%= "%.3f" % (group.location.lat ? group.location.lat : 0) %></td>
+        <td class="cord-td"><%= "%.3f" % (group.location.lon ? group.location.lon : 0) %></td>
+        <td class="number-td small-td"><%= group.info.members %></td>
+        <td class="icon-td"><%= link_to("group/#{group.id}") do %><i class="fa fa-eye"></i><% end %></td></td>
+        <td class="icon-td"><%= link_to(edit_admin_path(group)) do %><i class="fa fa-pencil"></i><% end %></td>
+        <td class="icon-td"><%= link_to(admin_url(group),
+          method: :delete,
+          data: { confirm: 'Are you sure you wish to delete this item?' }) do %><i class="fa fa-trash-o"></i><% end %>
+        </td>
+      </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+  <div id="submittedgroups" class="col s12">
+    <table class="bordered highlight" id="pending-review-table">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Link</th>
+          <th class="number-td">Lat</th>
+          <th class="number-td">Long</th>
+          <th class="number-td">Members</th>
+          <th class="number-td">Submitted</th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
 
-            <tbody>
-            <% @userSubmittedGroups.each do |group| %>
-            <tr id="row-<%= group.id %>">
-                <td class="email-td"><%= group.email %></td>
-                <td class="name-td"><%= group.name %></td>
-                <td class="name-td"><%= shrink_type(group.group_type) %></td>
-                <td class="link-td">
-                    <a target="_blank" href="<%= group.link %>">
-                        <% if group.group_type == "facebook_group" %>
-                            <%= group.link.gsub("https://www.facebook.com/groups", "") %>
-                        <% elsif group.group_type == "facebook_page" %>
-                            <%= group.link.gsub("https://www.facebook.com/", "") %>
-                        <% else %>
-                            <%= group.link %>
-                        <% end %>
-                    </a>
-                </td>
-                <td class="cord-td"><%= "%.3f" % (group.lat ? group.lat : 0) %></td>
-                <td class="cord-td"><%= "%.3f" % (group.lon ? group.lon : 0) %></td>
-                <td style="text-align: right; width: 115px;"><%= group.members %></td>
-                <td style="text-align: right; width: 130px;"><%= group.created_at.strftime('%d %b %H:%M') %></td>
-                <td class="icon-td"><%= link_to(group_path(group)) do %><i class="fa fa-eye"></i><% end %></td>
-                <td class="icon-td approve-action" id="<%= group.id %>"><a><i class="fa fa-check"></i></a></td>
-                <td class="icon-td"><%= link_to(group_path(group),
-                    method: :delete,
-                    data: { confirm: 'Are you sure you wish to deny this item?' }) do %><i class="fa fa-times"></i><% end %>
-                </td>
-            </tr>
+      <tbody>
+      <% @user_submitted_groups.each do |group| %>
+      <tr id="row-<%= group.id %>">
+        <td class="email-td"><%= group.email %></td>
+        <td class="name-td"><%= group.name %></td>
+        <td class="name-td"><%= shrink_type(group.group_type) %></td>
+        <td class="link-td">
+          <a target="_blank" href="<%= group.link %>">
+            <% if group.group_type == "facebook_group" %>
+              <%= group.link.gsub("https://www.facebook.com/groups", "") %>
+            <% elsif group.group_type == "facebook_page" %>
+              <%= group.link.gsub("https://www.facebook.com/", "") %>
+            <% else %>
+              <%= group.link %>
             <% end %>
-            </tbody>
-        </table>
-    </div>
+          </a>
+        </td>
+        <td class="cord-td"><%= "%.3f" % (group.lat ? group.lat : 0) %></td>
+        <td class="cord-td"><%= "%.3f" % (group.lon ? group.lon : 0) %></td>
+        <td style="text-align: right; width: 115px;"><%= group.members %></td>
+        <td style="text-align: right; width: 130px;"><%= group.created_at.strftime('%d %b %H:%M') %></td>
+        <td class="icon-td"><%= link_to(group_path(group)) do %><i class="fa fa-eye"></i><% end %></td>
+        <td class="icon-td approve-action" id="<%= group.id %>"><a><i class="fa fa-check"></i></a></td>
+        <td class="icon-td"><%= link_to(group_path(group),
+          method: :delete,
+          data: { confirm: 'Are you sure you wish to deny this item?' }) do %><i class="fa fa-times"></i><% end %>
+        </td>
+      </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

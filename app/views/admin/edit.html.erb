@@ -1,66 +1,66 @@
 <div class="header" style="margin-bottom: 10px;">
-    <h2>SlacklineGroups</h2>
+  <h2>SlacklineGroups</h2>
 </div>
 <%= link_to 'Back', admin_path %>
 <div class="my-container">
-    <div id="map">
-        <a class="waves-effect waves-light btn" id="export">Export</a>
-    </div>
-    <%= simple_form_for @group, :url => {:action => 'update'} do |f| %>
-    <%= render 'form', f: f %>
-    <% end %>
+  <div id="map">
+    <a class="waves-effect waves-light btn" id="export">Export</a>
+  </div>
+  <%= simple_form_for @group, :url => {:action => 'update'} do |f| %>
+  <%= render 'form', f: f %>
+  <% end %>
 </div>
 <script>
-    mapboxgl.accessToken = 'pk.eyJ1Ijoic3ludGFmIiwiYSI6ImNqM2Z2bzZhbTAxZWwycW4wcmI5cjk4MW0ifQ.YOd5yuJfLARC2oOfqY-KoA'
-    var map = new mapboxgl.Map({
-        center: [-20, 45],
-        zoom: 1.5,
-        container: 'map',
-        style: 'mapbox://styles/syntaf/cj3rys2fx000q2qodb7zlbh2v'
-    });
-    var draw = new MapboxDraw({
-        displayControlsDefault: false,
-        controls: {
-            point: true,
-            trash: true
-        }
-    });
-    map.addControl(draw);
-    var lon = $('#group_location_attributes_lon').val();
-    var lat = $('#group_location_attributes_lat').val();
-    console.log(lon, lat);
-    if(lon && lat) {
-        map.on('load', function() {
-            map.addLayer({
-                id: 'group-location',
-                type: 'circle',
-                source: {
-                    type: 'geojson',
-                    data: {
-                        type: 'Feature',
-                        geometry: {
-                            type: 'Point',
-                            coordinates: [lon, lat]
-                        }
-                    }
-                },
-                layout: {},
-                paint: {
-                    "circle-radius": 6,
-                    "circle-color": "#B42222"
-                }
-            });
-        });
-
-        $('.mapbox-gl-draw_trash').click(function() {
-            map.setLayoutProperty('group-location', 'visibility', 'none');
-            $('#group_location_attributes_lon').val('');
-            $('#group_location_attributes_lat').val('');
-        });
+  mapboxgl.accessToken = 'pk.eyJ1Ijoic3ludGFmIiwiYSI6ImNqM2Z2bzZhbTAxZWwycW4wcmI5cjk4MW0ifQ.YOd5yuJfLARC2oOfqY-KoA'
+  var map = new mapboxgl.Map({
+    center: [-20, 45],
+    zoom: 1.5,
+    container: 'map',
+    style: 'mapbox://styles/syntaf/cj3rys2fx000q2qodb7zlbh2v'
+  });
+  var draw = new MapboxDraw({
+    displayControlsDefault: false,
+    controls: {
+      point: true,
+      trash: true
     }
-    $('#export').click(function() {
-        var data = draw.getAll();
-        $('#group_location_attributes_lat').val(data.features[0].geometry.coordinates[1]);
-        $('#group_location_attributes_lon').val(data.features[0].geometry.coordinates[0]);
+  });
+  map.addControl(draw);
+  var lon = $('#group_location_attributes_lon').val();
+  var lat = $('#group_location_attributes_lat').val();
+  console.log(lon, lat);
+  if(lon && lat) {
+    map.on('load', function() {
+      map.addLayer({
+        id: 'group-location',
+        type: 'circle',
+        source: {
+          type: 'geojson',
+          data: {
+            type: 'Feature',
+            geometry: {
+              type: 'Point',
+              coordinates: [lon, lat]
+            }
+          }
+        },
+        layout: {},
+        paint: {
+          "circle-radius": 6,
+          "circle-color": "#B42222"
+        }
+      });
     });
+
+    $('.mapbox-gl-draw_trash').click(function() {
+      map.setLayoutProperty('group-location', 'visibility', 'none');
+      $('#group_location_attributes_lon').val('');
+      $('#group_location_attributes_lat').val('');
+    });
+  }
+  $('#export').click(function() {
+    var data = draw.getAll();
+    $('#group_location_attributes_lat').val(data.features[0].geometry.coordinates[1]);
+    $('#group_location_attributes_lon').val(data.features[0].geometry.coordinates[0]);
+  });
 </script>

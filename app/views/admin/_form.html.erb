@@ -1,66 +1,66 @@
 <% if @group.errors.any? %>
-    <div id="error_explanation">
-        <h4>
-            <%= pluralize(@group.errors.count, "error") %> prohibited
-            this article from being saved:
-        </h4>
-        <ul>
-            <% @group.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-            <% end %>
-        </ul>
-    </div>
+  <div id="error_explanation">
+    <h4>
+      <%= pluralize(@group.errors.count, "error") %> prohibited
+      this article from being saved:
+    </h4>
+    <ul>
+      <% @group.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
 <% end %>
 
 <table>
 <tbody>
-    <tr>
-        <td style="width: 50%;">
-            <p id="nm">
-                <%= f.label :name %><br>
-                <%= f.text_field :name %>
-            </p>
+  <tr>
+    <td style="width: 50%;">
+      <p id="nm">
+        <%= f.label :name %><br>
+        <%= f.text_field :name %>
+      </p>
 
-            <%= f.simple_fields_for :location do |l| %>
-                <p id="cd">
-                    <%= l.label :lat, 'Latitude' %><br>
-                    <%= l.text_field :lat %>
-                </p>
-                <p id="cd">
-                    <%= l.label :lon, 'Longitude' %><br>
-                    <%= l.text_field :lon %>
-                </p>
-            <% end %>
+      <%= f.simple_fields_for :location do |l| %>
+        <p id="cd">
+          <%= l.label :lat, 'Latitude' %><br>
+          <%= l.text_field :lat %>
+        </p>
+        <p id="cd">
+          <%= l.label :lon, 'Longitude' %><br>
+          <%= l.text_field :lon %>
+        </p>
+      <% end %>
 
-            <p id="nm">
-                <div class="input-field col s6">
-                    <%= f.input :group_type, label: false, :collection => ['facebook group', 'facebook page', 'website'] %>
-                </div>
-            </p>
-        </td>
-        <td style="width: 50%;">
-            <%= f.simple_fields_for :info do |i| %>
-                <p id="mm">
-                    <%= i.label :members %><br>
-                    <%= i.text_field :members %>
-                </p>
+      <p id="nm">
+        <div class="input-field col s6">
+          <%= f.input :group_type, label: false, :collection => ['facebook group', 'facebook page', 'website'] %>
+        </div>
+      </p>
+    </td>
+    <td style="width: 50%;">
+      <%= f.simple_fields_for :info do |i| %>
+        <p id="mm">
+          <%= i.label :members %><br>
+          <%= i.text_field :members %>
+        </p>
 
-                <p id="lk">
-                    <%= i.label :link, 'Link to group' %><br>
-                    <%= i.text_field :link %>
-                </p>
-                
-                <br>
-                <p>
-                    <%= i.check_box :is_regional, id:'groupRegional' %>
-                    <%= i.label 'Regional?', for: 'groupRegional', id: 'groupRegional' %>
-                </p>
-            <% end %>
-        </td>
-    </tr>
+        <p id="lk">
+          <%= i.label :link, 'Link to group' %><br>
+          <%= i.text_field :link %>
+        </p>
+        
+        <br>
+        <p>
+          <%= i.check_box :is_regional, id:'groupRegional' %>
+          <%= i.label 'Regional?', for: 'groupRegional', id: 'groupRegional' %>
+        </p>
+      <% end %>
+    </td>
+  </tr>
 </tbody>
 </table>
 
 <p>
-    <%= f.submit class: 'waves-effect waves-light btn' %>
+  <%= f.submit class: 'waves-effect waves-light btn' %>
 </p>
