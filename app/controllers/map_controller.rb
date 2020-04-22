@@ -7,6 +7,9 @@ class MapController < BaseMap
     # Displays the slacklinegroups map and checks if the user asked for a specific group. If
     # a group id is detected, grab that groups info and send it along javascript_variables
     def index
+        puts 'wtf'
+        logger.info 'current user!'
+        logger.info current_user
         @json = Array.new
         if params[:id] != nil
             @json = self.class.superclass.instance_method(:get_group).bind(self).call

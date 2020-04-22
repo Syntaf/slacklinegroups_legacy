@@ -46,8 +46,36 @@ namespace :dataset do
     end
   end
 
+  desc 'Imports Ryan\'s completed group list'
+  task import: :environment do
+    require 'csv'
+
+    csv_dataset = File.read('import_dataset.csv')
+    csv = CSV.parse(csv_dataset, headers: true)
+    csv.each do |row|
+      next if row['Link'].nil?
+
+      group = Group.new
+
+      group.name = row['Group Name']
+      group.group_type = determine_group_type(row['Link'])
+
+      group.create_info
+
+      group.info.members = 0
+      group.info.link = sanitize_link(row['Link'])
+      group.info.is_regional = row['City/Region'] == 'Countrywide'
+
+      group.create_location
+
+      group.location.lat = row['Latitude']
+      group.location.lon = row['Longitude']
+
+      group.save
+    end
+  end
+
   def trim_link(link)
-    puts link
     matches = link.match(%r{(?:http:\/\/|https:\/\/)?(?:www\.)?(?:facebook.com|fb.com)\/(groups\/)?(.*)})
 
     return nil if matches.nil?
@@ -55,5 +83,32 @@ namespace :dataset do
     trimmed_link = matches[2]
     trimmed_link = trimmed_link[0..-2] if trimmed_link[-1] == '/'
     trimmed_link
+  end
+
+  def sanitize_link(link)
+    link.gsub!(%r{^www}, 'https://www');
+    link.gsub!(%r{^(facebook|fb)}, 'https://www.\\1')
+    link.gsub!(%r{^http:\/\/}, 'https://')
+    link.gsub!("https://www.fb.com", "https://www.facebook.com")
+
+    link
+  end
+
+  def determine_group_type(link)
+    if is_group_link(link)
+      return 'facebook group'
+    elsif is_facebook_link(link)
+      return 'facebook page'
+    end
+
+    'other'
+  end
+
+  def is_group_link(link)
+    link.match(%r{.*\/groups\/.*}).nil?
+  end
+
+  def is_facebook_link(link)
+    link.match(%{.*(?:facebook\.com|fb\.com).*})
   end
 end
