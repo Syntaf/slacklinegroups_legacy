@@ -5,14 +5,19 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-# material library
-gem 'materialize-sass'
+gem 'bundler'
+
+# Authorization
+gem 'devise'
+
+# Heroku friendly app configuration using ENV
+gem 'figaro'
+
+gem 'font-awesome-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'font-awesome-rails'
+gem 'materialize-sass'
 gem 'seed_dump'
-gem 'figaro'
-gem 'bundler'
 gem 'simple_form'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
