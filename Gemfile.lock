@@ -110,7 +110,7 @@ GEM
     orm_adapter (0.5.0)
     pg (0.21.0)
     public_suffix (2.0.5)
-    puma (3.9.1)
+    puma (3.12.4)
     rack (2.2.2)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -216,7 +216,7 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.2)
   materialize-sass
   pg (~> 0.21)
-  puma (~> 3.7)
+  puma (~> 3.12)
   rails (~> 5.1.1)
   sass-rails (~> 5.0)
   seed_dump
