@@ -91,9 +91,6 @@ $(document).ready(function() {
     }
 
     $('.modal').modal();
-    $('.button-collapse').sideNav({
-        closeOnClick: true
-    });
     $('a').click(function() {
         $('#sidenav-overlay').remove();
     });
@@ -106,45 +103,45 @@ $(document).ready(function() {
     });
 
     $('#search-field').prop('disabled', true);
-    $('#search-field').autocomplete({
-        source: function(request, response) {
-            var results = $.ui.autocomplete.filter(groupNames, request.term);
-            response(results.slice(0, 7));
-            $('.ui-menu-item-wrapper').click(function() {
-                var slackGroupName = $(this).html();
-                for(var i = 0; i < groupList.length; i++) {
-                    var group = groupList[i];
-                    if(group.properties.name.toLowerCase() === slackGroupName.toLowerCase()) {
-                        if (currentPopup != null) {
-                            currentPopup.remove();
-                            currentPopup = null;
-                        }
-                        unclusteredPointClicked({
-                            features: 
-                            [
-                                {
-                                    geometry: 
-                                    {
-                                        coordinates: [group.geometry.coordinates[0], group.geometry.coordinates[1]]
-                                    },
-                                    properties:
-                                    {
-                                        name: group.properties.name,
-                                        members: group.properties.members,
-                                        type: group.properties.type,
-                                        link: group.properties.link,
-                                        id: group.properties.id
-                                    }
-                                }
-                            ],
-                            fromSearch: true
-                        });
-                        break;
-                    }
-                }
-            });
-        }
-    });
+    // $('#search-field').autocomplete({
+    //     source: function(request, response) {
+    //         var results = $.ui.autocomplete.filter(groupNames, request.term);
+    //         response(results.slice(0, 7));
+    //         $('.ui-menu-item-wrapper').click(function() {
+    //             var slackGroupName = $(this).html();
+    //             for(var i = 0; i < groupList.length; i++) {
+    //                 var group = groupList[i];
+    //                 if(group.properties.name.toLowerCase() === slackGroupName.toLowerCase()) {
+    //                     if (currentPopup != null) {
+    //                         currentPopup.remove();
+    //                         currentPopup = null;
+    //                     }
+    //                     unclusteredPointClicked({
+    //                         features: 
+    //                         [
+    //                             {
+    //                                 geometry: 
+    //                                 {
+    //                                     coordinates: [group.geometry.coordinates[0], group.geometry.coordinates[1]]
+    //                                 },
+    //                                 properties:
+    //                                 {
+    //                                     name: group.properties.name,
+    //                                     members: group.properties.members,
+    //                                     type: group.properties.type,
+    //                                     link: group.properties.link,
+    //                                     id: group.properties.id
+    //                                 }
+    //                             }
+    //                         ],
+    //                         fromSearch: true
+    //                     });
+    //                     break;
+    //                 }
+    //             }
+    //         });
+    //     }
+    // });
 
     function getCords(f, offset) {
         var x = f[0].geometry.coordinates;
@@ -160,6 +157,9 @@ $(document).ready(function() {
     function unclusteredPointClicked(e)
     {
         clickEvent = e;
+        console.log(clickEvent.features);
+        console.log(e.fromSearch);
+        console.log(map.getZoom());
         history.pushState({}, '', '/group/' + e.features[0].properties.id);
         if (map.getZoom() < 7.7 || e.fromSearch == true) {
             var lngLat = getCords(clickEvent.features, defaultOffset);

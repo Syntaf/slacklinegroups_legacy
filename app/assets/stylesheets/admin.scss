@@ -1,13 +1,10 @@
-// Place all the styles related to the admin controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-@import "materialize/components/color";
+@import "vars";
+
 body {
     background-color: #E9EBEE;
 }
 #db-tabs {
-    @extend .grey;
-    @extend .lighten-3;
+   background-color: $grey-lighten-3; 
 }
 .tab-text {
     color: #00838f !important;
@@ -93,8 +90,7 @@ td {
 }
 .header {
     height: 10vh;
-    @extend .cyan;
-    @extend .darken-2;
+    background-color: $cyan-darken-2;
     text-align: center;
     sub {
         font-size: 12px;

@@ -7,14 +7,15 @@
 
 <div id="map">
   <div class="search-bar card">
-    <i class="fa fa-bars menu button-collapse" data-activates="slide-out" aria-hidden="true"></i>
+    <i class="fa fa-bars menu button-collapse" data-toggle="nawdrawer" data-target="#slide-out"></i>
     <input placeholder="Search Groups" type="text" id="search-field">
     <div class="loader">Loading...</div>
     <i class="fa fa-search search" aria-hidden="true"></i>
   </div>
   <a class="zoom-out btn-floating btn-small waves-effect waves-light red"><i class="fa fa-home" aria-hidden="true"></i></a>
 </div>
-<ul id="slide-out" class="side-nav">
+<div id="slide-out" class="navdrawer" aria-hidden="true" tabindex="-1">
+  <ul class="side-nav">
   <li>
     <div class="headerview">
       <h3>SlacklineGroups</h3>
@@ -27,6 +28,7 @@
   <li><a target="" href="/groups/new"><i class="fa fa-envelope" aria-hidden="true"></i> Submit a new group</a></li>
   <li><a target="_blank" href="https://slackline.us/what-is-slacklining/"><i class="fa fa-question-circle" aria-hidden="true"></i> What's Slacklining?</a></li>
   <li><a href="/about"><i class="fa fa-code" aria-hidden="true"></i> About</a></li>
+  </ul>
   <div class="bottom-bar">
     <ul>
       <li><a target="_blank" href="https://www.facebook.com/Slacklinegroups-976903459112563/"><i style="color: #3B5998;" class="fa fa-facebook-square" aria-hidden="true"></i></a></li>
@@ -34,7 +36,7 @@
       <li><a target="_blank" href="https://www.linkedin.com/in/grant-mercer-82a52097/"><i style="color: #0077B5;" class="fa fa-linkedin-square" aria-hidden="true"></i></a></li>
     </ul>
   </div>
-</ul>
+</div>
 <div id="issue-modal" class="modal">
   <div class="modal-content">
     <h4>Submit an issue</h4>
