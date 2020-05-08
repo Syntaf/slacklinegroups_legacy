@@ -17,7 +17,7 @@ module Slacklinegroups
     }
 
     config.after_initialize do
-      Rails.application.load_tasks
+      Rails.application.load_tasks if Rake::Task.tasks.empty?
       Rake::Task['minify:slg'].invoke
     end
 
