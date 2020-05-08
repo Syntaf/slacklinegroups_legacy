@@ -227,8 +227,8 @@ $(document).ready(function() {
                     features: data
                 },
                 cluster: true,
-                clusterMaxZoom: 14,
-                clusterRadius: 35
+                clusterMaxZoom: 5,
+                clusterRadius: 25
             });
 
             map.addSource('ungrouped-points', {
@@ -260,11 +260,11 @@ $(document).ready(function() {
                         property: 'point_count',
                         type: 'interval',
                         stops: [
-                            [0, 20],
+                            [0, 15],
                             [5, 20],
-                            [10, 30],
-                            [25, 35],
-                            [50, 40]
+                            [10, 20],
+                            [25, 30],
+                            [50, 30]
                         ]
                     }
                 }
