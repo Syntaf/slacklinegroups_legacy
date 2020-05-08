@@ -162,14 +162,15 @@ $(document).ready(function() {
         clickEvent = e;
         history.pushState({}, '', '/group/' + e.features[0].properties.id);
         if (map.getZoom() < 7.7 || e.fromSearch == true) {
-            var lngLat = getCords(clickEvent.features, defaultOffset);
+            var lngLat = getCords(clickEvent.features, 0);
             map.flyTo({
                 center: lngLat,
+                offset: [0, 200],
                 zoom: 7.7
             });
         } else {
-            var lngLat = getCords(clickEvent.features, 0.04);
-            currentPopup = new mapboxgl.Popup()
+            var lngLat = getCords(clickEvent.features, 0);
+            currentPopup = new mapboxgl.Popup({offset: 25})
                 .setLngLat(lngLat)
                 .setHTML(createPopUp(clickEvent.features))
                 .addTo(map);
