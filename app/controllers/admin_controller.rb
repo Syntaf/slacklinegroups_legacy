@@ -4,8 +4,7 @@ class AdminController < ApplicationController
  before_action :authenticate_user!
 
  def index
-  @groups = Group.joins(:info, :location)
-
+  @groups = Group.all.includes(:location, :info)
   @user_submitted_groups = SubmittedGroup.all
  end
 
