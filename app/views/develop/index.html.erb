@@ -120,8 +120,8 @@ document.getElementById('mySlacklinegroupMap')
     <div class="container">
       <h4>No-JS approach to embedding a map</h4>
       <hr>
-      <p>If you beleive Javascript is the Devils language, you can still embed slacklinegroups.com without any! To do so, you'll need to use an iFrame which points to <i>slacklinegroups.com/embed</i>:</p>
-      <pre class="code"><code data-language="javascript">&lt;iframe src="https://www.slacklinegroups.com/embed" 
+      <p>If you beleive Javascript is the Devils language, you can still embed slacklinegroups.com without any! To do so, you'll need to use an iFrame which points to <i>slacklinegroups.com/embed</i>. Note that the example below uses http, but https is supported if needed</p>
+      <pre class="code"><code data-language="javascript">&lt;iframe src="http://www.slacklinegroups.com/embed" 
  width="500px" 
  height="500px"&gt;
 &lt;/iframe&gt;</code></pre>
@@ -133,7 +133,7 @@ width="500px"
 height="500px"&gt;
 &lt;/iframe&gt;</code></pre>
       </div>
-      <iframe id="nojsSLG" src="https://<%= hostUrl %>/embed?showHome=false&showSearchBar=false" width="500px" height="500px"></iframe>
+      <iframe id="nojsSLG" src="http://<%= hostUrl %>/embed?showHome=false&showSearchBar=false" width="500px" height="500px"></iframe>
     </div>
   </div>
 
